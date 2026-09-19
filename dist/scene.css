@@ -193,3 +193,13 @@ h1,h2,h3,h4,.wordmark,.preview-index,.modal-title{font-family:'Space Grotesk',sa
  .deck-tabs button{font-size:13px;padding:8px 10px}
 }
 @media(prefers-reduced-motion:reduce){.scene-ready .headline,.scene-ready .reveal{transition:none}.modal-is-open .portrait{animation:none!important}}
+
+/* Blend the complete image stack once, including the cursor light. */
+.scene-ready .portrait-surface{position:absolute;width:150svh;height:100svh;left:calc(68% - 100svh);top:0;animation:portrait-breathe 9s ease-in-out infinite;transform-origin:67% 50%;mask-image:linear-gradient(90deg,transparent 0%,#000 22%,#000 78%,transparent 100%),linear-gradient(180deg,transparent 0%,#000 7%,#000 78%,transparent 100%);mask-composite:intersect}
+.scene-ready .portrait-surface .portrait{inset:0;width:100%;height:100%;animation:none;transform:none;mask-image:none;-webkit-mask-image:none}
+.scene-ready .portrait-surface .reveal{mask-image:radial-gradient(ellipse 70px 90px at var(--light-x,-500px) var(--light-y,-500px),#000 10%,rgba(0,0,0,.8) 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 70px 90px at var(--light-x,-500px) var(--light-y,-500px),#000 10%,rgba(0,0,0,.8) 40%,transparent 100%)}
+.scene-ready .point-dot{background:radial-gradient(circle,#e0ecb4cc 0%,#e0ecb477 45%,#e0ecb400 75%);outline-color:#e0ecb433;opacity:.8;transition:opacity .25s,transform .3s,outline-color .25s,outline-offset .3s}
+.scene-ready .face-point:hover .point-dot,.scene-ready .face-point:focus-visible .point-dot,.scene-ready .face-point[aria-expanded=true] .point-dot{opacity:1;background:radial-gradient(circle,#edf5cd 0%,#e0ecb4b3 42%,#e0ecb400 78%);outline-color:#e0ecb466}
+.motion-paused .portrait-surface{animation-play-state:paused!important}
+@media(max-width:1000px){.scene-ready .portrait-surface{height:50svh;width:75svh;left:calc(50% - 50svh);top:4svh}}
+@media(prefers-reduced-motion:reduce){.scene-ready .portrait-surface{animation:none}.scene-ready .point-dot{transition:none}}
