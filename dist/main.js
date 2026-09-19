@@ -26,3 +26,102 @@ function reset() { active = false; reveal.style.opacity = '0'; cancelAnimationFr
 hero.addEventListener('pointerleave', reset);
 finePointer.addEventListener('change', reset);
 window.addEventListener('blur', reset);
+
+// Chapters are readable by default; motion is an optional enhancement.
+const chapterSections = [...document.querySelectorAll('.chapter[id]')];
+const sectionLinks = [...document.querySelectorAll('.nav-links a')];
+const chapterNav = document.querySelector('.chapter-nav');
+const fileTabList = document.querySelector('.file-tabs');
+const progressBar = document.querySelector('.reading-progress');
+const ribbon = document.querySelector('.interlude');
+const ribbonTrack = document.querySelector('.interlude-track');
+const star = document.querySelector('.big-star');
+const entranceElements = [...document.querySelectorAll('[data-enter]')];
+let entranceObserver;
+
+function configureMotion() {
+  entranceObserver?.disconnect();
+  document.documentElement.classList.toggle('motion-ready', !reducedMotion.matches);
+  if (reducedMotion.matches) {
+    entranceElements.forEach(element => element.classList.add('has-entered'));
+    return;
+  }
+  entranceObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('has-entered');
+      entranceObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -35px 0px' });
+  entranceElements.forEach(element => {
+    if (element.getBoundingClientRect().top < innerHeight) element.classList.add('has-entered');
+    else if (!element.classList.contains('has-entered')) entranceObserver.observe(element);
+  });
+}
+configureMotion();
+reducedMotion.addEventListener('change', configureMotion);
+
+let scrollFrame = 0;
+function updateReadingPosition() {
+  scrollFrame = 0;
+  const navHeight = chapterNav.offsetHeight;
+  fileTabList.setAttribute('aria-orientation', innerWidth <= 560 ? 'horizontal' : 'vertical');
+  const viewportHeight = innerHeight;
+  const contentStart = hero.offsetHeight;
+  const maxScroll = document.documentElement.scrollHeight - viewportHeight;
+  const fraction = Math.max(0, Math.min(1, (scrollY - contentStart) / Math.max(1, maxScroll - contentStart)));
+  progressBar.style.transform = `scaleX(${fraction})`;
+  let current = null;
+  chapterSections.forEach(section => {
+    if (section.getBoundingClientRect().top <= navHeight + 100) current = section.id;
+  });
+  sectionLinks.forEach(link => {
+    if (link.hash === `#${current}`) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  if (!reducedMotion.matches) {
+    const ribbonBounds = ribbon.getBoundingClientRect();
+    if (ribbonBounds.top < viewportHeight && ribbonBounds.bottom > 0) {
+      const travel = Math.max(0, ribbonTrack.scrollWidth - ribbon.clientWidth);
+      const position = (viewportHeight - ribbonBounds.top) / (viewportHeight + ribbonBounds.height);
+      ribbonTrack.style.setProperty('--ribbon-offset', `${-Math.min(travel, 350) * position}px`);
+    }
+    const starBounds = star.getBoundingClientRect();
+    if (starBounds.top < viewportHeight && starBounds.bottom > 0) {
+      star.style.setProperty('--star-rotation', `${(viewportHeight - starBounds.top) * .07}deg`);
+    }
+  }
+}
+function scheduleReadingUpdate() {
+  if (!scrollFrame) scrollFrame = requestAnimationFrame(updateReadingPosition);
+}
+addEventListener('scroll', scheduleReadingUpdate, { passive: true });
+addEventListener('resize', scheduleReadingUpdate, { passive: true });
+addEventListener('load', scheduleReadingUpdate);
+document.querySelectorAll('.past-role').forEach(details => details.addEventListener('toggle', scheduleReadingUpdate));
+updateReadingPosition();
+
+// Native-button tabs: click, arrows, Home and End all select the same panel.
+const fileTabs = [...document.querySelectorAll('[role="tab"]')];
+function selectFile(tab, moveFocus = false) {
+  fileTabs.forEach(candidate => {
+    const selected = candidate === tab;
+    candidate.setAttribute('aria-selected', String(selected));
+    candidate.tabIndex = selected ? 0 : -1;
+    document.getElementById(candidate.getAttribute('aria-controls')).hidden = !selected;
+  });
+  if (moveFocus) tab.focus({ preventScroll: true });
+}
+fileTabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => selectFile(tab));
+  tab.addEventListener('keydown', event => {
+    let next;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % fileTabs.length;
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + fileTabs.length) % fileTabs.length;
+    if (event.key === 'Home') next = 0;
+    if (event.key === 'End') next = fileTabs.length - 1;
+    if (next === undefined) return;
+    event.preventDefault();
+    selectFile(fileTabs[next], true);
+  });
+});
