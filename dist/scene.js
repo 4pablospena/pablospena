@@ -10,11 +10,11 @@ const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
 const chapters = new Map([...document.querySelectorAll('main > .chapter')].map(section => [section.id, section]));
 const homes = new Map();
 let copy = {
-  'sobre-mi': ['01 / perspectiva', 'el criterio detrás del código.', 'personas, producto y agentes de ia. cómo conecto lo que aprendo con lo que construyo.', 'explorar mi perspectiva'],
-  proyectos: ['02 / laboratorio abierto', 'ideas que ya tienen código.', 'agentes con memoria, límites para la autonomía y pequeñas automatizaciones. tres proyectos para explorar.', 'entrar al laboratorio'],
-  recorrido: ['03 / recorrido', 'cada etapa deja algo.', 'de liderar equipos a desarrollar producto en resizes. las experiencias que dan forma a mi manera de trabajar.', 'ver el recorrido'],
-  herramientas: ['04 / stack', 'las herramientas. el criterio.', 'typescript, vue, python y un entorno de desarrollo con codex, cursor y claude code. siempre en evolución.', 'explorar el stack'],
-  contacto: ['05 / hablemos', 'una conversación puede ser el inicio.', 'producto, desarrollo o agentes de ia. encuentra mi correo y mis perfiles para seguir la conversación.', 'abrir contacto']
+  'sobre-mi': ['01 / perspectiva', 'El criterio detrás del código.', 'Personas, producto y agentes de IA. Cómo conecto lo que aprendo con lo que construyo.', 'Explorar mi perspectiva'],
+  proyectos: ['02 / laboratorio abierto', 'Ideas que ya tienen código.', 'Agentes con memoria, límites para la autonomía y pequeñas automatizaciones. Tres proyectos para explorar.', 'Entrar al laboratorio'],
+  recorrido: ['03 / recorrido', 'Cada etapa suma.', 'De liderar equipos a desarrollar producto en Resizes. Las experiencias que dan forma a mi manera de trabajar.', 'Ver el recorrido'],
+  herramientas: ['04 / stack', 'Las herramientas. El criterio.', 'TypeScript, Vue, Python y un entorno de desarrollo con Codex, Cursor y Claude Code. Siempre en evolución.', 'Explorar el stack'],
+  contacto: ['05 / hablemos', 'Una conversación puede ser el inicio.', 'Producto, desarrollo o agentes de IA. Encuentra mi correo y mis perfiles para seguir la conversación.', 'Abrir contacto']
 };
 const spanishCopy = copy;
 let selected = '', currentSection = null, lastFocus = null;
@@ -174,46 +174,46 @@ addEventListener('popstate', syncRoute);
 addEventListener('hashchange', () => { if (currentSection?.id !== location.hash.slice(1)) syncRoute(); });
 let deckContent = {
   'sobre-mi': [
-    ['producto', 'primero, el problema.', 'vengo de trabajar con personas y liderar equipos. antes de escribir código, quiero entender qué necesita quien lo va a usar.'],
-    ['desarrollo', 'de entender a construir.', 'en resizes desarrollo producto y amplío mi conocimiento de plataforma. aprender, probar y mejorar forman parte del mismo trabajo.'],
-    ['agentes', 'autonomía con criterio.', 'me interesa dar a los agentes contexto, memoria y límites. que la ia resuelva tareas reales y deje espacio para lo que requiere una persona.']
+    ['producto', 'Primero, el problema.', 'Vengo de trabajar con personas y liderar equipos. Antes de escribir código, quiero entender qué necesita quien lo va a usar.'],
+    ['desarrollo', 'De entender a construir.', 'En Resizes desarrollo producto y amplío mi conocimiento de plataforma. Aprender, probar y mejorar forman parte del mismo trabajo.'],
+    ['agentes', 'Autonomía con criterio.', 'Me interesa dar a los agentes contexto, memoria y límites. Que la IA resuelva tareas reales y deje espacio para lo que requiere una persona.']
   ],
   proyectos: [
-    ['agentes', 'un agente. siete archivos.', 'build your agents organiza identidad, memoria, contexto y herramientas en una especificación abierta. construido con vue y nuxt.', 'explorar el proyecto', 'https://github.com/4pablospena/build-your-agents'],
-    ['seguridad', 'antes de actuar, revisar.', 'agentic action firewall inspecciona las acciones de un agente antes de ejecutarlas. reglas de autorización en typescript. proyecto en pre-alpha.', 'ver el código', 'https://github.com/4pablospena/agentic-action-firewall'],
-    ['automatización', 'lo repetitivo, resuelto.', 'una herramienta en python para convertir facturas de excel a pdf. una tarea concreta, menos trabajo manual.', 'ver la herramienta', 'https://github.com/4pablospena/facturas-excel-pdf']
+    ['agentes', 'Un agente. Siete archivos.', 'Build Your Agents organiza identidad, memoria, contexto y herramientas en una especificación abierta. Construido con Vue y Nuxt.', 'Explorar el proyecto', 'https://github.com/4pablospena/build-your-agents'],
+    ['seguridad', 'Antes de actuar, revisar.', 'Agentic Action Firewall inspecciona las acciones de un agente antes de ejecutarlas. Reglas de autorización en TypeScript. Proyecto en pre-alpha.', 'Ver el código', 'https://github.com/4pablospena/agentic-action-firewall'],
+    ['automatización', 'Lo repetitivo, resuelto.', 'Una herramienta en Python para convertir facturas de Excel a PDF. Una tarea concreta, menos trabajo manual.', 'Ver la herramienta', 'https://github.com/4pablospena/facturas-excel-pdf']
   ],
   recorrido: [
-    ['resizes', 'producto + ai.', 'desde diciembre de 2025, product & ai engineer. foco en desarrollo, aprendizaje de plataforma y exploración constante de agentes.'],
-    ['fútbol emotion', 'liderar también es escuchar.', 'floor manager en parque principado desde noviembre de 2023, antes de resizes. liderazgo, formación, stock y análisis de objetivos con power bi.'],
-    ['decathlon', 'entender a quien tienes delante.', 'vendedor deportivo en gijón en 2023. asesoramiento técnico y atención personalizada: escuchar antes de proponer.'],
-    ['formación', 'seguir aprendiendo.', 'ingeniería informática en la uned. formación en javascript y responsive web design en 2025. técnico deportivo de fútbol sala, básico y avanzado.']
+    ['resizes', 'Producto + IA.', 'Desde diciembre de 2025, Product & AI Engineer. Foco en desarrollo, aprendizaje de plataforma y exploración constante de agentes.'],
+    ['fútbol emotion', 'Liderar también es escuchar.', 'Floor Manager en Parque Principado desde noviembre de 2023, antes de Resizes. Liderazgo, formación, stock y análisis de objetivos con Power BI.'],
+    ['decathlon', 'Entender a quien tienes delante.', 'Vendedor deportivo en Gijón en 2023. Asesoramiento técnico y atención personalizada: escuchar antes de proponer.'],
+    ['formación', 'Seguir aprendiendo.', 'Ingeniería informática en la UNED. Formación en JavaScript y Responsive Web Design en 2025. Técnico deportivo de fútbol sala, básico y avanzado.']
   ],
   herramientas: [
-    ['desarrollo', 'con qué construyo.', 'typescript, javascript, vue, nuxt, python, html, css y sql. herramientas presentes en mis proyectos y formación.'],
-    ['con ia', 'un entorno para explorar.', 'codex, cursor y claude code en el desarrollo. git, github y bash para trabajar con el código y su evolución.'],
-    ['curiosidad', 'lo que viene después.', 'agentes con contexto, memoria y herramientas. plataforma y automatización. preguntas que convierto en nuevos experimentos.']
+    ['desarrollo', 'Con qué construyo.', 'TypeScript, JavaScript, Vue, Nuxt, Python, HTML, CSS y SQL. Herramientas presentes en mis proyectos y formación.'],
+    ['con IA', 'Un entorno para explorar.', 'Codex, Cursor y Claude Code en el desarrollo. Git, GitHub y Bash para trabajar con el código y su evolución.'],
+    ['curiosidad', 'Lo que viene después.', 'Agentes con contexto, memoria y herramientas. Plataforma y automatización. Preguntas que convierto en nuevos experimentos.']
   ],
   contacto: [
-    ['email', 'empecemos por una idea.', '¿producto, desarrollo o agentes de ia? escríbeme y hablamos.', 'escribir un correo', 'mailto:pablosuarezpena4it@outlook.com'],
-    ['linkedin', 'sigamos en contacto.', 'mi trayectoria y un lugar para conectar alrededor de lo que estamos construyendo.', 'abrir linkedin', 'https://www.linkedin.com/in/pablospena/'],
-    ['github', 'el código está abierto.', 'proyectos personales, experimentos y aprendizaje. lo que voy construyendo, a la vista.', 'explorar github', 'https://github.com/4pablospena']
+    ['email', 'Empecemos por una idea.', '¿Producto, desarrollo o agentes de IA? Escríbeme y hablamos.', 'Escribir un correo', 'mailto:pablosuarezpena4it@outlook.com'],
+    ['linkedin', 'Sigamos en contacto.', 'Mi trayectoria y un lugar para conectar alrededor de lo que estamos construyendo.', 'Abrir LinkedIn', 'https://www.linkedin.com/in/pablospena/'],
+    ['github', 'El código está abierto.', 'Proyectos personales, experimentos y aprendizaje. Lo que voy construyendo, a la vista.', 'Explorar GitHub', 'https://github.com/4pablospena']
   ]
 };
 const spanishDeckContent = deckContent;
 const englishCopy = {
-  'sobre-mi': ['01 / perspective', 'the thinking behind the code.', 'people, product and AI agents. how I connect what I learn with what I build.', 'explore my perspective'],
-  proyectos: ['02 / open lab', 'ideas that already have code.', 'agents with memory, boundaries for autonomy and small automations. three projects to explore.', 'enter the lab'],
-  recorrido: ['03 / journey', 'every stage leaves something.', 'from leading teams to building product at Resizes. the experiences shaping how I work.', 'see the journey'],
-  herramientas: ['04 / stack', 'the tools. the judgement.', 'typescript, vue, python and a development environment with Codex, Cursor and Claude Code. always evolving.', 'explore the stack'],
-  contacto: ['05 / say hello', 'a conversation can be the beginning.', 'product, development or AI agents. find my email and profiles and keep the conversation going.', 'open contact']
+  'sobre-mi': ['01 / perspective', 'The thinking behind the code.', 'People, product and AI agents. How I connect what I learn with what I build.', 'Explore my perspective'],
+  proyectos: ['02 / open lab', 'Ideas that already have code.', 'Agents with memory, boundaries for autonomy and small automations. Three projects to explore.', 'Enter the lab'],
+  recorrido: ['03 / journey', 'Every stage adds something.', 'From leading teams to building product at Resizes. The experiences shaping how I work.', 'See the journey'],
+  herramientas: ['04 / stack', 'The tools. The judgement.', 'TypeScript, Vue, Python and a development environment with Codex, Cursor and Claude Code. Always evolving.', 'Explore the stack'],
+  contacto: ['05 / say hello', 'A conversation can be the beginning.', 'Product, development or AI agents. Find my email and profiles and keep the conversation going.', 'Open contact']
 };
 const englishDeckContent = {
-  'sobre-mi': [['product', 'start with the problem.', 'I come from working with people and leading teams. before writing code, I want to understand what the person using it needs.'], ['development', 'from understanding to building.', 'at Resizes I build product and expand my platform knowledge. learning, testing and improving are the same work.'], ['agents', 'autonomy with judgement.', 'I want to give agents context, memory and boundaries. useful AI for real tasks, with room for what needs a person.']],
-  proyectos: [['agents', 'one agent. seven files.', 'Build Your Agents organises identity, memory, context and tools in an open specification. built with Vue and Nuxt.', 'explore the project', 'https://github.com/4pablospena/build-your-agents'], ['security', 'before acting, review.', 'Agentic Action Firewall inspects an agent’s actions before execution. authorisation rules in TypeScript. pre-alpha project.', 'see the code', 'https://github.com/4pablospena/agentic-action-firewall'], ['automation', 'repetitive work, resolved.', 'a Python tool to convert Excel invoices to PDF. one concrete task, less manual work.', 'see the tool', 'https://github.com/4pablospena/facturas-excel-pdf']],
-  recorrido: [['resizes', 'product + AI.', 'since December 2025, Product & AI Engineer. focused on development, platform learning and constant agent exploration.'], ['fútbol emotion', 'leading also means listening.', 'Floor Manager in Parque Principado from November 2023, before Resizes. leadership, training, stock and Power BI objectives analysis.'], ['decathlon', 'understand who is in front of you.', 'sports seller in Gijón in 2023. technical advice and personal service: listen before proposing.'], ['education', 'keep learning.', 'Computer Engineering at UNED. JavaScript and Responsive Web Design training in 2025. basic and advanced futsal coaching.']],
-  herramientas: [['development', 'what I build with.', 'TypeScript, JavaScript, Vue, Nuxt, Python, HTML, CSS and SQL. tools present in my projects and training.'], ['with AI', 'a space to explore.', 'Codex, Cursor and Claude Code in development. Git, GitHub and Bash to work with code and its evolution.'], ['curiosity', 'what comes next.', 'agents with context, memory and tools. platform and automation. questions turned into new experiments.']],
-  contacto: [['email', 'start with an idea.', 'product, development or AI agents? write to me and let’s talk.', 'write an email', 'mailto:pablosuarezpena4it@outlook.com'], ['linkedin', 'keep in touch.', 'my journey and a place to connect around what we are building.', 'open LinkedIn', 'https://www.linkedin.com/in/pablospena/'], ['github', 'the code is open.', 'personal projects, experiments and learning. what I build, in the open.', 'explore GitHub', 'https://github.com/4pablospena']]
+  'sobre-mi': [['product', 'First, the problem.', 'I come from working with people and leading teams. Before writing code, I want to understand what the person using it needs.'], ['development', 'From understanding to building.', 'At Resizes I build product and expand my platform knowledge. Learning, testing and improving are the same work.'], ['agents', 'Autonomy with judgement.', 'I want to give agents context, memory and boundaries. Useful AI for real tasks, with room for what needs a person.']],
+  proyectos: [['agents', 'One agent. Seven files.', 'Build Your Agents organises identity, memory, context and tools in an open specification. Built with Vue and Nuxt.', 'Explore the project', 'https://github.com/4pablospena/build-your-agents'], ['security', 'Before acting, review.', 'Agentic Action Firewall inspects an agent’s actions before execution. Authorisation rules in TypeScript. Pre-alpha project.', 'See the code', 'https://github.com/4pablospena/agentic-action-firewall'], ['automation', 'Repetitive work, resolved.', 'A Python tool to convert Excel invoices to PDF. One concrete task, less manual work.', 'See the tool', 'https://github.com/4pablospena/facturas-excel-pdf']],
+  recorrido: [['resizes', 'Product + AI.', 'Since December 2025, Product & AI Engineer. Focused on development, platform learning and constant agent exploration.'], ['fútbol emotion', 'Leading also means listening.', 'Floor Manager in Parque Principado from November 2023, before Resizes. Leadership, training, stock and Power BI objectives analysis.'], ['decathlon', 'Understand who is in front of you.', 'Sports seller in Gijón in 2023. Technical advice and personal service: listen before proposing.'], ['education', 'Keep learning.', 'Computer Engineering at UNED. JavaScript and Responsive Web Design training in 2025. Basic and advanced futsal coaching.']],
+  herramientas: [['development', 'What I build with.', 'TypeScript, JavaScript, Vue, Nuxt, Python, HTML, CSS and SQL. Tools present in my projects and training.'], ['with AI', 'A space to explore.', 'Codex, Cursor and Claude Code in development. Git, GitHub and Bash to work with code and its evolution.'], ['curiosity', 'What comes next.', 'Agents with context, memory and tools. Platform and automation. Questions turned into new experiments.']],
+  contacto: [['email', 'Start with an idea.', 'Product, development or AI agents? Write to me and let’s talk.', 'Write an email', 'mailto:pablosuarezpena4it@outlook.com'], ['linkedin', 'Keep in touch.', 'My journey and a place to connect around what we are building.', 'Open LinkedIn', 'https://www.linkedin.com/in/pablospena/'], ['github', 'The code is open.', 'Personal projects, experiments and learning. What I build, in the open.', 'Explore GitHub', 'https://github.com/4pablospena']]
 };
 let activeLocale = 'es';
 const languageButton = document.querySelector('.lang-switch');
@@ -229,8 +229,8 @@ function setLocale(locale) {
   document.querySelector('.edition').textContent = english ? 'a work in progress' : 'un trabajo en evolución';
   document.querySelector('.coordinates').textContent = english ? '( asturias, spain / 43° n )' : '( asturias, españa / 43° n )';
   document.querySelector('.small-label').textContent = english ? 'now' : 'ahora';
-  document.querySelector('.current p').innerHTML = english ? 'building at resizes<br><span>since December 2025</span>' : 'construyendo en resizes<br><span>desde diciembre de 2025</span>';
-  document.querySelector('.intro-meta span').textContent = english ? 'learning. building. repeating.' : 'aprendiendo. construyendo. repitiendo.';
+  document.querySelector('.current p').innerHTML = english ? 'Building at Resizes<br><span>Since December 2025</span>' : 'Construyendo en Resizes<br><span>Desde diciembre de 2025</span>';
+  document.querySelector('.intro-meta span').textContent = english ? 'Learning. Building. Repeating.' : 'Aprendiendo. Construyendo. Repitiendo.';
   document.querySelector('.motion-toggle').textContent = document.documentElement.classList.contains('motion-paused') ? (english ? 'resume motion' : 'activar movimiento') : (english ? 'pause motion' : 'pausar movimiento');
   const closeText = dialog.querySelector('.modal-close').firstChild; if (closeText) closeText.textContent = english ? 'close ' : 'cerrar ';
   languageButton.setAttribute('aria-pressed', String(english));
@@ -250,9 +250,9 @@ function renderDeck(id) {
   const nav = document.createElement('nav'); nav.className = 'deck-tabs'; nav.setAttribute('aria-label', 'Explorar este contenido');
   const article = document.createElement('article'); article.className = 'deck-card'; article.setAttribute('aria-live', 'polite'); article.tabIndex = 0; article.setAttribute('aria-label', 'Contenido de la ficha');
   const foot = document.createElement('div'); foot.className = 'deck-controls';
-  const prev = document.createElement('button'); prev.textContent = activeLocale === 'en' ? 'previous' : 'anterior'; prev.type = 'button';
+  const prev = document.createElement('button'); prev.textContent = activeLocale === 'en' ? 'Previous' : 'Anterior'; prev.type = 'button';
   const count = document.createElement('span');
-  const next = document.createElement('button'); next.textContent = activeLocale === 'en' ? 'next' : 'siguiente'; next.type = 'button';
+  const next = document.createElement('button'); next.textContent = activeLocale === 'en' ? 'Next' : 'Siguiente'; next.type = 'button';
   function show(i) {
     index = i;
     const [label, title, description, linkLabel, href] = cards[index];
