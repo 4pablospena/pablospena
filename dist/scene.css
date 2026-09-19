@@ -1,0 +1,79 @@
+/* A single portrait scene. Chapters remain available when JavaScript is absent. */
+.face-map,.scene-preview,.motion-toggle{display:none}
+.scene-ready body{overflow:hidden}
+.scene-ready main>.chapter,.scene-ready .chapter-nav,.scene-ready .interlude,.scene-ready .hero-access{display:none}
+.scene-ready .hero{height:100svh;min-height:0;background:#1b222b}
+.scene-ready .hero-content{padding:30px 42px}
+.scene-ready .portrait-stack{transform:translate(var(--portrait-x,0px),var(--portrait-y,0px));transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.scene-ready .portrait{width:150svh;height:100svh;max-width:none;left:calc(50% - 100svh);object-position:center;object-fit:fill;animation:portrait-breathe 9s ease-in-out infinite;transform-origin:67% 50%}
+.scene-ready .clean{filter:saturate(.32) brightness(.85)}
+.scene-ready .warmth{opacity:.06}
+.scene-ready .portrait{mask-image:linear-gradient(90deg,transparent,#000 12%,#000 84%,transparent)}
+.scene-ready .reveal{display:none}
+.scene-ready .scrim{background:linear-gradient(180deg,rgba(15,20,27,.25),rgba(15,20,27,0) 45%,rgba(15,20,27,.85))}
+.scene-ready .headline{position:absolute;top:18%;left:42px;margin:0}
+.scene-ready h1{font-size:clamp(32px,3.6vw,58px);line-height:1.02;letter-spacing:-.05em}
+.scene-ready h1 em{font-weight:400;color:#d1e98a;font-style:normal}
+.scene-ready .eyebrow{font-size:10px;letter-spacing:.12em;margin-bottom:20px}
+.scene-ready .hero-note{font-size:12px;margin-top:20px}
+.scene-ready .edition{font-size:12px}
+.scene-ready .hero-bottom{position:absolute;bottom:28px;left:42px;right:42px;border-top:1px solid #ffffff29;padding-top:18px;align-items:center}
+.scene-ready .current{display:flex;gap:18px;align-items:center;min-width:0}
+.scene-ready .current p{margin:0;font-size:12px}
+.scene-ready .current p span{font-size:11px}
+.scene-ready .intro>p{display:none}
+.scene-ready .intro-meta{font-size:11px}
+.scene-ready .intro-meta a{display:none}
+.scene-ready .face-map{display:block;position:absolute;inset:0;pointer-events:none}
+.face-point{--direction:-1;position:absolute;left:calc(50% + var(--px));top:var(--py);width:44px;height:44px;border:0;background:transparent;color:#f0f0ee;cursor:pointer;pointer-events:auto;transform:translate(-50%,-50%);font:inherit;padding:0;z-index:1}
+.point-dot{display:block;position:absolute;inset:16px;border-radius:50%;background:#d1e98a;outline:1px solid #d1e98a66;outline-offset:7px;transition:transform .3s,outline-offset .3s}
+.face-point::after{content:'';position:absolute;width:var(--length,100px);height:1px;background:#f0f0ee77;top:22px;left:22px;transform-origin:left;transform:rotate(var(--angle));pointer-events:none}
+.point-label{position:absolute;top:var(--label-y,-66px);right:var(--label-right,100px);display:flex;gap:12px;align-items:center;white-space:nowrap;font-size:14px;padding:12px 0;border-bottom:1px solid #ffffff50;transition:color .25s,transform .25s}
+.point-label small{font-size:9px;opacity:.6}.point-label i{font-size:17px;font-style:normal;color:#d1e98a}
+.point-path{--px:-9svh;--py:29%;--angle:210deg;--label-right:112px;--length:125px}
+.point-about{--px:9svh;--py:27%;--angle:-30deg;--label-right:-214px;--length:130px}
+.point-stack{--px:-1svh;--py:44%;--angle:200deg;--label-right:137px;--label-y:-48px;--length:148px}
+.point-projects{--px:-7svh;--py:56%;--angle:155deg;--label-right:128px;--label-y:50px;--length:143px}
+.point-contact{--px:8svh;--py:57%;--angle:25deg;--label-right:-205px;--label-y:50px;--length:140px}
+.face-point:hover .point-dot,.face-point[aria-expanded=true] .point-dot{transform:scale(1.25);outline-offset:11px}
+.face-point:hover .point-label,.face-point[aria-expanded=true] .point-label{color:#d1e98a;transform:translateY(-3px)}
+.face-point:focus-visible{outline:1px solid #d1e98a;border-radius:50%;outline-offset:5px}
+.scene-ready .scene-preview{display:block;position:absolute;left:42px;bottom:130px;width:290px;pointer-events:auto;border-top:1px solid #d1e98a;padding-top:16px}
+.preview-index{font-size:10px;letter-spacing:.1em;color:#d1e98a}
+.scene-preview .preview-title{font-size:26px;letter-spacing:-.04em;font-weight:450;line-height:1.08;margin:12px 0}
+.preview-copy{font-size:13px;line-height:1.6;color:#c3c6cb;margin:0 0 16px;min-height:62px}
+.preview-open{display:flex;justify-content:space-between;width:100%;font:inherit;font-size:12px;background:transparent;color:#f0f0ee;padding:12px 0;border:0;border-top:1px solid #ffffff29;cursor:pointer}
+.preview-open span{color:#d1e98a;font-size:20px}.preview-open:hover{color:#d1e98a}
+.scene-preview.is-changing{animation:preview-in .3s ease-out}
+.scene-ready .motion-toggle{display:block;position:absolute;right:42px;bottom:125px;background:transparent;border:0;color:#c3c6cb;font:inherit;font-size:10px;pointer-events:auto;cursor:pointer;padding:12px}
+.motion-paused .portrait{animation-play-state:paused!important}.motion-paused .portrait-stack{transform:none!important}
+.scene-ready .content-modal{padding:3svh 3vw}
+.scene-ready .modal-frame{height:94svh;border:1px solid #ffffff40;box-shadow:none}
+.scene-ready .modal-body{height:calc(94svh - 64px);overscroll-behavior:contain}
+.scene-ready .modal-body .chapter{padding:44px 48px;min-height:100%}
+.scene-ready .modal-body h2{margin:24px 0;font-size:clamp(32px,4.5vw,68px)}
+.scene-ready .modal-body .chapter-heading{margin:30px 0 42px}
+.scene-ready .modal-body .path-intro{position:static}
+.scene-ready .modal-body [data-enter]{opacity:1;transform:none}
+@keyframes portrait-breathe{0%,100%{transform:scale(1.015) translateY(0)}50%{transform:scale(1.028) translateY(-3px)}}
+@keyframes preview-in{from{opacity:.3;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1100px){.scene-ready .headline{top:13%}.scene-ready h1{font-size:32px}.scene-ready .hero-note{display:none}.scene-ready .scene-preview{width:240px}.point-label{font-size:12px}}
+@media(max-width:1000px){
+ .scene-ready .hero-content{padding:20px}.scene-ready .edition,.scene-ready .coordinates,.scene-ready .headline,.scene-ready .intro{display:none}
+ .scene-ready .portrait{height:78svh;width:117svh;left:calc(50% - 78svh);top:5svh}
+ .scene-ready .portrait{mask-image:linear-gradient(180deg,transparent,#000 8%,#000 90%,transparent)}
+ .scene-ready .topbar{align-items:center}.scene-ready .wordmark{font-size:19px}
+ .point-path{--px:-7svh;--py:27%;--length:65px;--label-right:48px;--label-y:-60px;--angle:220deg}
+ .point-about{--px:7svh;--py:25%;--length:60px;--label-right:-72px;--label-y:-62px;--angle:-50deg}
+ .point-stack{--px:-1svh;--py:40%;--length:80px;--label-right:68px;--label-y:-38px;--angle:200deg}
+ .point-projects{--px:-5svh;--py:49%;--length:74px;--label-right:48px;--label-y:35px;--angle:155deg}
+ .point-contact{--px:7svh;--py:50%;--length:62px;--label-right:-82px;--label-y:35px;--angle:35deg}
+ .point-label{font-size:12px;gap:7px;padding:8px 0}.point-label small{display:none}.point-dot{inset:18px;outline-offset:5px}
+ .scene-ready .scene-preview{left:20px;right:20px;bottom:75px;width:auto;padding-top:12px;background:#19212bed}
+ .scene-preview .preview-title{font-size:23px;margin:8px 0}.preview-copy{font-size:12px;line-height:1.45;min-height:0;margin-bottom:8px;max-width:440px}.preview-open{padding:8px 0}
+ .scene-ready .hero-bottom{left:20px;right:20px;bottom:16px;padding-top:10px;display:block}.scene-ready .current{margin:0}.scene-ready .current p{font-size:10px}.scene-ready .current p span{display:none}.scene-ready .small-label{font-size:9px}
+ .scene-ready .motion-toggle{right:10px;bottom:10px;font-size:9px;z-index:4}
+ .scene-ready .content-modal{padding:0}.scene-ready .modal-frame{height:100dvh}.scene-ready .modal-body{height:calc(100dvh - 62px)}.scene-ready .modal-body .chapter{padding:28px 20px}.scene-ready .modal-title{display:none}
+}
+@media(max-height:650px) and (min-width:761px){.scene-ready .headline{top:18%}.scene-ready .scene-preview{bottom:92px}.scene-ready h1{font-size:30px}.scene-ready .preview-title{font-size:22px}.scene-ready .preview-copy{min-height:0}.scene-ready .hero-note{display:none}}
+@media(prefers-reduced-motion:reduce){.scene-ready .portrait,.scene-preview.is-changing{animation:none}.scene-ready .portrait-stack,.point-label,.point-dot{transition:none}.scene-ready .motion-toggle{display:none}}

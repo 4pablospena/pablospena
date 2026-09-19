@@ -7,16 +7,30 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;450;500;550;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/content.css"><script src="/main.js" defer></script>
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/content.css"><link rel="stylesheet" href="/scene.css"><script src="/scene.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#sobre-mi">saltar al contenido</a>
+<a class="skip" href="#sobre-mi" data-modal-target="sobre-mi">saltar al contenido</a>
 <main>
 <section id="inicio" class="hero" aria-labelledby="hero-title">
 <div class="portrait-stack" aria-hidden="true"><img class="portrait clean" src="/assets/pablo-portrait.webp" alt="" fetchpriority="high" draggable="false"><img class="portrait warmth" src="/assets/pablo-portrait.webp" alt="" draggable="false"><img class="portrait reveal" src="/assets/pablo-portrait.webp" alt="" draggable="false"><div class="scrim"></div></div>
 <div class="hero-content">
 <header class="topbar"><div class="identity"><span class="wordmark">pablo suárez<span class="asterisk">*</span></span><span class="edition">un trabajo en evolución</span></div><span class="year">©2026</span><span class="coordinates">( asturias, españa &nbsp;/&nbsp; 43° n )</span></header>
-<div class="headline"><p class="eyebrow">product & ai engineer</p><h1 id="hero-title">de la idea<br><span class="headline-row"><span class="plus" aria-hidden="true">+</span>al producto.</span></h1><p class="hero-note">código, criterio y curiosidad.</p></div>
+<div class="headline"><p class="eyebrow">product & ai engineer</p><h1 id="hero-title">una cara.<br>mucho por<br><em>descubrir.</em></h1><p class="hero-note">código, criterio y curiosidad.</p></div>
+<nav class="face-map" aria-label="Explora mi universo">
+  <button class="face-point point-path" data-preview="recorrido" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>03</small> recorrido <i>↗</i></span></button>
+  <button class="face-point point-about" data-preview="sobre-mi" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>01</small> perspectiva <i>↗</i></span></button>
+  <button class="face-point point-stack" data-preview="herramientas" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>04</small> stack <i>↗</i></span></button>
+  <button class="face-point point-projects" data-preview="proyectos" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>02</small> proyectos <i>↗</i></span></button>
+  <button class="face-point point-contact" data-preview="contacto" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>05</small> hablemos <i>↗</i></span></button>
+</nav>
+<aside id="scene-preview" class="scene-preview" aria-live="polite">
+  <span class="preview-index">un mapa de lo que soy</span>
+  <h2 class="preview-title">todo empieza aquí.</h2>
+  <p class="preview-copy">explora los puntos del retrato. detrás de cada uno, una parte de mi historia.</p>
+  <button class="preview-open" data-modal-target="sobre-mi">conóceme <span aria-hidden="true">↗</span></button>
+</aside>
+<button class="motion-toggle" type="button" aria-pressed="false">pausar movimiento <span aria-hidden="true">Ⅱ</span></button>
 <div class="hero-access" aria-label="Explorar la página desde la portada">
   <span class="access-kicker">abrir desde aquí <span aria-hidden="true">↘</span></span>
   <div class="access-grid">
