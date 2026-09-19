@@ -26,13 +26,14 @@ points.forEach(point => {
 function hidePreview() {
   clearTimeout(hideTimer);
   preview.hidden = true;
+  document.body.classList.remove('preview-is-open');
   points.forEach(point => point.setAttribute('aria-expanded', 'false'));
 }
 function scheduleHide() {
   clearTimeout(hideTimer);
   hideTimer = setTimeout(() => {
     if (!preview.matches(':hover') && !preview.contains(document.activeElement) && !points.some(point => point.matches(':hover'))) hidePreview();
-  }, 250);
+  }, 650);
 }
 function placePreview() {
   const point = points.find(point => point.dataset.preview === selected);
@@ -44,9 +45,8 @@ function placePreview() {
     preview.style.top = `${innerHeight - height - 65}px`;
     return;
   }
-  const left = rect.x + rect.width / 2 < innerWidth / 2 ? rect.left - width - 12 : rect.right + 12;
-  preview.style.left = `${Math.max(16, Math.min(innerWidth - width - 16, left))}px`;
-  preview.style.top = `${Math.max(80, Math.min(innerHeight - height - 65, rect.top - 35))}px`;
+  preview.style.left = '42px';
+  preview.style.top = `${Math.max(100, (innerHeight - height) / 2)}px`;
 }
 preview.addEventListener('pointerenter', () => clearTimeout(hideTimer));
 preview.addEventListener('pointerleave', scheduleHide);
@@ -70,6 +70,7 @@ function selectPreview(id) {
   if (!copy[id]) return;
   clearTimeout(hideTimer);
   preview.hidden = false;
+  document.body.classList.add('preview-is-open');
   selected = id;
   const [index, title, description, action] = copy[id];
   preview.querySelector('.preview-index').textContent = index;
@@ -84,9 +85,12 @@ function selectPreview(id) {
   placePreview();
 }
 points.forEach(point => {
-  point.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') selectPreview(point.dataset.preview); });
-  point.addEventListener('focus', () => selectPreview(point.dataset.preview));
-  point.addEventListener('click', () => selectPreview(point.dataset.preview));
+  point.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch' && !dialog.open) selectPreview(point.dataset.preview); });
+  point.addEventListener('focus', () => { if (!dialog.open) selectPreview(point.dataset.preview); });
+  point.addEventListener('click', () => {
+    if (dialog.open) { openSection(point.dataset.preview, point, false); history.replaceState(history.state, '', `#${point.dataset.preview}`); }
+    else selectPreview(point.dataset.preview);
+  });
   point.addEventListener('pointerleave', scheduleHide);
   point.addEventListener('blur', scheduleHide);
   point.addEventListener('keydown', event => {
@@ -110,15 +114,15 @@ function openSection(id, trigger, updateHistory = true) {
   dialog.style.setProperty('--portal-y', `${origin.y + origin.height / 2}px`);
   returnSection();
   currentSection = chapters.get(id);
-  modalBody.replaceChildren(currentSection);
+  renderDeck(id);
   modalTitle.textContent = copy[id][0];
   if (!dialog.open) lastFocus = trigger || document.activeElement;
-  dialog.showModal();
+  if (!dialog.open) dialog.show();
   hidePreview();
   if (!reducedMotion.matches) portalAnimation = dialog.animate([
-    { clipPath: 'circle(8px at var(--portal-x) var(--portal-y))', opacity: .4 },
-    { clipPath: 'circle(150vmax at var(--portal-x) var(--portal-y))', opacity: 1 }
-  ], { duration: 850, easing: 'cubic-bezier(.22,1,.36,1)' });
+    { transform: 'translateX(35px) scale(.96)', opacity: 0 },
+    { transform: 'translateX(0) scale(1)', opacity: 1 }
+  ], { duration: 550, easing: 'cubic-bezier(.22,1,.36,1)' });
   modalBody.scrollTop = 0;
   document.body.classList.add('modal-is-open');
   if (updateHistory) history.pushState({ portraitModal: true }, '', `#${id}`);
@@ -130,9 +134,9 @@ async function closeSection(updateHistory = true) {
   portalAnimation?.cancel();
   if (!reducedMotion.matches) {
     portalAnimation = dialog.animate([
-      { clipPath: 'circle(150vmax at var(--portal-x) var(--portal-y))', opacity: 1 },
-      { clipPath: 'circle(8px at var(--portal-x) var(--portal-y))', opacity: 0 }
-    ], { duration: 430, easing: 'cubic-bezier(.65,0,.8,.3)', fill: 'forwards' });
+      { transform: 'translateX(0) scale(1)', opacity: 1 },
+      { transform: 'translateX(35px) scale(.96)', opacity: 0 }
+    ], { duration: 250, easing: 'ease-in', fill: 'forwards' });
     try { await portalAnimation.finished; } catch { return; }
   }
   dialog.close();
@@ -156,7 +160,7 @@ document.addEventListener('click', event => {
   }
   if (dialog.open && event.target.closest('a[href="#inicio"]')) { event.preventDefault(); closeSection(); }
 });
-document.addEventListener('keydown', event => { if (event.key === 'Escape' && !dialog.open) hidePreview(); });
+document.addEventListener('keydown', event => { if (event.key === 'Escape') { if (dialog.open) closeSection(); else hidePreview(); } });
 closeButton.addEventListener('click', () => closeSection());
 dialog.addEventListener('cancel', event => { event.preventDefault(); closeSection(); });
 dialog.addEventListener('click', event => { if (event.target === dialog) closeSection(); });
@@ -167,6 +171,68 @@ function syncRoute() {
 }
 addEventListener('popstate', syncRoute);
 addEventListener('hashchange', () => { if (currentSection?.id !== location.hash.slice(1)) syncRoute(); });
+const deckContent = {
+  'sobre-mi': [
+    ['producto', 'primero, el problema.', 'vengo de trabajar con personas y liderar equipos. antes de escribir código, quiero entender qué necesita quien lo va a usar.'],
+    ['desarrollo', 'de entender a construir.', 'en resizes desarrollo producto y amplío mi conocimiento de plataforma. aprender, probar y mejorar forman parte del mismo trabajo.'],
+    ['agentes', 'autonomía con criterio.', 'me interesa dar a los agentes contexto, memoria y límites. que la ia resuelva tareas reales y deje espacio para lo que requiere una persona.']
+  ],
+  proyectos: [
+    ['agentes', 'un agente. siete archivos.', 'build your agents organiza identidad, memoria, contexto y herramientas en una especificación abierta. construido con vue y nuxt.', 'explorar el proyecto', 'https://github.com/4pablospena/build-your-agents'],
+    ['seguridad', 'antes de actuar, revisar.', 'agentic action firewall inspecciona las acciones de un agente antes de ejecutarlas. reglas de autorización en typescript. proyecto en pre-alpha.', 'ver el código', 'https://github.com/4pablospena/agentic-action-firewall'],
+    ['automatización', 'lo repetitivo, resuelto.', 'una herramienta en python para convertir facturas de excel a pdf. una tarea concreta, menos trabajo manual.', 'ver la herramienta', 'https://github.com/4pablospena/facturas-excel-pdf']
+  ],
+  recorrido: [
+    ['resizes', 'producto + ai.', 'desde diciembre de 2025, product & ai engineer. foco en desarrollo, aprendizaje de plataforma y exploración constante de agentes.'],
+    ['fútbol emotion', 'liderar también es escuchar.', 'floor manager en parque principado desde noviembre de 2023, antes de resizes. liderazgo, formación, stock y análisis de objetivos con power bi.'],
+    ['decathlon', 'entender a quien tienes delante.', 'vendedor deportivo en gijón en 2023. asesoramiento técnico y atención personalizada: escuchar antes de proponer.'],
+    ['formación', 'seguir aprendiendo.', 'ingeniería informática en la uned. formación en javascript y responsive web design en 2025. técnico deportivo de fútbol sala, básico y avanzado.']
+  ],
+  herramientas: [
+    ['desarrollo', 'con qué construyo.', 'typescript, javascript, vue, nuxt, python, html, css y sql. herramientas presentes en mis proyectos y formación.'],
+    ['con ia', 'un entorno para explorar.', 'codex, cursor y claude code en el desarrollo. git, github y bash para trabajar con el código y su evolución.'],
+    ['curiosidad', 'lo que viene después.', 'agentes con contexto, memoria y herramientas. plataforma y automatización. preguntas que convierto en nuevos experimentos.']
+  ],
+  contacto: [
+    ['email', 'empecemos por una idea.', '¿producto, desarrollo o agentes de ia? escríbeme y hablamos.', 'escribir un correo', 'mailto:pablosuarezpena4it@outlook.com'],
+    ['linkedin', 'sigamos en contacto.', 'mi trayectoria y un lugar para conectar alrededor de lo que estamos construyendo.', 'abrir linkedin', 'https://www.linkedin.com/in/pablospena/'],
+    ['github', 'el código está abierto.', 'proyectos personales, experimentos y aprendizaje. lo que voy construyendo, a la vista.', 'explorar github', 'https://github.com/4pablospena']
+  ]
+};
+function renderDeck(id) {
+  const cards = deckContent[id];
+  let index = 0;
+  const root = document.createElement('div'); root.className = 'portrait-deck';
+  const nav = document.createElement('nav'); nav.className = 'deck-tabs'; nav.setAttribute('aria-label', 'Explorar este contenido');
+  const article = document.createElement('article'); article.className = 'deck-card'; article.setAttribute('aria-live', 'polite');
+  const foot = document.createElement('div'); foot.className = 'deck-controls';
+  const prev = document.createElement('button'); prev.textContent = 'anterior'; prev.type = 'button';
+  const count = document.createElement('span');
+  const next = document.createElement('button'); next.textContent = 'siguiente'; next.type = 'button';
+  function show(i) {
+    index = i;
+    const [label, title, description, linkLabel, href] = cards[index];
+    article.replaceChildren();
+    const heading = document.createElement('h2'); heading.textContent = title;
+    const text = document.createElement('p'); text.textContent = description;
+    article.append(heading, text);
+    if (href) {
+      const link = document.createElement('a'); link.href = href; link.textContent = linkLabel;
+      if (href.startsWith('https:')) { link.target = '_blank'; link.rel = 'noopener noreferrer'; }
+      article.append(link);
+    }
+    [...nav.children].forEach((button, n) => button.setAttribute('aria-pressed', String(n === index)));
+    count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+    prev.disabled = index === 0; next.disabled = index === cards.length - 1;
+    if (!reducedMotion.matches) article.animate([{ opacity: .2, transform: 'translateY(9px)' }, { opacity: 1, transform: 'none' }], { duration: 280 });
+    modalBody.scrollTop = 0;
+  }
+  cards.forEach((card, i) => {
+    const button = document.createElement('button'); button.type = 'button'; button.textContent = card[0]; button.addEventListener('click', () => show(i)); nav.append(button);
+  });
+  prev.addEventListener('click', () => show(index - 1)); next.addEventListener('click', () => show(index + 1));
+  foot.append(prev, count, next); root.append(nav, article, foot); modalBody.replaceChildren(root); show(0);
+}
 syncRoute();
 
 // One copy of each chapter: all interactions persist when moved into the dialog.
@@ -207,3 +273,25 @@ hero.addEventListener('pointermove', event => {
 function resetMotion() { hero.style.setProperty('--portrait-x', '0px'); hero.style.setProperty('--portrait-y', '0px'); }
 hero.addEventListener('pointerleave', resetMotion);
 reducedMotion.addEventListener('change', resetMotion);
+
+// The warm reveal is masked in image coordinates so it stays aligned with the
+// moving portrait. The light remains usable while a side panel is open.
+const light = document.querySelector('.reveal');
+let lightX = 0, lightY = 0, lightTargetX = 0, lightTargetY = 0, lightFrame = 0, lightActive = false;
+function paintLight() {
+  lightFrame = 0;
+  lightX += (lightTargetX - lightX) * .22; lightY += (lightTargetY - lightY) * .22;
+  light.style.setProperty('--light-x', `${lightX}px`); light.style.setProperty('--light-y', `${lightY}px`);
+  if (lightActive && Math.hypot(lightTargetX - lightX, lightTargetY - lightY) > .3) lightFrame = requestAnimationFrame(paintLight);
+}
+hero.addEventListener('pointermove', event => {
+  if (!finePointer.matches || event.pointerType === 'touch') return;
+  const bounds = light.getBoundingClientRect();
+  lightTargetX = (event.clientX - bounds.left) * light.offsetWidth / bounds.width;
+  lightTargetY = (event.clientY - bounds.top) * light.offsetHeight / bounds.height;
+  if (!lightActive || reducedMotion.matches) { lightX = lightTargetX; lightY = lightTargetY; }
+  lightActive = true; light.style.opacity = '1';
+  if (!lightFrame) lightFrame = requestAnimationFrame(paintLight);
+});
+function clearLight() { lightActive = false; light.style.opacity = '0'; cancelAnimationFrame(lightFrame); lightFrame = 0; }
+hero.addEventListener('pointerleave', clearLight); addEventListener('blur', clearLight); finePointer.addEventListener('change', clearLight);

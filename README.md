@@ -16,12 +16,12 @@ El retrato centra una escena de una sola pantalla. Cinco puntos muestran preview
 
 ## Diseño y experiencia
 
-La navegación muestra únicamente puntos sobre el rostro. La preview está oculta hasta hover, foco o toque; permanece accesible al mover el puntero hacia ella y se cierra al salir o con Escape. En móvil aparece bajo la cara. Los capítulos se despliegan mediante una máscara circular desde el punto seleccionado y se repliegan al cerrar. La animación se omite con movimiento reducido. Tipografía: Space Grotesk para títulos y DM Sans para lectura. Los diálogos comparten un fondo oscuro y acentos claros; se han retirado las flechas decorativas de navegación.
+La navegación muestra únicamente puntos sobre el rostro. La preview está oculta hasta hover, foco o toque; permanece accesible al mover el puntero hacia ella y se cierra al salir o con Escape. El contenido se explora en fichas con pestañas y anterior/siguiente dentro de un panel no bloqueante: a la izquierda en escritorio y debajo de la cara en móvil. Los puntos permiten cambiar de sección mientras el panel está abierto. El retrato permanece visible y animado, con foco cálido que sigue el cursor usando coordenadas de la imagen y suavizado. La animación se omite con movimiento reducido. Tipografía: Space Grotesk para títulos y DM Sans para lectura. Se han retirado las flechas decorativas de navegación.
 
 - `dist/style.css`: portada original y ajustes responsive.
 - `dist/content.css`: capítulos editoriales en azul pizarra, papel y lima.
 - `dist/scene.css` y `dist/scene.js`: mapa del retrato, previews, movimiento y diálogos. `main.js` conserva la implementación anterior y ya no se carga.
-- Los capítulos se mueven al diálogo sin duplicar IDs ni contenido. Escape, cierre, historial y enlaces directos con hash están soportados. El foco vuelve al disparador.
+- `deckContent` organiza los resúmenes interactivos. Los capítulos largos quedan como alternativa sin JavaScript. Escape, cierre, historial y enlaces directos con hash están soportados. El foco vuelve al punto seleccionado.
 - Sin librerías de animación. Movimiento reducido desactiva el movimiento del retrato. El contenido completo sigue visible sin JavaScript.
 - Pestañas accesibles mediante flechas, Home y End; experiencias anteriores con elementos details nativos.
 - Las descripciones de archivos y del firewall se contrastaron con los README públicos de los repositorios. Los diagramas son explicaciones conceptuales, no capturas de producto.
