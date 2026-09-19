@@ -40,7 +40,7 @@ function placePreview() {
   if (!point) return;
   const rect = point.getBoundingClientRect();
   const width = preview.offsetWidth, height = preview.offsetHeight;
-  if (innerWidth <= 1000) {
+  if (innerWidth <= 1000 && innerHeight > 500) {
     preview.style.left = `${(innerWidth - width) / 2}px`;
     preview.style.top = `${innerHeight - height - 65}px`;
     return;
@@ -204,7 +204,7 @@ function renderDeck(id) {
   let index = 0;
   const root = document.createElement('div'); root.className = 'portrait-deck';
   const nav = document.createElement('nav'); nav.className = 'deck-tabs'; nav.setAttribute('aria-label', 'Explorar este contenido');
-  const article = document.createElement('article'); article.className = 'deck-card'; article.setAttribute('aria-live', 'polite');
+  const article = document.createElement('article'); article.className = 'deck-card'; article.setAttribute('aria-live', 'polite'); article.tabIndex = 0; article.setAttribute('aria-label', 'Contenido de la ficha');
   const foot = document.createElement('div'); foot.className = 'deck-controls';
   const prev = document.createElement('button'); prev.textContent = 'anterior'; prev.type = 'button';
   const count = document.createElement('span');
@@ -223,12 +223,23 @@ function renderDeck(id) {
     }
     [...nav.children].forEach((button, n) => button.setAttribute('aria-pressed', String(n === index)));
     count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+    root.style.setProperty('--deck-progress', `${(index + 1) / cards.length * 100}%`);
     prev.disabled = index === 0; next.disabled = index === cards.length - 1;
     if (!reducedMotion.matches) article.animate([{ opacity: .2, transform: 'translateY(9px)' }, { opacity: 1, transform: 'none' }], { duration: 280 });
     modalBody.scrollTop = 0;
+    article.scrollTop = 0;
   }
   cards.forEach((card, i) => {
     const button = document.createElement('button'); button.type = 'button'; button.textContent = card[0]; button.addEventListener('click', () => show(i)); nav.append(button);
+    button.addEventListener('keydown', event => {
+      let nextIndex;
+      if (event.key === 'ArrowRight') nextIndex = (i + 1) % cards.length;
+      if (event.key === 'ArrowLeft') nextIndex = (i + cards.length - 1) % cards.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = cards.length - 1;
+      if (nextIndex === undefined) return;
+      event.preventDefault(); show(nextIndex); nav.children[nextIndex].focus();
+    });
   });
   prev.addEventListener('click', () => show(index - 1)); next.addEventListener('click', () => show(index + 1));
   foot.append(prev, count, next); root.append(nav, article, foot); modalBody.replaceChildren(root); show(0);

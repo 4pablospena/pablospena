@@ -16,6 +16,10 @@ El retrato centra una escena de una sola pantalla. Cinco puntos muestran preview
 
 ## Diseño y experiencia
 
+Revisión de septiembre de 2026: nombre completo en la cabecera y año centrado geométricamente, independientemente del ancho de sus vecinos. Tipografía actual: Sora (títulos) y Manrope (lectura), servidas por Google Fonts. Los paneles mantienen pestañas y controles visibles mientras solo el contenido de la ficha tiene scroll. Flechas, Home y End permiten navegar entre las pestañas. Una línea indica el progreso de lectura entre fichas.
+
+Validación: cinco secciones, apertura/cierre, enlaces directos, selección por teclado, dimensiones del contenido y centrado del año en 1440×900, 390×844, 320×640, 768×1024 y 844×390. Se revisaron capturas en escritorio, móvil y horizontal. Sin errores JavaScript en esas comprobaciones. El panel sigue siendo no bloqueante para conservar acceso al retrato. La auditoría se limita a estas rutas y tamaños; no incluye dispositivos físicos ni una certificación de accesibilidad.
+
 La navegación muestra únicamente puntos sobre el rostro. La preview está oculta hasta hover, foco o toque; permanece accesible al mover el puntero hacia ella y se cierra al salir o con Escape. El contenido se explora en fichas con pestañas y anterior/siguiente dentro de un panel no bloqueante: a la izquierda en escritorio y debajo de la cara en móvil. Los puntos permiten cambiar de sección mientras el panel está abierto. El retrato permanece visible y animado, con foco cálido que sigue el cursor usando coordenadas de la imagen y suavizado. La animación se omite con movimiento reducido. Tipografía: Space Grotesk para títulos y DM Sans para lectura. Se han retirado las flechas decorativas de navegación.
 
 - `dist/style.css`: portada original y ajustes responsive.
