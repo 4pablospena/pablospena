@@ -208,6 +208,8 @@ h1,h2,h3,h4,.wordmark,.preview-index,.modal-title{font-family:'Space Grotesk',sa
 :root{font-family:'Manrope',sans-serif}
 h1,h2,h3,h4,.wordmark,.preview-index,.modal-title{font-family:'Sora',sans-serif}
 .scene-ready .topbar{position:relative;align-items:center;min-height:40px}
+.scene-ready .lang-switch{position:absolute;left:calc(50% - 105px);top:50%;transform:translateY(-50%);font:inherit;font-size:10px;letter-spacing:.08em;background:transparent;border:0;color:#aebbbe;padding:8px;cursor:pointer;transition:color .2s;pointer-events:auto}
+.scene-ready .lang-switch b{font-weight:600;color:#dcebb4}.scene-ready .lang-switch i{font-style:normal;color:#647477;margin:0 5px}.scene-ready .lang-switch:hover,.scene-ready .lang-switch:focus-visible{color:#fff;outline:1px solid #dcebb4;outline-offset:2px}
 .scene-ready .year{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:12px;letter-spacing:.04em;border-width:1px;border-color:#f0f0ee80;padding:7px 18px}
 .scene-ready .wordmark{font-size:20px;font-weight:500;letter-spacing:-.055em;white-space:nowrap}
 .scene-ready .asterisk{font-size:22px;margin-left:6px}
@@ -241,6 +243,7 @@ h1,h2,h3,h4,.wordmark,.preview-index,.modal-title{font-family:'Sora',sans-serif}
 @media(max-width:1000px){
  .scene-ready .topbar{justify-content:center;min-height:68px;align-items:flex-start}
  .scene-ready .wordmark{font-size:18px}
+ .scene-ready .lang-switch{left:auto;right:10px;top:22px;transform:none;font-size:9px}
  .scene-ready .year{top:47px;font-size:10px;padding:4px 13px}
  .scene-ready h1{font-size:clamp(26px,4.1svh,40px)}
  .scene-ready .modal-toolbar{height:54px;padding:0 16px}

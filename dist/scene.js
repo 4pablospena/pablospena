@@ -9,13 +9,14 @@ const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
 const chapters = new Map([...document.querySelectorAll('main > .chapter')].map(section => [section.id, section]));
 const homes = new Map();
-const copy = {
+let copy = {
   'sobre-mi': ['01 / perspectiva', 'el criterio detrás del código.', 'personas, producto y agentes de ia. cómo conecto lo que aprendo con lo que construyo.', 'explorar mi perspectiva'],
   proyectos: ['02 / laboratorio abierto', 'ideas que ya tienen código.', 'agentes con memoria, límites para la autonomía y pequeñas automatizaciones. tres proyectos para explorar.', 'entrar al laboratorio'],
   recorrido: ['03 / recorrido', 'cada etapa deja algo.', 'de liderar equipos a desarrollar producto en resizes. las experiencias que dan forma a mi manera de trabajar.', 'ver el recorrido'],
   herramientas: ['04 / stack', 'las herramientas. el criterio.', 'typescript, vue, python y un entorno de desarrollo con codex, cursor y claude code. siempre en evolución.', 'explorar el stack'],
   contacto: ['05 / hablemos', 'una conversación puede ser el inicio.', 'producto, desarrollo o agentes de ia. encuentra mi correo y mis perfiles para seguir la conversación.', 'abrir contacto']
 };
+const spanishCopy = copy;
 let selected = '', currentSection = null, lastFocus = null;
 let hideTimer, portalAnimation, closing = false;
 preview.hidden = true;
@@ -171,7 +172,7 @@ function syncRoute() {
 }
 addEventListener('popstate', syncRoute);
 addEventListener('hashchange', () => { if (currentSection?.id !== location.hash.slice(1)) syncRoute(); });
-const deckContent = {
+let deckContent = {
   'sobre-mi': [
     ['producto', 'primero, el problema.', 'vengo de trabajar con personas y liderar equipos. antes de escribir código, quiero entender qué necesita quien lo va a usar.'],
     ['desarrollo', 'de entender a construir.', 'en resizes desarrollo producto y amplío mi conocimiento de plataforma. aprender, probar y mejorar forman parte del mismo trabajo.'],
@@ -199,6 +200,49 @@ const deckContent = {
     ['github', 'el código está abierto.', 'proyectos personales, experimentos y aprendizaje. lo que voy construyendo, a la vista.', 'explorar github', 'https://github.com/4pablospena']
   ]
 };
+const spanishDeckContent = deckContent;
+const englishCopy = {
+  'sobre-mi': ['01 / perspective', 'the thinking behind the code.', 'people, product and AI agents. how I connect what I learn with what I build.', 'explore my perspective'],
+  proyectos: ['02 / open lab', 'ideas that already have code.', 'agents with memory, boundaries for autonomy and small automations. three projects to explore.', 'enter the lab'],
+  recorrido: ['03 / journey', 'every stage leaves something.', 'from leading teams to building product at Resizes. the experiences shaping how I work.', 'see the journey'],
+  herramientas: ['04 / stack', 'the tools. the judgement.', 'typescript, vue, python and a development environment with Codex, Cursor and Claude Code. always evolving.', 'explore the stack'],
+  contacto: ['05 / say hello', 'a conversation can be the beginning.', 'product, development or AI agents. find my email and profiles and keep the conversation going.', 'open contact']
+};
+const englishDeckContent = {
+  'sobre-mi': [['product', 'start with the problem.', 'I come from working with people and leading teams. before writing code, I want to understand what the person using it needs.'], ['development', 'from understanding to building.', 'at Resizes I build product and expand my platform knowledge. learning, testing and improving are the same work.'], ['agents', 'autonomy with judgement.', 'I want to give agents context, memory and boundaries. useful AI for real tasks, with room for what needs a person.']],
+  proyectos: [['agents', 'one agent. seven files.', 'Build Your Agents organises identity, memory, context and tools in an open specification. built with Vue and Nuxt.', 'explore the project', 'https://github.com/4pablospena/build-your-agents'], ['security', 'before acting, review.', 'Agentic Action Firewall inspects an agent’s actions before execution. authorisation rules in TypeScript. pre-alpha project.', 'see the code', 'https://github.com/4pablospena/agentic-action-firewall'], ['automation', 'repetitive work, resolved.', 'a Python tool to convert Excel invoices to PDF. one concrete task, less manual work.', 'see the tool', 'https://github.com/4pablospena/facturas-excel-pdf']],
+  recorrido: [['resizes', 'product + AI.', 'since December 2025, Product & AI Engineer. focused on development, platform learning and constant agent exploration.'], ['fútbol emotion', 'leading also means listening.', 'Floor Manager in Parque Principado from November 2023, before Resizes. leadership, training, stock and Power BI objectives analysis.'], ['decathlon', 'understand who is in front of you.', 'sports seller in Gijón in 2023. technical advice and personal service: listen before proposing.'], ['education', 'keep learning.', 'Computer Engineering at UNED. JavaScript and Responsive Web Design training in 2025. basic and advanced futsal coaching.']],
+  herramientas: [['development', 'what I build with.', 'TypeScript, JavaScript, Vue, Nuxt, Python, HTML, CSS and SQL. tools present in my projects and training.'], ['with AI', 'a space to explore.', 'Codex, Cursor and Claude Code in development. Git, GitHub and Bash to work with code and its evolution.'], ['curiosity', 'what comes next.', 'agents with context, memory and tools. platform and automation. questions turned into new experiments.']],
+  contacto: [['email', 'start with an idea.', 'product, development or AI agents? write to me and let’s talk.', 'write an email', 'mailto:pablosuarezpena4it@outlook.com'], ['linkedin', 'keep in touch.', 'my journey and a place to connect around what we are building.', 'open LinkedIn', 'https://www.linkedin.com/in/pablospena/'], ['github', 'the code is open.', 'personal projects, experiments and learning. what I build, in the open.', 'explore GitHub', 'https://github.com/4pablospena']]
+};
+let activeLocale = 'es';
+const languageButton = document.querySelector('.lang-switch');
+const pointLabels = { sobremi: ['perspectiva', 'perspective'], proyectos: ['proyectos', 'projects'], recorrido: ['recorrido', 'journey'], herramientas: ['stack', 'stack'], contacto: ['hablemos', 'say hello'] };
+function setLocale(locale) {
+  activeLocale = locale;
+  const english = locale === 'en';
+  copy = english ? englishCopy : spanishCopy;
+  deckContent = english ? englishDeckContent : spanishDeckContent;
+  document.documentElement.lang = locale;
+  document.querySelector('#hero-title').innerHTML = english ? 'From an idea,<br>a product.<br><em>For repetitive work,<br>an agent.</em>' : 'De una idea,<br>un producto.<br><em>De lo repetitivo,<br>un agente.</em>';
+  document.querySelector('.hero-note').textContent = english ? 'Development with intention. Automation with judgement.' : 'Desarrollo con intención. Automatizo con criterio.';
+  document.querySelector('.edition').textContent = english ? 'a work in progress' : 'un trabajo en evolución';
+  document.querySelector('.coordinates').textContent = english ? '( asturias, spain / 43° n )' : '( asturias, españa / 43° n )';
+  document.querySelector('.small-label').textContent = english ? 'now' : 'ahora';
+  document.querySelector('.current p').innerHTML = english ? 'building at resizes<br><span>since December 2025</span>' : 'construyendo en resizes<br><span>desde diciembre de 2025</span>';
+  document.querySelector('.intro-meta span').textContent = english ? 'learning. building. repeating.' : 'aprendiendo. construyendo. repitiendo.';
+  document.querySelector('.motion-toggle').textContent = document.documentElement.classList.contains('motion-paused') ? (english ? 'resume motion' : 'activar movimiento') : (english ? 'pause motion' : 'pausar movimiento');
+  const closeText = dialog.querySelector('.modal-close').firstChild; if (closeText) closeText.textContent = english ? 'close ' : 'cerrar ';
+  languageButton.setAttribute('aria-pressed', String(english));
+  languageButton.setAttribute('aria-label', english ? 'Switch language' : 'Cambiar idioma');
+  languageButton.querySelector('span').textContent = english ? 'EN' : 'ES';
+  languageButton.querySelector('b').textContent = english ? 'ES' : 'EN';
+  points.forEach(point => { const key = point.dataset.preview.replace('-', ''); const label = point.querySelector('.point-label'); if (label) label.childNodes[1].textContent = ` ${pointLabels[key]?.[english ? 1 : 0] || ''} `; });
+  if (selected) selectPreview(selected);
+  if (dialog.open && currentSection) { modalTitle.textContent = copy[currentSection.id][0]; renderDeck(currentSection.id); }
+}
+languageButton.addEventListener('click', () => { const next = activeLocale === 'es' ? 'en' : 'es'; localStorage.setItem('site-locale', next); setLocale(next); });
+if (localStorage.getItem('site-locale') === 'en') setLocale('en');
 function renderDeck(id) {
   const cards = deckContent[id];
   let index = 0;
@@ -206,9 +250,9 @@ function renderDeck(id) {
   const nav = document.createElement('nav'); nav.className = 'deck-tabs'; nav.setAttribute('aria-label', 'Explorar este contenido');
   const article = document.createElement('article'); article.className = 'deck-card'; article.setAttribute('aria-live', 'polite'); article.tabIndex = 0; article.setAttribute('aria-label', 'Contenido de la ficha');
   const foot = document.createElement('div'); foot.className = 'deck-controls';
-  const prev = document.createElement('button'); prev.textContent = 'anterior'; prev.type = 'button';
+  const prev = document.createElement('button'); prev.textContent = activeLocale === 'en' ? 'previous' : 'anterior'; prev.type = 'button';
   const count = document.createElement('span');
-  const next = document.createElement('button'); next.textContent = 'siguiente'; next.type = 'button';
+  const next = document.createElement('button'); next.textContent = activeLocale === 'en' ? 'next' : 'siguiente'; next.type = 'button';
   function show(i) {
     index = i;
     const [label, title, description, linkLabel, href] = cards[index];
