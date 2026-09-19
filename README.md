@@ -16,6 +16,8 @@ El retrato centra una escena de una sola pantalla. Cinco puntos muestran preview
 
 ## Diseño y experiencia
 
+La navegación muestra únicamente puntos sobre el rostro. La preview está oculta hasta hover, foco o toque; permanece accesible al mover el puntero hacia ella y se cierra al salir o con Escape. En móvil aparece bajo la cara. Los capítulos se despliegan mediante una máscara circular desde el punto seleccionado y se repliegan al cerrar. La animación se omite con movimiento reducido. Tipografía: Space Grotesk para títulos y DM Sans para lectura. Los diálogos comparten un fondo oscuro y acentos claros; se han retirado las flechas decorativas de navegación.
+
 - `dist/style.css`: portada original y ajustes responsive.
 - `dist/content.css`: capítulos editoriales en azul pizarra, papel y lima.
 - `dist/scene.css` y `dist/scene.js`: mapa del retrato, previews, movimiento y diálogos. `main.js` conserva la implementación anterior y ya no se carga.

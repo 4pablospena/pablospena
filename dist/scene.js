@@ -17,15 +17,59 @@ const copy = {
   contacto: ['05 / hablemos', 'una conversación puede ser el inicio.', 'producto, desarrollo o agentes de ia. encuentra mi correo y mis perfiles para seguir la conversación.', 'abrir contacto']
 };
 let selected = '', currentSection = null, lastFocus = null;
+let hideTimer, portalAnimation, closing = false;
+preview.hidden = true;
+points.forEach(point => {
+  point.setAttribute('aria-label', point.querySelector('.point-label').textContent.replace('↗', '').trim());
+  point.querySelector('.point-label i')?.remove();
+});
+function hidePreview() {
+  clearTimeout(hideTimer);
+  preview.hidden = true;
+  points.forEach(point => point.setAttribute('aria-expanded', 'false'));
+}
+function scheduleHide() {
+  clearTimeout(hideTimer);
+  hideTimer = setTimeout(() => {
+    if (!preview.matches(':hover') && !preview.contains(document.activeElement) && !points.some(point => point.matches(':hover'))) hidePreview();
+  }, 250);
+}
+function placePreview() {
+  const point = points.find(point => point.dataset.preview === selected);
+  if (!point) return;
+  const rect = point.getBoundingClientRect();
+  const width = preview.offsetWidth, height = preview.offsetHeight;
+  if (innerWidth <= 1000) {
+    preview.style.left = `${(innerWidth - width) / 2}px`;
+    preview.style.top = `${innerHeight - height - 65}px`;
+    return;
+  }
+  const left = rect.x + rect.width / 2 < innerWidth / 2 ? rect.left - width - 12 : rect.right + 12;
+  preview.style.left = `${Math.max(16, Math.min(innerWidth - width - 16, left))}px`;
+  preview.style.top = `${Math.max(80, Math.min(innerHeight - height - 65, rect.top - 35))}px`;
+}
+preview.addEventListener('pointerenter', () => clearTimeout(hideTimer));
+preview.addEventListener('pointerleave', scheduleHide);
+preview.addEventListener('focusout', scheduleHide);
+addEventListener('resize', () => { if (!preview.hidden) placePreview(); });
 chapters.forEach(section => {
   const marker = document.createComment(`home: ${section.id}`);
   section.before(marker);
   homes.set(section.id, marker);
 });
 document.documentElement.classList.add('scene-ready');
+// Remove decorative link arrows while retaining diagrams that explain a flow.
+document.querySelectorAll('a, h1, h2, .motion-toggle, .stack-number').forEach(element => {
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) walker.currentNode.textContent = walker.currentNode.textContent.replace(/[↗↘↑↓]/g, '').trimEnd();
+});
+document.querySelectorAll('.arrow-link').forEach(link => { link.textContent = 'ver'; });
+document.querySelector('.colophon a[href="#inicio"]').textContent = 'volver al retrato';
 
 function selectPreview(id) {
-  if (!copy[id] || selected === id) return;
+  if (!copy[id]) return;
+  clearTimeout(hideTimer);
+  preview.hidden = false;
   selected = id;
   const [index, title, description, action] = copy[id];
   preview.querySelector('.preview-index').textContent = index;
@@ -34,16 +78,17 @@ function selectPreview(id) {
   const button = preview.querySelector('.preview-open');
   button.dataset.modalTarget = id;
   button.replaceChildren(document.createTextNode(action + ' '));
-  const arrow = document.createElement('span');
-  arrow.textContent = '↗'; arrow.setAttribute('aria-hidden', 'true'); button.append(arrow);
   points.forEach(point => point.setAttribute('aria-expanded', String(point.dataset.preview === id)));
   preview.classList.remove('is-changing');
   requestAnimationFrame(() => preview.classList.add('is-changing'));
+  placePreview();
 }
 points.forEach(point => {
   point.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') selectPreview(point.dataset.preview); });
   point.addEventListener('focus', () => selectPreview(point.dataset.preview));
   point.addEventListener('click', () => selectPreview(point.dataset.preview));
+  point.addEventListener('pointerleave', scheduleHide);
+  point.addEventListener('blur', scheduleHide);
   point.addEventListener('keydown', event => {
     if (event.key !== 'ArrowDown') return;
     event.preventDefault(); preview.querySelector('button').focus();
@@ -58,35 +103,60 @@ function returnSection() {
 function openSection(id, trigger, updateHistory = true) {
   if (!chapters.has(id)) return;
   selectPreview(id);
+  closing = false;
+  portalAnimation?.cancel();
+  const origin = points.find(point => point.dataset.preview === id).getBoundingClientRect();
+  dialog.style.setProperty('--portal-x', `${origin.x + origin.width / 2}px`);
+  dialog.style.setProperty('--portal-y', `${origin.y + origin.height / 2}px`);
   returnSection();
   currentSection = chapters.get(id);
   modalBody.replaceChildren(currentSection);
   modalTitle.textContent = copy[id][0];
   if (!dialog.open) lastFocus = trigger || document.activeElement;
   dialog.showModal();
+  hidePreview();
+  if (!reducedMotion.matches) portalAnimation = dialog.animate([
+    { clipPath: 'circle(8px at var(--portal-x) var(--portal-y))', opacity: .4 },
+    { clipPath: 'circle(150vmax at var(--portal-x) var(--portal-y))', opacity: 1 }
+  ], { duration: 850, easing: 'cubic-bezier(.22,1,.36,1)' });
   modalBody.scrollTop = 0;
   document.body.classList.add('modal-is-open');
   if (updateHistory) history.pushState({ portraitModal: true }, '', `#${id}`);
   closeButton.focus({ preventScroll: true });
 }
-function closeSection(updateHistory = true) {
-  if (!dialog.open) return;
+async function closeSection(updateHistory = true) {
+  if (!dialog.open || closing) return;
+  closing = true;
+  portalAnimation?.cancel();
+  if (!reducedMotion.matches) {
+    portalAnimation = dialog.animate([
+      { clipPath: 'circle(150vmax at var(--portal-x) var(--portal-y))', opacity: 1 },
+      { clipPath: 'circle(8px at var(--portal-x) var(--portal-y))', opacity: 0 }
+    ], { duration: 430, easing: 'cubic-bezier(.65,0,.8,.3)', fill: 'forwards' });
+    try { await portalAnimation.finished; } catch { return; }
+  }
   dialog.close();
+  portalAnimation?.cancel();
+  closing = false;
   returnSection();
   document.body.classList.remove('modal-is-open');
   if (updateHistory) {
     if (history.state?.portraitModal) history.back();
     else history.replaceState(null, '', location.pathname + location.search);
   }
-  if (lastFocus?.isConnected) lastFocus.focus({ preventScroll: true });
+  const point = points.find(point => point.dataset.preview === selected);
+  (point || lastFocus)?.focus({ preventScroll: true });
+  hidePreview();
 }
 document.addEventListener('click', event => {
+  if (!event.target.closest('.face-point, .scene-preview') && !dialog.open) hidePreview();
   const trigger = event.target.closest('[data-modal-target]');
   if (trigger && chapters.has(trigger.dataset.modalTarget)) {
     event.preventDefault(); openSection(trigger.dataset.modalTarget, trigger);
   }
   if (dialog.open && event.target.closest('a[href="#inicio"]')) { event.preventDefault(); closeSection(); }
 });
+document.addEventListener('keydown', event => { if (event.key === 'Escape' && !dialog.open) hidePreview(); });
 closeButton.addEventListener('click', () => closeSection());
 dialog.addEventListener('cancel', event => { event.preventDefault(); closeSection(); });
 dialog.addEventListener('click', event => { if (event.target === dialog) closeSection(); });
@@ -127,7 +197,7 @@ const motionButton = document.querySelector('.motion-toggle');
 motionButton.addEventListener('click', () => {
   const paused = document.documentElement.classList.toggle('motion-paused');
   motionButton.setAttribute('aria-pressed', String(paused));
-  motionButton.textContent = paused ? 'activar movimiento ↗' : 'pausar movimiento Ⅱ';
+  motionButton.textContent = paused ? 'activar movimiento' : 'pausar movimiento';
 });
 hero.addEventListener('pointermove', event => {
   if (!finePointer.matches || reducedMotion.matches || document.documentElement.classList.contains('motion-paused')) return;
