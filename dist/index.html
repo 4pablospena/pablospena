@@ -17,12 +17,22 @@
 <div class="hero-content">
 <header class="topbar"><div class="identity"><span class="wordmark">pablo suárez<span class="asterisk">*</span></span><span class="edition">un trabajo en evolución</span></div><span class="year">©2026</span><span class="coordinates">( asturias, españa &nbsp;/&nbsp; 43° n )</span></header>
 <div class="headline"><p class="eyebrow">product & ai engineer</p><h1 id="hero-title">de la idea<br><span class="headline-row"><span class="plus" aria-hidden="true">+</span>al producto.</span></h1><p class="hero-note">código, criterio y curiosidad.</p></div>
-<div class="hero-bottom"><div class="current"><span class="small-label">ahora</span><p>construyendo en resizes<br><span>desde diciembre de 2025</span></p></div><div class="intro"><p>soy pablo. desarrollo productos y exploro cómo los agentes de ia pueden llevarlos más lejos. con los pies en el código y la curiosidad puesta en todo lo que aún no sé construir.</p><div class="intro-meta"><span>aprendiendo. construyendo. repitiendo.</span><a href="#sobre-mi">( descubrir ↓ )</a></div></div></div>
+<div class="hero-access" aria-label="Explorar la página desde la portada">
+  <span class="access-kicker">abrir desde aquí <span aria-hidden="true">↘</span></span>
+  <div class="access-grid">
+    <button type="button" class="access-trigger" data-modal-target="sobre-mi"><span>01</span><strong>perspectiva</strong><i aria-hidden="true">↗</i></button>
+    <button type="button" class="access-trigger" data-modal-target="proyectos"><span>02</span><strong>proyectos</strong><i aria-hidden="true">↗</i></button>
+    <button type="button" class="access-trigger" data-modal-target="recorrido"><span>03</span><strong>recorrido</strong><i aria-hidden="true">↗</i></button>
+    <button type="button" class="access-trigger" data-modal-target="herramientas"><span>04</span><strong>stack</strong><i aria-hidden="true">↗</i></button>
+    <button type="button" class="access-trigger" data-modal-target="contacto"><span>05</span><strong>hablemos</strong><i aria-hidden="true">↗</i></button>
+  </div>
+</div>
+<div class="hero-bottom"><div class="current"><span class="small-label">ahora</span><p>construyendo en resizes<br><span>desde diciembre de 2025</span></p></div><div class="intro"><p>soy pablo. desarrollo productos y exploro cómo los agentes de ia pueden llevarlos más lejos. con los pies en el código y la curiosidad puesta en todo lo que aún no sé construir.</p><div class="intro-meta"><span>aprendiendo. construyendo. repitiendo.</span><a href="#sobre-mi" data-modal-target="sobre-mi">( descubrir ↓ )</a></div></div></div>
 </div></section>
 <nav class="chapter-nav" aria-label="Secciones de la página">
   <a class="nav-brand" href="#inicio" aria-label="Volver a la portada">p<span>*</span></a>
-  <div class="nav-links"><a href="#sobre-mi" aria-current="location">perspectiva</a><a href="#proyectos">proyectos</a><a href="#recorrido">recorrido</a><a href="#herramientas">stack</a></div>
-  <a class="nav-contact" href="#contacto">hablemos <span aria-hidden="true">↗</span></a>
+  <div class="nav-links"><button type="button" data-modal-target="sobre-mi" aria-current="location">perspectiva</button><button type="button" data-modal-target="proyectos">proyectos</button><button type="button" data-modal-target="recorrido">recorrido</button><button type="button" data-modal-target="herramientas">stack</button></div>
+  <button type="button" class="nav-contact" data-modal-target="contacto">hablemos <span aria-hidden="true">↗</span></button>
   <div class="reading-track" aria-hidden="true"><div class="reading-progress"></div></div>
 </nav>
 <section id="sobre-mi" class="chapter perspective" aria-labelledby="perspective-title">
@@ -112,6 +122,13 @@
   <div class="contact-links" data-enter><a href="mailto:pablosuarezpena4it@outlook.com"><span>01 / email</span><span>escríbeme <i aria-hidden="true">↗</i></span></a><a href="https://www.linkedin.com/in/pablospena/" target="_blank" rel="noopener noreferrer"><span>02 / linkedin</span><span>conectemos <i aria-hidden="true">↗</i></span></a><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer"><span>03 / github</span><span>nos vemos en el código <i aria-hidden="true">↗</i></span></a></div>
   <div class="colophon"><span>pablo suárez peña · ©2026</span><span>un trabajo en evolución.</span><a href="#inicio">volver arriba ↑</a></div>
 </footer>
+
+<dialog id="content-modal" class="content-modal" aria-labelledby="modal-title">
+  <div class="modal-frame">
+    <header class="modal-toolbar"><span class="modal-context">pablo suárez <span aria-hidden="true">*</span></span><span id="modal-title" class="modal-title">explorar</span><button type="button" class="modal-close" data-modal-close aria-label="Cerrar panel">cerrar <span aria-hidden="true">×</span></button></header>
+    <div class="modal-body" data-modal-body></div>
+  </div>
+</dialog>
 
 </main>
 </body></html>

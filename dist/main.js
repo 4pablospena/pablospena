@@ -76,7 +76,8 @@ function updateReadingPosition() {
     if (section.getBoundingClientRect().top <= navHeight + 100) current = section.id;
   });
   sectionLinks.forEach(link => {
-    if (link.hash === `#${current}`) link.setAttribute('aria-current', 'location');
+    const linkTarget = link.hash ? link.hash.slice(1) : link.getAttribute('data-modal-target');
+    if (linkTarget === current) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
   });
   if (!reducedMotion.matches) {
@@ -124,4 +125,103 @@ fileTabs.forEach((tab, index) => {
     event.preventDefault();
     selectFile(fileTabs[next], true);
   });
+});
+
+// The homepage doubles as a launchpad. Each section can be explored in a focused,
+// native dialog without losing the full-page fallback underneath.
+const contentModal = document.querySelector('#content-modal');
+const modalBody = contentModal?.querySelector('[data-modal-body]');
+const modalTitle = contentModal?.querySelector('#modal-title');
+const modalClose = contentModal?.querySelector('[data-modal-close]');
+const modalLabels = {
+  'sobre-mi': 'perspectiva',
+  proyectos: 'laboratorio abierto',
+  recorrido: 'recorrido',
+  herramientas: 'stack & curiosidad',
+  contacto: 'la siguiente conversación'
+};
+let lastModalTrigger = null;
+
+function namespaceClone(root, suffix) {
+  const ids = [...root.querySelectorAll('[id]')];
+  const replacements = new Map(ids.map(element => [element.id, `${element.id}-${suffix}`]));
+  ids.forEach(element => { element.id = replacements.get(element.id); });
+  root.querySelectorAll('[aria-controls]').forEach(element => {
+    const next = replacements.get(element.getAttribute('aria-controls'));
+    if (next) element.setAttribute('aria-controls', next);
+  });
+  root.querySelectorAll('[aria-labelledby]').forEach(element => {
+    const next = replacements.get(element.getAttribute('aria-labelledby'));
+    if (next) element.setAttribute('aria-labelledby', next);
+  });
+}
+
+function setupModalTabs(root) {
+  const tabs = [...root.querySelectorAll('[role="tab"]')];
+  const select = (tab, moveFocus = false) => {
+    tabs.forEach(candidate => {
+      const selected = candidate === tab;
+      candidate.setAttribute('aria-selected', String(selected));
+      candidate.tabIndex = selected ? 0 : -1;
+      const panel = root.querySelector(`[id="${candidate.getAttribute('aria-controls')}"]`);
+      if (panel) panel.hidden = !selected;
+    });
+    if (moveFocus) tab.focus({ preventScroll: true });
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', event => {
+      let next;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      if (next === undefined) return;
+      event.preventDefault();
+      select(tabs[next], true);
+    });
+  });
+}
+
+function openContentModal(id, trigger) {
+  if (!contentModal || !modalBody) return;
+  const source = document.getElementById(id);
+  if (!source) return;
+  const clone = source.cloneNode(true);
+  clone.removeAttribute('id');
+  namespaceClone(clone, 'modal');
+  modalBody.replaceChildren(clone);
+  modalTitle.textContent = modalLabels[id] || 'explorar';
+  setupModalTabs(clone);
+  lastModalTrigger = trigger;
+  sectionLinks.forEach(link => {
+    if (link.getAttribute('data-modal-target') === id) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  if (!contentModal.open) contentModal.showModal();
+  document.body.classList.add('modal-is-open');
+  modalClose?.focus({ preventScroll: true });
+}
+
+function closeContentModal() {
+  if (!contentModal?.open) return;
+  contentModal.close();
+}
+
+document.addEventListener('click', event => {
+  const trigger = event.target.closest('[data-modal-target]');
+  if (!trigger) return;
+  const id = trigger.getAttribute('data-modal-target');
+  if (!document.getElementById(id)) return;
+  event.preventDefault();
+  openContentModal(id, trigger);
+});
+modalClose?.addEventListener('click', closeContentModal);
+contentModal?.addEventListener('click', event => {
+  if (event.target === contentModal) closeContentModal();
+});
+contentModal?.addEventListener('close', () => {
+  document.body.classList.remove('modal-is-open');
+  modalBody?.replaceChildren();
+  lastModalTrigger?.focus({ preventScroll: true });
 });
