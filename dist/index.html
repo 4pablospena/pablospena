@@ -6,23 +6,25 @@
 <title>Pablo Suárez Peña — Product & AI Engineer</title>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/content.css"><link rel="stylesheet" href="/scene.css"><script src="/scene.js" defer></script>
+<link rel="preconnect" href="https://api.github.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/content.css"><link rel="stylesheet" href="/scene.css"><link rel="stylesheet" href="/live.css">
+<script src="/feeds.js" defer></script><script src="/fx.js" defer></script><script src="/scene.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#sobre-mi" data-modal-target="sobre-mi">saltar al contenido</a>
 <main>
 <section id="inicio" class="hero" aria-labelledby="hero-title">
-<div class="portrait-stack" aria-hidden="true"><div class="portrait-surface"><img class="portrait clean" src="/assets/pablo-portrait.webp" alt="" fetchpriority="high" draggable="false"><img class="portrait warmth" src="/assets/pablo-portrait.webp" alt="" draggable="false"><img class="portrait reveal" src="/assets/pablo-portrait.webp" alt="" draggable="false"></div><div class="scrim"></div></div>
+<div class="portrait-stack" aria-hidden="true"><div class="portrait-surface"><img class="portrait clean" src="/assets/pablo-portrait.webp" alt="" fetchpriority="high" draggable="false"></div><div class="scrim"></div></div>
 <div class="hero-content">
-<header class="topbar"><div class="identity"><span class="wordmark">Pablo Suárez Peña</span><span class="edition">un trabajo en evolución</span></div><button class="lang-switch" type="button" aria-label="Cambiar idioma" aria-pressed="false"><span>ES</span><i aria-hidden="true">/</i><b>EN</b></button><span class="year">©2026</span><span class="coordinates">( asturias, españa &nbsp;/&nbsp; 43° n )</span></header>
-<div class="headline"><p class="eyebrow">product & ai engineer</p><h1 id="hero-title">De una idea,<br>un producto.<br><em>De lo repetitivo,<br>un agente.</em></h1><p class="hero-note">Desarrollo con intención. Automatizo con criterio.</p></div>
-<nav class="face-map" aria-label="Explora mi universo">
-  <button class="face-point point-path" data-preview="recorrido" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>03</small> recorrido <i>↗</i></span></button>
-  <button class="face-point point-about" data-preview="sobre-mi" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>01</small> perspectiva <i>↗</i></span></button>
-  <button class="face-point point-stack" data-preview="herramientas" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>04</small> stack <i>↗</i></span></button>
-  <button class="face-point point-projects" data-preview="proyectos" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>02</small> proyectos <i>↗</i></span></button>
-  <button class="face-point point-contact" data-preview="contacto" aria-controls="scene-preview" aria-expanded="false"><span class="point-dot"></span><span class="point-label"><small>05</small> hablemos <i>↗</i></span></button>
+<header class="topbar"><div class="identity"><span class="wordmark">Pablo Suárez Peña</span><span class="edition" data-en="a work in progress">un trabajo en evolución</span></div><button class="lang-switch" type="button" aria-label="Cambiar idioma" aria-pressed="false"><span>ES</span><i aria-hidden="true">/</i><b>EN</b></button><span class="year">©2026</span><span class="coordinates" data-en="( asturias, spain &nbsp;/&nbsp; 43° n )">( asturias, españa &nbsp;/&nbsp; 43° n )</span></header>
+<div class="headline"><p class="eyebrow">product & ai engineer <a href="https://resiz.es/" target="_blank" rel="noopener noreferrer">@ Resizes</a></p><h1 id="hero-title">De una idea,<br>un producto.<br><em>De lo repetitivo,<br>un agente.</em></h1><p class="hero-note">Desarrollo con intención. Automatizo con criterio.</p><p class="hero-intro" data-en="I'm Pablo. I build products and explore how AI agents can take them further. Feet in the code, curiosity on everything I can't build yet.">Soy Pablo. Desarrollo productos y exploro cómo los agentes de IA pueden llevarlos más lejos. Con los pies en el código y la curiosidad puesta en todo lo que aún no sé construir.</p><div class="hero-cta"><button type="button" data-modal-target="contacto">Hablemos</button></div></div>
+<nav class="face-map index-nav" aria-label="Explora mi universo">
+  <button type="button" class="face-point" data-preview="sobre-mi"><small>01</small><span class="point-label">perspectiva</span></button>
+  <button type="button" class="face-point" data-preview="proyectos"><small>02</small><span class="point-label">proyectos</span></button>
+  <button type="button" class="face-point" data-preview="recorrido"><small>03</small><span class="point-label">recorrido</span></button>
+  <button type="button" class="face-point" data-preview="actividad"><small>04</small><span class="point-label">GitHub</span><span class="gh-nav-count" data-gh-nav></span></button>
+  <button type="button" class="face-point nav-talk" data-preview="contacto"><span class="point-label">hablemos</span></button>
 </nav>
 <aside id="scene-preview" class="scene-preview" aria-live="polite">
   <span class="preview-index">un mapa de lo que soy</span>
@@ -30,48 +32,54 @@
   <p class="preview-copy">Explora los puntos del retrato. Detrás de cada uno, una parte de mi historia.</p>
   <button class="preview-open" data-modal-target="sobre-mi">Conóceme <span aria-hidden="true">↗</span></button>
 </aside>
-<button class="motion-toggle" type="button" aria-pressed="false">pausar movimiento <span aria-hidden="true">Ⅱ</span></button>
 <div class="hero-access" aria-label="Explorar la página desde la portada">
   <span class="access-kicker">abrir desde aquí <span aria-hidden="true">↘</span></span>
   <div class="access-grid">
     <button type="button" class="access-trigger" data-modal-target="sobre-mi"><span>01</span><strong>perspectiva</strong><i aria-hidden="true">↗</i></button>
     <button type="button" class="access-trigger" data-modal-target="proyectos"><span>02</span><strong>proyectos</strong><i aria-hidden="true">↗</i></button>
     <button type="button" class="access-trigger" data-modal-target="recorrido"><span>03</span><strong>recorrido</strong><i aria-hidden="true">↗</i></button>
-    <button type="button" class="access-trigger" data-modal-target="herramientas"><span>04</span><strong>stack</strong><i aria-hidden="true">↗</i></button>
-    <button type="button" class="access-trigger" data-modal-target="contacto"><span>05</span><strong>hablemos</strong><i aria-hidden="true">↗</i></button>
+    <button type="button" class="access-trigger" data-modal-target="contacto"><span>04</span><strong>hablemos</strong><i aria-hidden="true">↗</i></button>
   </div>
 </div>
-<div class="hero-bottom"><div class="current"><span class="small-label">ahora</span><p>construyendo en resizes<br><span>desde diciembre de 2025</span></p></div><div class="intro"><p>soy pablo. desarrollo productos y exploro cómo los agentes de ia pueden llevarlos más lejos. con los pies en el código y la curiosidad puesta en todo lo que aún no sé construir.</p><div class="intro-meta"><span>aprendiendo. construyendo. repitiendo.</span><a href="#sobre-mi" data-modal-target="sobre-mi">( descubrir ↓ )</a></div></div></div>
+<div class="hero-bottom"><div class="current"><span class="small-label">ahora</span><p>Construyendo en Resizes<br><span>desde diciembre de 2025</span></p></div><button type="button" class="gh-home" data-gh-home data-modal-target="actividad" hidden><span class="small-label">GitHub</span><span class="gh-home-copy"><strong class="gh-home-total"></strong><span class="gh-home-last"></span></span></button></div>
 </div></section>
 <nav class="chapter-nav" aria-label="Secciones de la página">
   <a class="nav-brand" href="#inicio" aria-label="Volver a la portada">p<span>*</span></a>
-  <div class="nav-links"><button type="button" data-modal-target="sobre-mi" aria-current="location">perspectiva</button><button type="button" data-modal-target="proyectos">proyectos</button><button type="button" data-modal-target="recorrido">recorrido</button><button type="button" data-modal-target="herramientas">stack</button></div>
+  <div class="nav-links"><button type="button" data-modal-target="sobre-mi" aria-current="location">perspectiva</button><button type="button" data-modal-target="proyectos">proyectos</button><button type="button" data-modal-target="recorrido">recorrido</button><button type="button" data-modal-target="actividad">GitHub</button></div>
   <button type="button" class="nav-contact" data-modal-target="contacto">hablemos <span aria-hidden="true">↗</span></button>
   <div class="reading-track" aria-hidden="true"><div class="reading-progress"></div></div>
 </nav>
 <section id="sobre-mi" class="chapter perspective" aria-labelledby="perspective-title">
-  <div class="chapter-meta"><span>01 / perspectiva</span><span>del problema a la posibilidad</span></div>
+  <div class="chapter-meta"><span>01 / perspectiva</span><span data-en="From the problem to the possibility">Del problema a la posibilidad</span></div>
   <div class="manifesto" data-enter>
-    <p class="kicker">desarrollo con intención.</p>
-    <h2 id="perspective-title">la tecnología cambia.<br><span class="ink-muted">el punto de partida, no.</span></h2>
-    <div class="manifesto-bottom"><span class="big-star" aria-hidden="true">✳</span><p>una persona.<br>un problema real.<br><em>algo que puede funcionar mejor.</em></p></div>
+    <p class="kicker" data-en="Development with intention.">Desarrollo con intención.</p>
+    <h2 id="perspective-title" data-en="Technology changes.<br><span class=&quot;ink-muted&quot;>The starting point does not.</span>">La tecnología cambia.<br><span class="ink-muted">El punto de partida, no.</span></h2>
+    <div class="manifesto-bottom"><span class="big-star" aria-hidden="true">✳</span><p data-en="A person.<br>A real problem.<br><em>Something that can work better.</em>">Una persona.<br>Un problema real.<br><em>Algo que puede funcionar mejor.</em></p></div>
   </div>
   <div class="perspective-bottom">
-    <div class="personal-note" data-enter><span class="margin-label">mi forma de verlo</span><p>vengo de trabajar con personas y liderar equipos. ahora llevo esa experiencia al código: entender lo que hace falta, construir y seguir aprendiendo.</p></div>
+    <div class="personal-note" data-enter><span class="margin-label" data-en="How I see it">mi forma de verlo</span><p data-en="I come from working with people and leading teams. I now bring that into code: understand what is needed, build it and keep learning.">Vengo de trabajar con personas y liderar equipos. Ahora llevo esa experiencia al código: entender lo que hace falta, construir y seguir aprendiendo.</p></div>
     <div class="focus-grid">
-      <article class="focus-item" data-enter><span class="focus-index">[ 01 ]</span><h3>producto.</h3><p>partir de una necesidad, darle forma y convertirla en software.</p></article>
-      <article class="focus-item" data-enter><span class="focus-index">[ 02 ]</span><h3>desarrollo.</h3><p>mi foco en resizes. construir mientras amplío mi visión hacia plataforma.</p></article>
-      <article class="focus-item" data-enter><span class="focus-index">[ 03 ]</span><h3>agentes.</h3><p>explorar cómo darles contexto, memoria y límites para hacerlos útiles.</p></article>
+      <article class="focus-item" data-enter><span class="focus-index">[ 01 ]</span><h3 data-en="Product.">Producto.</h3><p data-en="Start from a need, give it shape and turn it into software.">Partir de una necesidad, darle forma y convertirla en software.</p></article>
+      <article class="focus-item" data-enter><span class="focus-index">[ 02 ]</span><h3 data-en="Development.">Desarrollo.</h3><p data-en="My focus at Resizes. Building while I widen my view towards platform.">Mi foco en Resizes. Construir mientras amplío mi visión hacia plataforma.</p></article>
+      <article class="focus-item" data-enter><span class="focus-index">[ 03 ]</span><h3 data-en="Agents.">Agentes.</h3><p data-en="Exploring how to give them context, memory and boundaries so they become useful.">Explorar cómo darles contexto, memoria y límites para hacerlos útiles.</p></article>
+    </div>
+  </div>
+  <div class="stack-block">
+    <div class="chapter-heading" data-enter><h2 data-en="The tools change.<br><em>The will does not.</em>">Las herramientas cambian.<br><em>Las ganas, no.</em></h2></div>
+    <div class="stack-grid">
+      <article class="stack-group" data-enter><span class="stack-number">01</span><h3 data-en="Building.">Construir.</h3><p data-en="Languages and tools present in my projects and training.">Lenguajes y herramientas presentes en mis proyectos y formación.</p><ul class="stack-tags"><li>TypeScript</li><li>JavaScript</li><li>Vue</li><li>Nuxt</li><li>Python</li><li>html & css</li><li>sql</li></ul></article>
+      <article class="stack-group" data-enter><span class="stack-number">02</span><h3 data-en="Working with AI.">Colaborar con IA.</h3><p data-en="Part of my development environment, alongside version control.">Parte de mi entorno de desarrollo, junto al control de versiones.</p><ul class="stack-tags"><li>codex</li><li>cursor</li><li>claude code</li><li>git & GitHub</li><li>bash</li></ul></article>
+      <article class="stack-group exploring" data-enter><span class="stack-number">03</span><h3 data-en="Still exploring.">Seguir explorando.</h3><p data-en="The questions that lead me to the next project.">Las preguntas que me llevan al siguiente proyecto.</p><ul class="explore-list"><li data-en="Agents with context">agentes con contexto</li><li data-en="Platform">plataforma</li><li data-en="Automation">automatización</li><li data-en="Memory and tools">memoria y herramientas</li></ul></article>
     </div>
   </div>
 </section>
 <section id="proyectos" class="chapter projects-chapter" aria-labelledby="projects-title">
-  <div class="chapter-meta"><span>02 / laboratorio abierto</span><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer">explorar github ↗</a></div>
-  <div class="chapter-heading" data-enter><h2 id="projects-title">ideas que ya<br>tienen <em>código.</em></h2><p>proyectos personales para aprender haciendo.<br>de los agentes a las pequeñas automatizaciones.</p></div>
+  <div class="chapter-meta"><span data-en="02 / Open lab">02 / laboratorio abierto</span><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer" data-en="Explore GitHub">explorar GitHub</a></div>
+  <div class="chapter-heading" data-enter><h2 id="projects-title" data-en="Ideas that already<br>have <em>code.</em>">Ideas que ya<br>tienen <em>código.</em></h2><p data-en="Personal projects for learning by building.<br>From agents to small automations.">Proyectos personales para aprender haciendo.<br>De los agentes a las pequeñas automatizaciones.</p></div>
   <article class="featured-project" data-enter>
     <div class="agent-explorer">
       <div class="explorer-top"><span>build / your / agents</span><span>01 — 03</span></div>
-      <div class="explorer-title" aria-hidden="true">un agente.<br><span>siete archivos.</span></div>
+      <div class="explorer-title" aria-hidden="true">Un agente.<br><span>Siete archivos.</span></div>
       <div class="agent-files" aria-label="Archivos de la especificación">
         <div class="file-tabs" role="tablist" aria-label="Explorar los archivos del agente">
           <button type="button" role="tab" id="tab-soul" aria-controls="panel-soul" aria-selected="true" tabindex="0">soul.md</button>
@@ -83,63 +91,62 @@
           <button type="button" role="tab" id="tab-heartbeat" aria-controls="panel-heartbeat" aria-selected="false" tabindex="-1">heartbeat.md</button>
         </div>
         <div class="file-panels">
-          <div role="tabpanel" id="panel-soul" aria-labelledby="tab-soul" tabindex="0"><span class="file-code">01 / identidad del agente</span><h4>una voz propia.<br>unos límites claros.</h4><p>la personalidad, los valores y las capacidades que definen cómo se comporta.</p></div>
-          <div role="tabpanel" id="panel-identity" aria-labelledby="tab-identity" tabindex="0" hidden><span class="file-code">02 / configuración</span><h4>un lugar<br>desde el que operar.</h4><p>metadatos, modelos y pautas para dirigir las peticiones del agente.</p></div>
-          <div role="tabpanel" id="panel-agents" aria-labelledby="tab-agents" tabindex="0" hidden><span class="file-code">03 / coordinación</span><h4>menos improvisación.<br>más criterio.</h4><p>el orden de la sesión, los flujos de trabajo y las reglas de actuación.</p></div>
-          <div role="tabpanel" id="panel-user" aria-labelledby="tab-user" tabindex="0" hidden><span class="file-code">04 / contexto humano</span><h4>entender a quien<br>está al otro lado.</h4><p>preferencias, proyectos y tareas de la persona con la que trabaja.</p></div>
-          <div role="tabpanel" id="panel-memory" aria-labelledby="tab-memory" tabindex="0" hidden><span class="file-code">05 / memoria</span><h4>no empezar<br>de cero cada vez.</h4><p>hechos confirmados que merece la pena conservar entre sesiones.</p></div>
-          <div role="tabpanel" id="panel-tools" aria-labelledby="tab-tools" tabindex="0" hidden><span class="file-code">06 / herramientas</span><h4>saber qué usar.<br>y cuándo.</h4><p>el mapa de herramientas y conexiones disponibles, y su orden de selección.</p></div>
-          <div role="tabpanel" id="panel-heartbeat" aria-labelledby="tab-heartbeat" tabindex="0" hidden><span class="file-code">07 / continuidad</span><h4>las tareas<br>que vuelven.</h4><p>tareas programadas que necesitan un disparador externo para ejecutarse.</p></div>
+          <div role="tabpanel" id="panel-soul" aria-labelledby="tab-soul" tabindex="0"><span class="file-code" data-en="01 / Agent identity">01 / identidad del agente</span><h4 data-en="A voice of its own.<br>Clear boundaries.">Una voz propia.<br>Unos límites claros.</h4><p data-en="The personality, values and capabilities that define how it behaves.">La personalidad, los valores y las capacidades que definen cómo se comporta.</p></div>
+          <div role="tabpanel" id="panel-identity" aria-labelledby="tab-identity" tabindex="0" hidden><span class="file-code" data-en="02 / Configuration">02 / configuración</span><h4 data-en="A place<br>to operate from.">Un lugar<br>desde el que operar.</h4><p data-en="Metadata, models and guidance for directing the agent's requests.">Metadatos, modelos y pautas para dirigir las peticiones del agente.</p></div>
+          <div role="tabpanel" id="panel-agents" aria-labelledby="tab-agents" tabindex="0" hidden><span class="file-code" data-en="03 / Coordination">03 / coordinación</span><h4 data-en="Less improvisation.<br>More judgement.">Menos improvisación.<br>Más criterio.</h4><p data-en="Session order, workflows and rules of action.">El orden de la sesión, los flujos de trabajo y las reglas de actuación.</p></div>
+          <div role="tabpanel" id="panel-user" aria-labelledby="tab-user" tabindex="0" hidden><span class="file-code" data-en="04 / Human context">04 / contexto humano</span><h4 data-en="Understand who<br>is on the other side.">Entender a quien<br>está al otro lado.</h4><p data-en="Preferences, projects and tasks of the person it works with.">Preferencias, proyectos y tareas de la persona con la que trabaja.</p></div>
+          <div role="tabpanel" id="panel-memory" aria-labelledby="tab-memory" tabindex="0" hidden><span class="file-code" data-en="05 / Memory">05 / memoria</span><h4 data-en="Don't start<br>from zero each time.">No empezar<br>de cero cada vez.</h4><p data-en="Confirmed facts worth keeping between sessions.">Hechos confirmados que merece la pena conservar entre sesiones.</p></div>
+          <div role="tabpanel" id="panel-tools" aria-labelledby="tab-tools" tabindex="0" hidden><span class="file-code" data-en="06 / Tools">06 / herramientas</span><h4 data-en="Know what to use.<br>And when.">Saber qué usar.<br>Y cuándo.</h4><p data-en="The map of available tools and connections, and the order for choosing them.">El mapa de herramientas y conexiones disponibles, y su orden de selección.</p></div>
+          <div role="tabpanel" id="panel-heartbeat" aria-labelledby="tab-heartbeat" tabindex="0" hidden><span class="file-code" data-en="07 / Continuity">07 / continuidad</span><h4 data-en="The tasks<br>that come back.">Las tareas<br>que vuelven.</h4><p data-en="Scheduled tasks that need an external trigger to run.">Tareas programadas que necesitan un disparador externo para ejecutarse.</p></div>
         </div>
       </div>
-      <div class="explorer-foot"><span>una especificación en markdown</span><span>selecciona un archivo ↑</span></div>
+      <div class="explorer-foot"><span data-en="A specification in markdown">Una especificación en markdown</span><span data-en="Select a file">selecciona un archivo</span></div>
     </div>
-    <div class="featured-copy"><span class="project-category">agentes de ia / especificación abierta</span><h3>dar contexto<br>a la inteligencia.</h3><p>un agente necesita algo más que un prompt. este proyecto organiza su identidad, sus herramientas y su memoria en siete archivos que puedes leer y editar.</p><p class="project-purpose">para construir agentes personales con una estructura comprensible y portable.</p><div class="tech-list"><span>vue</span><span>nuxt</span><span>markdown</span></div><a class="text-link" href="https://github.com/4pablospena/build-your-agents" target="_blank" rel="noopener noreferrer">ver el proyecto <span aria-hidden="true">↗</span></a></div>
+    <div class="featured-copy"><span class="project-category" data-en="AI agents / open specification">Agentes de IA / especificación abierta</span><h3 data-en="Give context<br>to intelligence.">Dar contexto<br>a la inteligencia.</h3><p data-en="An agent needs more than a prompt. This project organises its identity, tools and memory in seven files you can read and edit.">Un agente necesita algo más que un prompt. Este proyecto organiza su identidad, sus herramientas y su memoria en siete archivos que puedes leer y editar.</p><p class="project-purpose" data-en="For building personal agents with a structure you can understand and carry with you.">Para construir agentes personales con una estructura comprensible y portable.</p><div class="tech-list"><span>Vue</span><span>Nuxt</span><span>markdown</span></div><a class="text-link" href="https://github.com/4pablospena/build-your-agents" target="_blank" rel="noopener noreferrer" data-en="See the project">ver el proyecto</a></div>
   </article>
   <div class="project-pair">
     <article class="lab-card firewall-card" data-enter>
-      <div class="card-meta"><span>02 / agentic action firewall</span><span>pre-alpha</span></div>
-      <div class="action-diagram" aria-label="Flujo conceptual: agente, revisión de políticas, acción"><span class="diagram-node">agente</span><span class="diagram-line" aria-hidden="true"></span><span class="diagram-gate">revisar<br><small>políticas</small></span><span class="diagram-line" aria-hidden="true"></span><span class="diagram-node">acción</span></div>
-      <h3>autonomía.<br>con límites.</h3><p>una capa entre el agente y el mundo exterior. inspecciona las acciones antes de ejecutarlas y aplica reglas de autorización.</p><div class="card-bottom"><span class="project-category">typescript · seguridad de agentes</span><a class="arrow-link" href="https://github.com/4pablospena/agentic-action-firewall" target="_blank" rel="noopener noreferrer" aria-label="Ver agentic action firewall en GitHub">↗</a></div>
+      <div class="card-meta"><span>02 / Agentic action firewall</span><span>pre-alpha</span></div>
+      <div class="action-diagram" aria-label="Flujo conceptual: agente, revisión de políticas, acción"><span class="diagram-node" data-en="Agent">agente</span><span class="diagram-line" aria-hidden="true"></span><span class="diagram-gate" data-en="Review<br><small>Policies</small>">revisar<br><small>políticas</small></span><span class="diagram-line" aria-hidden="true"></span><span class="diagram-node" data-en="Action">acción</span></div>
+      <h3 data-en="Autonomy.<br>With boundaries.">Autonomía.<br>Con límites.</h3><p data-en="A layer between the agent and the outside world. It inspects actions before they run and applies authorisation rules.">Una capa entre el agente y el mundo exterior. Inspecciona las acciones antes de ejecutarlas y aplica reglas de autorización.</p><div class="card-bottom"><span class="project-category">TypeScript · seguridad de agentes</span><a class="arrow-link" href="https://github.com/4pablospena/agentic-action-firewall" target="_blank" rel="noopener noreferrer" aria-label="Ver agentic action firewall en GitHub">↗</a></div>
     </article>
     <article class="lab-card automation-card" data-enter>
-      <div class="card-meta"><span>03 / facturas excel → pdf</span><span>automatización</span></div>
-      <div class="format-diagram" aria-label="Conversión de Excel a PDF"><span>.xlsx</span><span class="format-arrow" aria-hidden="true">↗</span><span>.pdf</span></div>
-      <h3>lo repetitivo,<br>resuelto.</h3><p>convertir facturas de excel a pdf. una herramienta concreta para simplificar una tarea cotidiana con python.</p><div class="card-bottom"><span class="project-category">python · documentos</span><a class="arrow-link" href="https://github.com/4pablospena/facturas-excel-pdf" target="_blank" rel="noopener noreferrer" aria-label="Ver conversor de facturas en GitHub">↗</a></div>
+      <div class="card-meta"><span>03 / facturas Excel → PDF</span><span>automatización</span></div>
+      <div class="format-diagram" aria-label="Conversión de Excel a PDF"><span>.Xlsx</span><span class="format-arrow" aria-hidden="true">↗</span><span>.PDF</span></div>
+      <h3 data-en="Repetitive work,<br>resolved.">Lo repetitivo,<br>resuelto.</h3><p data-en="Turn Excel invoices into PDF. A concrete tool to simplify an everyday task with Python.">Convertir facturas de Excel a PDF. Una herramienta concreta para simplificar una tarea cotidiana con Python.</p><div class="card-bottom"><span class="project-category">Python · documentos</span><a class="arrow-link" href="https://github.com/4pablospena/facturas-excel-pdf" target="_blank" rel="noopener noreferrer" aria-label="Ver conversor de facturas en GitHub">↗</a></div>
     </article>
   </div>
 </section>
 <div class="interlude" aria-hidden="true"><div class="interlude-track"><span>entender</span><i>↗</i><span>construir</span><i>↗</i><span>aprender</span><i>↗</i><span>volver a empezar</span></div></div>
 <section id="recorrido" class="chapter path-chapter" aria-labelledby="path-title">
-  <div class="chapter-meta"><span>03 / recorrido</span><span>lo que traigo conmigo</span></div>
-  <div class="path-layout"><div class="path-intro" data-enter><h2 id="path-title">cambia el medio.<br><em>queda la experiencia.</em></h2><p>del equipo y el cliente al producto y el código. una trayectoria conectada por resolver problemas.</p><span class="path-symbol" aria-hidden="true">↳</span></div>
+  <div class="chapter-meta"><span data-en="03 / Journey">03 / recorrido</span><span data-en="What I bring with me">lo que traigo conmigo</span></div>
+  <div class="path-layout"><div class="path-intro" data-enter><h2 id="path-title" data-en="The medium changes.<br><em>The experience stays.</em>">Cambia el medio.<br><em>Queda la experiencia.</em></h2><p data-en="From the team and the customer to the product and the code. A path connected by solving problems.">Del equipo y el cliente al producto y el código. Una trayectoria conectada por resolver problemas.</p><span class="path-symbol" aria-hidden="true">↳</span></div>
     <div class="path-entries">
-      <article class="current-role" data-enter><div class="role-top"><span class="current-badge">ahora / resizes</span><span>dic. 2025 — presente</span></div><span class="role-year" aria-hidden="true">2025<span>↗</span></span><h3>product &<br>ai engineer.</h3><p>centrado en desarrollo de producto. ampliando mi conocimiento de plataforma y profundizando en ia y agentes.</p><div class="role-foot"><span>desarrollo</span><span>producto</span><span>ia</span></div></article>
-      <details class="past-role" data-enter open><summary><span><span class="date">desde nov. 2023 · antes de resizes</span><span class="past-title">liderar equipos.</span><span class="past-company">floor manager / fútbol emotion</span></span><span class="details-mark" aria-hidden="true">+</span></summary><div class="role-detail"><p>liderazgo y formación de equipos, seguimiento de objetivos de venta y análisis de rendimiento con power bi. gestión de stock en parque principado.</p><span>me llevo: criterio, responsabilidad y trabajo en equipo.</span></div></details>
-      <details class="past-role" data-enter><summary><span><span class="date">2023</span><span class="past-title">aprender a escuchar.</span><span class="past-company">vendedor deportivo / decathlon · gijón</span></span><span class="details-mark" aria-hidden="true">+</span></summary><div class="role-detail"><p>asesoramiento técnico y atención personalizada. entender qué necesitaba cada cliente para ayudarle a elegir.</p><span>me llevo: escuchar antes de proponer.</span></div></details>
-      <div class="education-note" data-enter><span class="margin-label">la base</span><p>ingeniería informática <span>/ uned</span></p><span>formación en javascript y responsive web design. técnico deportivo de fútbol sala, básico y avanzado.</span></div>
+      <article class="current-role" data-enter><div class="role-top"><span class="current-badge" data-en="Now / Resizes">ahora / Resizes</span><span data-en="Dec. 2025 — Present">Dic. 2025 — Presente</span></div><span class="role-year" aria-hidden="true">2025</span><h3>product &<br>AI engineer.</h3><p data-en="Focused on product development. Widening my platform knowledge and going deeper into AI and agents.">Centrado en desarrollo de producto. Ampliando mi conocimiento de plataforma y profundizando en IA y agentes.</p><div class="role-foot"><span data-en="Development">desarrollo</span><span data-en="Product">producto</span><span>IA</span></div></article>
+      <details class="past-role" data-enter open><summary><span><span class="date" data-en="From nov. 2023 · Before Resizes">Desde nov. 2023 · Antes de Resizes</span><span class="past-title" data-en="Leading teams.">Liderar equipos.</span><span class="past-company">Floor manager / Fútbol Emotion</span></span><span class="details-mark" aria-hidden="true">+</span></summary><div class="role-detail"><p data-en="Leading and training teams, tracking sales targets and analysing performance with Power BI. Stock management at Parque Principado.">Liderazgo y formación de equipos, seguimiento de objetivos de venta y análisis de rendimiento con Power BI. Gestión de stock en Parque Principado.</p><span data-en="I take with me: judgement, responsibility and teamwork.">Me llevo: criterio, responsabilidad y trabajo en equipo.</span></div></details>
+      <details class="past-role" data-enter><summary><span><span class="date">2023</span><span class="past-title" data-en="Learning to listen.">Aprender a escuchar.</span><span class="past-company" data-en="Sports seller / Decathlon · Gijón">Vendedor deportivo / Decathlon · Gijón</span></span><span class="details-mark" aria-hidden="true">+</span></summary><div class="role-detail"><p data-en="Technical advice and personal service. Understanding what each customer needed in order to help them choose.">Asesoramiento técnico y atención personalizada. Entender qué necesitaba cada cliente para ayudarle a elegir.</p><span data-en="I take with me: listen before proposing.">Me llevo: escuchar antes de proponer.</span></div></details>
+      <div class="education-note" data-enter><span class="margin-label" data-en="The base">la base</span><p data-en="Computer engineering <span>/ UNED</span>">ingeniería informática <span>/ UNED</span></p><span data-en="Training in JavaScript and responsive web design. Basic and advanced futsal coach.">Formación en JavaScript y responsive web design. Técnico deportivo de fútbol sala, básico y avanzado.</span></div>
     </div>
   </div>
 </section>
-<section id="herramientas" class="chapter stack-chapter" aria-labelledby="stack-title">
-  <div class="chapter-meta"><span>04 / stack & curiosidad</span><span>siempre en construcción</span></div>
-  <div class="chapter-heading" data-enter><h2 id="stack-title">las herramientas cambian.<br><em>las ganas, no.</em></h2></div>
-  <div class="stack-grid">
-    <article class="stack-group" data-enter><span class="stack-number">01</span><h3>construir.</h3><p>lenguajes y herramientas presentes en mis proyectos y formación.</p><ul class="stack-tags"><li>typescript</li><li>javascript</li><li>vue</li><li>nuxt</li><li>python</li><li>html & css</li><li>sql</li></ul></article>
-    <article class="stack-group" data-enter><span class="stack-number">02</span><h3>colaborar con ia.</h3><p>parte de mi entorno de desarrollo, junto al control de versiones.</p><ul class="stack-tags"><li>codex</li><li>cursor</li><li>claude code</li><li>git & github</li><li>bash</li></ul></article>
-    <article class="stack-group exploring" data-enter><span class="stack-number">03 ↗</span><h3>seguir explorando.</h3><p>las preguntas que me llevan al siguiente proyecto.</p><ul class="explore-list"><li>agentes con contexto</li><li>plataforma</li><li>automatización</li><li>memoria y herramientas</li></ul></article>
-  </div>
+<section id="actividad" class="chapter activity-chapter" aria-labelledby="activity-title">
+  <div class="chapter-meta"><span>05 / actividad</span><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+  <div class="chapter-heading" data-enter><h2 id="activity-title">El código,<br><em>en movimiento.</em></h2><p>Commits, revisiones y experimentos. Lo que construyo, a la vista en GitHub.</p></div>
+</section>
+<section id="escritos" class="chapter writing-chapter" aria-labelledby="writing-title">
+  <div class="chapter-meta"><span>06 / escritos</span><a href="https://www.linkedin.com/in/pablospena/recent-activity/all/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
+  <div class="chapter-heading" data-enter><h2 id="writing-title">Lo que aprendo,<br><em>por escrito.</em></h2><p>Posts y redacciones sobre producto, desarrollo y agentes de IA.</p></div>
 </section>
 <footer id="contacto" class="chapter contact-chapter" aria-labelledby="contact-title">
-  <div class="chapter-meta"><span>05 / la siguiente conversación</span><span>desde asturias, con curiosidad</span></div>
-  <div class="contact-heading" data-enter><p>¿producto, código o agentes?</p><h2 id="contact-title"><a href="mailto:pablosuarezpena4it@outlook.com">hablemos<span aria-hidden="true">↗</span></a></h2></div>
-  <div class="contact-links" data-enter><a href="mailto:pablosuarezpena4it@outlook.com"><span>01 / email</span><span>escríbeme <i aria-hidden="true">↗</i></span></a><a href="https://www.linkedin.com/in/pablospena/" target="_blank" rel="noopener noreferrer"><span>02 / linkedin</span><span>conectemos <i aria-hidden="true">↗</i></span></a><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer"><span>03 / github</span><span>nos vemos en el código <i aria-hidden="true">↗</i></span></a></div>
-  <div class="colophon"><span>pablo suárez peña · ©2026</span><span>un trabajo en evolución.</span><a href="#inicio">volver arriba ↑</a></div>
+  <div class="chapter-meta"><span data-en="The next conversation">la siguiente conversación</span><span data-en="From Asturias, with curiosity">Desde Asturias, con curiosidad</span></div>
+  <div class="contact-heading" data-enter><p data-en="Product, code or agents?">¿Producto, código o agentes?</p><h2 id="contact-title"><a href="mailto:pablosuarezpena4it@outlook.com" data-en="Say hello">Hablemos</a></h2></div>
+  <div class="contact-links" data-enter><a href="mailto:pablosuarezpena4it@outlook.com"><span>01 / email</span><span data-en="Write to me">escríbeme</span></a><a href="https://www.linkedin.com/in/pablospena/" target="_blank" rel="noopener noreferrer"><span>02 / LinkedIn</span><span data-en="Let's connect">conectemos</span></a><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer"><span>03 / GitHub</span><span data-en="See you in the code">nos vemos en el código</span></a></div>
+  <div class="colophon"><span>Pablo Suárez Peña · ©2026</span><span>Un trabajo en evolución.</span><a href="#inicio">volver arriba ↑</a></div>
 </footer>
 
 <dialog id="content-modal" class="content-modal" aria-labelledby="modal-title">
   <div class="modal-frame">
-    <header class="modal-toolbar"><span class="modal-context">pablo suárez <span aria-hidden="true">*</span></span><span id="modal-title" class="modal-title">explorar</span><button type="button" class="modal-close" data-modal-close aria-label="Cerrar panel">cerrar <span aria-hidden="true">×</span></button></header>
+    <header class="modal-toolbar"><span class="modal-context">Pablo Suárez <span aria-hidden="true">*</span></span><span id="modal-title" class="modal-title">explorar</span><button type="button" class="modal-close" data-modal-close aria-label="Cerrar panel">cerrar <span aria-hidden="true">×</span></button></header>
     <div class="modal-body" data-modal-body></div>
   </div>
 </dialog>

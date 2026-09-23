@@ -11,10 +11,12 @@ const chapters = new Map([...document.querySelectorAll('main > .chapter')].map(s
 const homes = new Map();
 let copy = {
   'sobre-mi': ['01 / perspectiva', 'El criterio detrás del código.', 'Personas, producto y agentes de IA. Cómo conecto lo que aprendo con lo que construyo.', 'Explorar mi perspectiva'],
-  proyectos: ['02 / laboratorio abierto', 'Ideas que ya tienen código.', 'Agentes con memoria, límites para la autonomía y pequeñas automatizaciones. Tres proyectos para explorar.', 'Entrar al laboratorio'],
+  proyectos: ['02 / proyectos', 'Ideas que ya tienen código.', 'Agentes con memoria, límites para la autonomía y pequeñas automatizaciones. Tres proyectos para explorar.', 'Entrar al laboratorio'],
   recorrido: ['03 / recorrido', 'Cada etapa suma.', 'De liderar equipos a desarrollar producto en Resizes. Las experiencias que dan forma a mi manera de trabajar.', 'Ver el recorrido'],
   herramientas: ['04 / stack', 'Las herramientas. El criterio.', 'TypeScript, Vue, Python y un entorno de desarrollo con Codex, Cursor y Claude Code. Siempre en evolución.', 'Explorar el stack'],
-  contacto: ['05 / hablemos', 'Una conversación puede ser el inicio.', 'Producto, desarrollo o agentes de IA. Encuentra mi correo y mis perfiles para seguir la conversación.', 'Abrir contacto']
+  actividad: ['04 / github', 'El código, en movimiento.', 'Contribuciones, actividad reciente y repositorios, en vivo desde GitHub.', 'Ver actividad'],
+  escritos: ['06 / escritos', 'Lo que aprendo, por escrito.', 'Posts y redacciones sobre producto, desarrollo y agentes de IA.', 'Leer'],
+  contacto: ['hablemos', 'Una conversación puede ser el inicio.', 'Producto, desarrollo o agentes de IA. Encuentra mi correo y mis perfiles para seguir la conversación.', 'Abrir contacto']
 };
 const spanishCopy = copy;
 let selected = '', currentSection = null, lastFocus = null;
@@ -60,11 +62,11 @@ chapters.forEach(section => {
 });
 document.documentElement.classList.add('scene-ready');
 // Remove decorative link arrows while retaining diagrams that explain a flow.
-document.querySelectorAll('a, h1, h2, .motion-toggle, .stack-number').forEach(element => {
+document.querySelectorAll('a, h1, h2, .stack-number').forEach(element => {
   const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-  while (walker.nextNode()) walker.currentNode.textContent = walker.currentNode.textContent.replace(/[↗↘↑↓]/g, '').trimEnd();
+  while (walker.nextNode()) walker.currentNode.textContent = walker.currentNode.textContent.replace(/[↗↘↑↓]/g, '');
 });
-document.querySelectorAll('.arrow-link').forEach(link => { link.textContent = 'ver'; });
+document.querySelectorAll('.arrow-link').forEach(link => { link.textContent = 'github'; });
 document.querySelector('.colophon a[href="#inicio"]').textContent = 'volver al retrato';
 
 function selectPreview(id) {
@@ -86,19 +88,15 @@ function selectPreview(id) {
   placePreview();
 }
 points.forEach(point => {
-  point.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch' && !dialog.open) selectPreview(point.dataset.preview); });
-  point.addEventListener('focus', () => { if (!dialog.open) selectPreview(point.dataset.preview); });
   point.addEventListener('click', () => {
-    if (dialog.open) { openSection(point.dataset.preview, point, false); history.replaceState(history.state, '', `#${point.dataset.preview}`); }
-    else selectPreview(point.dataset.preview);
-  });
-  point.addEventListener('pointerleave', scheduleHide);
-  point.addEventListener('blur', scheduleHide);
-  point.addEventListener('keydown', event => {
-    if (event.key !== 'ArrowDown') return;
-    event.preventDefault(); preview.querySelector('button').focus();
+    const id = point.dataset.preview;
+    if (dialog.open && currentSection?.id === id) { closeSection(); return; }
+    const replacing = dialog.open;
+    openSection(id, point, !replacing);
+    if (replacing) history.replaceState(history.state, '', `#${id}`);
   });
 });
+function markCurrentPoint(id) { points.forEach(point => point.setAttribute('aria-current', String(point.dataset.preview === id))); }
 
 function returnSection() {
   if (!currentSection) return;
@@ -110,12 +108,16 @@ function openSection(id, trigger, updateHistory = true) {
   selectPreview(id);
   closing = false;
   portalAnimation?.cancel();
-  const origin = points.find(point => point.dataset.preview === id).getBoundingClientRect();
-  dialog.style.setProperty('--portal-x', `${origin.x + origin.width / 2}px`);
-  dialog.style.setProperty('--portal-y', `${origin.y + origin.height / 2}px`);
+  const originEl = points.find(point => point.dataset.preview === id) || trigger;
+  if (originEl) {
+    const origin = originEl.getBoundingClientRect();
+    dialog.style.setProperty('--portal-x', `${origin.x + origin.width / 2}px`);
+    dialog.style.setProperty('--portal-y', `${origin.y + origin.height / 2}px`);
+  }
   returnSection();
   currentSection = chapters.get(id);
-  renderDeck(id);
+  if (window.PSPFeeds?.has(id)) window.PSPFeeds.render(id, modalBody, activeLocale);
+  else modalBody.replaceChildren(currentSection);
   modalTitle.textContent = copy[id][0];
   if (!dialog.open) lastFocus = trigger || document.activeElement;
   if (!dialog.open) dialog.show();
@@ -126,6 +128,7 @@ function openSection(id, trigger, updateHistory = true) {
   ], { duration: 550, easing: 'cubic-bezier(.22,1,.36,1)' });
   modalBody.scrollTop = 0;
   document.body.classList.add('modal-is-open');
+  markCurrentPoint(id);
   if (updateHistory) history.pushState({ portraitModal: true }, '', `#${id}`);
   closeButton.focus({ preventScroll: true });
 }
@@ -145,6 +148,7 @@ async function closeSection(updateHistory = true) {
   closing = false;
   returnSection();
   document.body.classList.remove('modal-is-open');
+  markCurrentPoint(null);
   if (updateHistory) {
     if (history.state?.portraitModal) history.back();
     else history.replaceState(null, '', location.pathname + location.search);
@@ -165,13 +169,17 @@ document.addEventListener('keydown', event => { if (event.key === 'Escape') { if
 closeButton.addEventListener('click', () => closeSection());
 dialog.addEventListener('cancel', event => { event.preventDefault(); closeSection(); });
 dialog.addEventListener('click', event => { if (event.target === dialog) closeSection(); });
-function syncRoute() {
+function routeId() {
   const id = location.hash.slice(1);
+  return id === 'herramientas' ? 'sobre-mi' : id;
+}
+function syncRoute() {
+  const id = routeId();
   if (chapters.has(id)) openSection(id, null, false);
   else closeSection(false);
 }
 addEventListener('popstate', syncRoute);
-addEventListener('hashchange', () => { if (currentSection?.id !== location.hash.slice(1)) syncRoute(); });
+addEventListener('hashchange', () => { if (currentSection?.id !== routeId()) syncRoute(); });
 let deckContent = {
   'sobre-mi': [
     ['producto', 'Primero, el problema.', 'Vengo de trabajar con personas y liderar equipos. Antes de escribir código, quiero entender qué necesita quien lo va a usar.'],
@@ -203,10 +211,12 @@ let deckContent = {
 const spanishDeckContent = deckContent;
 const englishCopy = {
   'sobre-mi': ['01 / perspective', 'The thinking behind the code.', 'People, product and AI agents. How I connect what I learn with what I build.', 'Explore my perspective'],
-  proyectos: ['02 / open lab', 'Ideas that already have code.', 'Agents with memory, boundaries for autonomy and small automations. Three projects to explore.', 'Enter the lab'],
+  proyectos: ['02 / projects', 'Ideas that already have code.', 'Agents with memory, boundaries for autonomy and small automations. Three projects to explore.', 'Enter the lab'],
   recorrido: ['03 / journey', 'Every stage adds something.', 'From leading teams to building product at Resizes. The experiences shaping how I work.', 'See the journey'],
   herramientas: ['04 / stack', 'The tools. The judgement.', 'TypeScript, Vue, Python and a development environment with Codex, Cursor and Claude Code. Always evolving.', 'Explore the stack'],
-  contacto: ['05 / say hello', 'A conversation can be the beginning.', 'Product, development or AI agents. Find my email and profiles and keep the conversation going.', 'Open contact']
+  actividad: ['04 / github', 'Code, in motion.', 'Contributions, recent activity and repositories, live from GitHub.', 'See activity'],
+  escritos: ['06 / writing', 'What I learn, in writing.', 'Posts and pieces on product, development and AI agents.', 'Read'],
+  contacto: ['say hello', 'A conversation can be the beginning.', 'Product, development or AI agents. Find my email and profiles and keep the conversation going.', 'Open contact']
 };
 const englishDeckContent = {
   'sobre-mi': [['product', 'First, the problem.', 'I come from working with people and leading teams. Before writing code, I want to understand what the person using it needs.'], ['development', 'From understanding to building.', 'At Resizes I build product and expand my platform knowledge. Learning, testing and improving are the same work.'], ['agents', 'Autonomy with judgement.', 'I want to give agents context, memory and boundaries. Useful AI for real tasks, with room for what needs a person.']],
@@ -217,7 +227,7 @@ const englishDeckContent = {
 };
 let activeLocale = 'es';
 const languageButton = document.querySelector('.lang-switch');
-const pointLabels = { sobremi: ['perspectiva', 'perspective'], proyectos: ['proyectos', 'projects'], recorrido: ['recorrido', 'journey'], herramientas: ['stack', 'stack'], contacto: ['hablemos', 'say hello'] };
+const pointLabels = { sobremi: ['perspectiva', 'perspective'], proyectos: ['proyectos', 'projects'], recorrido: ['recorrido', 'journey'], herramientas: ['stack', 'stack'], actividad: ['GitHub', 'GitHub'], escritos: ['escritos', 'writing'], contacto: ['hablemos', 'say hello'] };
 function setLocale(locale) {
   activeLocale = locale;
   const english = locale === 'en';
@@ -226,24 +236,39 @@ function setLocale(locale) {
   document.documentElement.lang = locale;
   document.querySelector('#hero-title').innerHTML = english ? 'From an idea,<br>a product.<br><em>For repetitive work,<br>an agent.</em>' : 'De una idea,<br>un producto.<br><em>De lo repetitivo,<br>un agente.</em>';
   document.querySelector('.hero-note').textContent = english ? 'Development with intention. Automation with judgement.' : 'Desarrollo con intención. Automatizo con criterio.';
-  document.querySelector('.edition').textContent = english ? 'a work in progress' : 'un trabajo en evolución';
-  document.querySelector('.coordinates').textContent = english ? '( asturias, spain / 43° n )' : '( asturias, españa / 43° n )';
+  const eyebrowLink = document.querySelector('.eyebrow a');
+  if (eyebrowLink) eyebrowLink.textContent = '@ Resizes';
+  document.querySelector('.hero-cta button').textContent = english ? 'Say hello' : 'Hablemos';
   document.querySelector('.small-label').textContent = english ? 'now' : 'ahora';
-  document.querySelector('.current p').innerHTML = english ? 'Building at Resizes<br><span>Since December 2025</span>' : 'Construyendo en Resizes<br><span>Desde diciembre de 2025</span>';
-  document.querySelector('.intro-meta span').textContent = english ? 'Learning. Building. Repeating.' : 'Aprendiendo. Construyendo. Repitiendo.';
-  document.querySelector('.motion-toggle').textContent = document.documentElement.classList.contains('motion-paused') ? (english ? 'resume motion' : 'activar movimiento') : (english ? 'pause motion' : 'pausar movimiento');
+  document.querySelector('.current p').innerHTML = english ? 'Building at Resizes<br><span>since December 2025</span>' : 'Construyendo en Resizes<br><span>desde diciembre de 2025</span>';
+  applyTranslations(english);
   const closeText = dialog.querySelector('.modal-close').firstChild; if (closeText) closeText.textContent = english ? 'close ' : 'cerrar ';
   languageButton.setAttribute('aria-pressed', String(english));
   languageButton.setAttribute('aria-label', english ? 'Switch language' : 'Cambiar idioma');
   languageButton.querySelector('span').textContent = english ? 'EN' : 'ES';
   languageButton.querySelector('b').textContent = english ? 'ES' : 'EN';
-  points.forEach(point => { const key = point.dataset.preview.replace('-', ''); const label = point.querySelector('.point-label'); if (label) label.childNodes[1].textContent = ` ${pointLabels[key]?.[english ? 1 : 0] || ''} `; });
-  if (selected) selectPreview(selected);
-  if (dialog.open && currentSection) { modalTitle.textContent = copy[currentSection.id][0]; renderDeck(currentSection.id); }
+  points.forEach(point => {
+    const text = pointLabels[point.dataset.preview.replace('-', '')]?.[english ? 1 : 0] || '';
+    point.querySelector('.point-label').textContent = text;
+    point.setAttribute('aria-label', text);
+  });
+  window.PSPFeeds?.setLocale(locale);
+  window.PSPReveal?.(document.querySelector('#hero-title'));
+  if (dialog.open && currentSection) {
+    modalTitle.textContent = copy[currentSection.id][0];
+    if (window.PSPFeeds?.has(currentSection.id)) window.PSPFeeds.render(currentSection.id, modalBody, activeLocale);
+  }
+}
+function applyTranslations(english) {
+  document.querySelectorAll('[data-en]').forEach(node => {
+    if (!node.dataset.es) node.dataset.es = node.innerHTML;
+    node.innerHTML = english ? node.dataset.en : node.dataset.es;
+  });
 }
 languageButton.addEventListener('click', () => { const next = activeLocale === 'es' ? 'en' : 'es'; localStorage.setItem('site-locale', next); setLocale(next); });
 if (localStorage.getItem('site-locale') === 'en') setLocale('en');
 function renderDeck(id) {
+  if (window.PSPFeeds?.has(id)) { window.PSPFeeds.render(id, modalBody, activeLocale); return; }
   const cards = deckContent[id];
   let index = 0;
   const root = document.createElement('div'); root.className = 'portrait-deck';
@@ -314,39 +339,3 @@ document.querySelectorAll('[role="tablist"]').forEach(list => {
     });
   });
 });
-const motionButton = document.querySelector('.motion-toggle');
-motionButton.addEventListener('click', () => {
-  const paused = document.documentElement.classList.toggle('motion-paused');
-  motionButton.setAttribute('aria-pressed', String(paused));
-  motionButton.textContent = paused ? 'activar movimiento' : 'pausar movimiento';
-});
-hero.addEventListener('pointermove', event => {
-  if (!finePointer.matches || reducedMotion.matches || document.documentElement.classList.contains('motion-paused')) return;
-  hero.style.setProperty('--portrait-x', `${(event.clientX / innerWidth - .5) * 7}px`);
-  hero.style.setProperty('--portrait-y', `${(event.clientY / innerHeight - .5) * 4}px`);
-});
-function resetMotion() { hero.style.setProperty('--portrait-x', '0px'); hero.style.setProperty('--portrait-y', '0px'); }
-hero.addEventListener('pointerleave', resetMotion);
-reducedMotion.addEventListener('change', resetMotion);
-
-// The warm reveal is masked in image coordinates so it stays aligned with the
-// moving portrait. The light remains usable while a side panel is open.
-const light = document.querySelector('.reveal');
-let lightX = 0, lightY = 0, lightTargetX = 0, lightTargetY = 0, lightFrame = 0, lightActive = false;
-function paintLight() {
-  lightFrame = 0;
-  lightX += (lightTargetX - lightX) * .22; lightY += (lightTargetY - lightY) * .22;
-  light.style.setProperty('--light-x', `${lightX}px`); light.style.setProperty('--light-y', `${lightY}px`);
-  if (lightActive && Math.hypot(lightTargetX - lightX, lightTargetY - lightY) > .3) lightFrame = requestAnimationFrame(paintLight);
-}
-hero.addEventListener('pointermove', event => {
-  if (!finePointer.matches || event.pointerType === 'touch') return;
-  const bounds = light.getBoundingClientRect();
-  lightTargetX = (event.clientX - bounds.left) * light.offsetWidth / bounds.width;
-  lightTargetY = (event.clientY - bounds.top) * light.offsetHeight / bounds.height;
-  if (!lightActive || reducedMotion.matches) { lightX = lightTargetX; lightY = lightTargetY; }
-  lightActive = true; light.style.opacity = '1';
-  if (!lightFrame) lightFrame = requestAnimationFrame(paintLight);
-});
-function clearLight() { lightActive = false; light.style.opacity = '0'; cancelAnimationFrame(lightFrame); lightFrame = 0; }
-hero.addEventListener('pointerleave', clearLight); addEventListener('blur', clearLight); finePointer.addEventListener('change', clearLight);
