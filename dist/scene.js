@@ -11,7 +11,7 @@ const chapters = new Map([...document.querySelectorAll('main > .chapter')].map(s
 const homes = new Map();
 let copy = {
   'sobre-mi': ['01 / perspectiva', 'El criterio detrás del código.', 'Personas, producto y agentes de IA. Cómo conecto lo que aprendo con lo que construyo.', 'Explorar mi perspectiva'],
-  proyectos: ['02 / proyectos', 'Ideas que ya tienen código.', 'Agentes con memoria, límites para la autonomía y pequeñas automatizaciones. Tres proyectos para explorar.', 'Entrar al laboratorio'],
+  proyectos: ['02 / proyectos', 'Ideas que ya tienen código.', 'Agentes con memoria, límites para la autonomía y pequeñas automatizaciones. Siarem, mi proyecto actual, y otros proyectos para explorar.', 'Entrar al laboratorio'],
   recorrido: ['03 / recorrido', 'Cada etapa suma.', 'De liderar equipos a desarrollar producto en Resizes. Las experiencias que dan forma a mi manera de trabajar.', 'Ver el recorrido'],
   herramientas: ['04 / stack', 'Las herramientas. El criterio.', 'TypeScript, Vue, Python y un entorno de desarrollo con Codex, Cursor y Claude Code. Siempre en evolución.', 'Explorar el stack'],
   actividad: ['04 / github', 'El código, en movimiento.', 'Contribuciones, actividad reciente y repositorios, en vivo desde GitHub.', 'Ver actividad'],
@@ -211,7 +211,7 @@ let deckContent = {
 const spanishDeckContent = deckContent;
 const englishCopy = {
   'sobre-mi': ['01 / perspective', 'The thinking behind the code.', 'People, product and AI agents. How I connect what I learn with what I build.', 'Explore my perspective'],
-  proyectos: ['02 / projects', 'Ideas that already have code.', 'Agents with memory, boundaries for autonomy and small automations. Three projects to explore.', 'Enter the lab'],
+  proyectos: ['02 / projects', 'Ideas that already have code.', 'Agents with memory, boundaries for autonomy and small automations. Siarem, my current project, and other projects to explore.', 'Enter the lab'],
   recorrido: ['03 / journey', 'Every stage adds something.', 'From leading teams to building product at Resizes. The experiences shaping how I work.', 'See the journey'],
   herramientas: ['04 / stack', 'The tools. The judgement.', 'TypeScript, Vue, Python and a development environment with Codex, Cursor and Claude Code. Always evolving.', 'Explore the stack'],
   actividad: ['04 / github', 'Code, in motion.', 'Contributions, recent activity and repositories, live from GitHub.', 'See activity'],

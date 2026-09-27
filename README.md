@@ -55,3 +55,11 @@ LinkedIn no ofrece una API pública, así que los posts se añaden a mano en `di
 - Sin librerías de animación. Movimiento reducido desactiva el movimiento del retrato. El contenido completo sigue visible sin JavaScript.
 - Pestañas accesibles mediante flechas, Home y End; experiencias anteriores con elementos details nativos.
 - Las descripciones de archivos y del firewall se contrastaron con los README públicos de los repositorios. Los diagramas son explicaciones conceptuales, no capturas de producto.
+
+## Revisión de septiembre de 2026 (III): proyecto actual y móvil
+
+Siarem aparece primero en proyectos, marcado «En desarrollo», con enlace al repositorio y descripción basada en su README público. La home incluye iconos accesibles de LinkedIn, correo, GitHub y X.
+
+En pantallas de hasta 1000 px, la portada usa scroll natural, el retrato tiene un espacio propio y la navegación queda fija abajo. Los paneles aprovechan la altura disponible con scroll interior, texto de lectura de 15 px y controles táctiles de al menos 44 px en enlaces y pestañas. Se contempla el área segura inferior del dispositivo.
+
+Comprobado en Chromium a 320×640, 390×844, 430×932, 768×1024, 844×390 y 1440×900: cinco secciones, cierre y cambio de idioma, sin desbordamiento horizontal ni errores JavaScript. Verificación con navegador emulado; pendiente de comprobación en dispositivos físicos.
