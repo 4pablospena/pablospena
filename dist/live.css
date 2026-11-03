@@ -67,6 +67,7 @@ a:focus-visible{outline-color:var(--acid)}
 .scene-ready .index-nav .face-point:hover small,.scene-ready .index-nav .face-point[aria-current=true] small{color:var(--acid)}
 .scene-ready .index-nav .face-point:hover::after,.scene-ready .index-nav .face-point[aria-current=true]::after{transform:scaleX(1)}
 .scene-ready .index-nav .nav-talk{color:var(--acid);margin-left:6px}
+.scene-ready .index-nav .nav-blog{text-decoration:none}
 .scene-ready .index-nav .nav-talk::after{transform:scaleX(1)}
 .scene-ready .index-nav .face-point:focus-visible{outline:1px solid var(--acid);outline-offset:0;border-radius:3px}
 .scene-ready .hero-intro{max-width:420px;margin:18px 0 0;font-size:15px;line-height:1.65;color:#c5cfd1}

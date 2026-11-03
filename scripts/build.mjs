@@ -18,10 +18,10 @@ export async function build(root = fileURLToPath(new URL('../', import.meta.url)
   await mkdir(blogDirectory, { recursive: true });
   await writeFile(join(blogDirectory, 'index.html'), blogIndex(posts));
   await writeFile(join(blogDirectory, 'rss.xml'), rssFeed(posts));
-  for (const post of posts) {
+  for (const [index, post] of posts.entries()) {
     const directory = join(blogDirectory, post.slug);
     await mkdir(directory, { recursive: true });
-    await writeFile(join(directory, 'index.html'), blogArticle(post));
+    await writeFile(join(directory, 'index.html'), blogArticle(post, index + 1));
   }
   await writeFile(join(root, 'dist/data/blog.json'), JSON.stringify({ posts: posts.map(({ html, ...post }) => post) }, null, 2) + '\n');
   const snapshot = JSON.parse(await readFile(join(root, 'dist/data/projects.json'), 'utf8'));

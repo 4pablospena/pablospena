@@ -37,6 +37,8 @@ Al abrir proyectos, la web consulta los repositorios de GitHub y conserva el cat
 
 Los artículos se editan en `content/posts/*.md` con el editor de código. Las imágenes se guardan en `dist/assets/uploads/`. El nombre del archivo determina la URL: `mi-articulo.md` se publica en `/blog/mi-articulo/`.
 
+El blog se presenta como un cuaderno con numeración grande, índice de títulos y metadatos en los márgenes. La ficha lateral sigue la nota enfocada; las páginas de lectura añaden un índice de apartados y progreso. En móvil el archivo se ordena en una columna. Las plantillas están en `lib/templates.mjs`, los estilos en `dist/blog.css` y las interacciones en `dist/blog.js`. Comparte las tipografías de la portada: Sora para los títulos, Manrope para la lectura y JetBrains Mono para los metadatos.
+
 ### Crear y editar un artículo
 
 ```sh
@@ -88,7 +90,7 @@ Las siguientes notas documentan versiones anteriores del portfolio.
 
 ## Contenido
 
-Fuentes: CV de noviembre de 2025, información facilitada por Pablo y repositorios públicos de https://github.com/4pablospena. LinkedIn no permitió lectura automatizada. No se infiere fecha de finalización en Fútbol Emotion ni finalización del grado.
+Fuentes del portfolio: CV de noviembre de 2025, información facilitada por Pablo y repositorios públicos de https://github.com/4pablospena. La primera entrada, «De la tienda al código», se basa en su [perfil de LinkedIn](https://www.linkedin.com/in/pablospena/) y sus publicaciones propias, revisados el 3 de noviembre de 2026. No se infiere fecha de finalización en Fútbol Emotion ni finalización del grado.
 
 ## Retrato
 
