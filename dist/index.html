@@ -24,6 +24,7 @@
   <button type="button" class="face-point" data-preview="proyectos"><small>02</small><span class="point-label">proyectos</span></button>
   <button type="button" class="face-point" data-preview="recorrido"><small>03</small><span class="point-label">recorrido</span></button>
   <button type="button" class="face-point" data-preview="actividad"><small>04</small><span class="point-label">GitHub</span><span class="gh-nav-count" data-gh-nav></span></button>
+  <button type="button" class="face-point" data-preview="blog"><small>05</small><span class="point-label">blog</span></button>
   <button type="button" class="face-point nav-talk" data-preview="contacto"><span class="point-label">hablemos</span></button>
 </nav>
 <aside id="scene-preview" class="scene-preview" aria-live="polite">
@@ -38,6 +39,7 @@
     <button type="button" class="access-trigger" data-modal-target="sobre-mi"><span>01</span><strong>perspectiva</strong><i aria-hidden="true">↗</i></button>
     <button type="button" class="access-trigger" data-modal-target="proyectos"><span>02</span><strong>proyectos</strong><i aria-hidden="true">↗</i></button>
     <button type="button" class="access-trigger" data-modal-target="recorrido"><span>03</span><strong>recorrido</strong><i aria-hidden="true">↗</i></button>
+    <a class="access-trigger" href="/blog/"><span>05</span><strong>blog</strong></a>
     <button type="button" class="access-trigger" data-modal-target="contacto"><span>04</span><strong>hablemos</strong><i aria-hidden="true">↗</i></button>
   </div>
 </div>
@@ -45,7 +47,7 @@
 </div></section>
 <nav class="chapter-nav" aria-label="Secciones de la página">
   <a class="nav-brand" href="#inicio" aria-label="Volver a la portada">p<span>*</span></a>
-  <div class="nav-links"><button type="button" data-modal-target="sobre-mi" aria-current="location">perspectiva</button><button type="button" data-modal-target="proyectos">proyectos</button><button type="button" data-modal-target="recorrido">recorrido</button><button type="button" data-modal-target="actividad">GitHub</button></div>
+  <div class="nav-links"><button type="button" data-modal-target="sobre-mi" aria-current="location">perspectiva</button><button type="button" data-modal-target="proyectos">proyectos</button><button type="button" data-modal-target="recorrido">recorrido</button><button type="button" data-modal-target="actividad">GitHub</button><a href="/blog/">blog</a></div>
   <button type="button" class="nav-contact" data-modal-target="contacto">hablemos <span aria-hidden="true">↗</span></button>
   <div class="reading-track" aria-hidden="true"><div class="reading-progress"></div></div>
 </nav>
@@ -74,55 +76,41 @@
   </div>
 </section>
 <section id="proyectos" class="chapter projects-chapter" aria-labelledby="projects-title">
-  <div class="chapter-meta"><span data-en="02 / Open lab">02 / laboratorio abierto</span><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer" data-en="Explore GitHub">explorar GitHub</a></div>
-  <div class="chapter-heading" data-enter><h2 id="projects-title" data-en="Ideas that already<br>have <em>code.</em>">Ideas que ya<br>tienen <em>código.</em></h2><p data-en="Personal projects for learning by building.<br>From agents to small automations.">Proyectos personales para aprender haciendo.<br>De los agentes a las pequeñas automatizaciones.</p></div>
-  <article class="lab-card current-project" data-enter>
-    <div class="card-meta"><span data-en="Current project">Proyecto actual</span><span class="project-status" data-en="In development">En desarrollo</span></div>
-    <h3>Siarem</h3>
-    <p data-en="The CRM I'm building to connect sales and delivery: companies, leads, opportunities, orders, projects and invoices in one place.">El CRM en el que estoy trabajando para conectar ventas y entrega: empresas, leads, oportunidades, pedidos, proyectos y facturas en un mismo lugar.</p>
+  <div class="chapter-meta"><span data-en="02 / Projects">02 / proyectos</span><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer" data-en="Explore GitHub">Explorar GitHub</a></div>
+  <div class="chapter-heading"><h2 id="projects-title" data-en="What I’m<br><em>building.</em>">Lo que voy<br><em>construyendo.</em></h2><p data-en="Personal projects, experiments and tools. Code and descriptions from my public GitHub repositories.">Proyectos personales, experimentos y herramientas. Código y descripciones de mis repositorios públicos en GitHub.</p></div>
+  <div class="project-catalog" data-project-list><!-- project-list:start -->
+<article class="project-entry" data-repository="pulso">
+    <div class="project-entry-meta"><span>01 / <span data-translation-text data-en="Everyday life">Vida diaria</span></span><time datetime="2026-11-02T19:21:26Z">nov 2026</time></div>
+    <h3>Pulso</h3><p data-translation-text data-en="Nutrition, workouts and grocery shopping in a personal app. Connects Apple Health and Strava data to plan the day.">Nutrición, entrenamientos y lista de la compra en una app personal. Conecta datos de Apple Salud y Strava para planificar el día.</p>
+    <div class="tech-list"><span>Vue</span><span>Nuxt</span><span>PWA</span></div>
+    <div class="project-entry-links"><a href="https://github.com/4pablospena/pulso" target="_blank" rel="noopener noreferrer" data-en="View code">Ver código</a></div>
+  </article>
+<article class="project-entry" data-repository="build-your-agents">
+    <div class="project-entry-meta"><span>02 / <span data-translation-text data-en="AI agents">Agentes de IA</span></span><time datetime="2026-10-11T14:18:55Z">oct 2026</time></div>
+    <h3>Build Your Agents</h3><p data-translation-text data-en="An open specification for organising personal agents’ identity, context, memory and tools. Includes templates and a configurator.">Una especificación abierta para organizar identidad, contexto, memoria y herramientas de agentes personales. Incluye plantillas y un configurador.</p>
+    <div class="tech-list"><span>Vue</span><span>Nuxt</span><span>Markdown</span></div>
+    <div class="project-entry-links"><a href="https://github.com/4pablospena/build-your-agents" target="_blank" rel="noopener noreferrer" data-en="View code">Ver código</a><a href="https://build-your-agents.vercel.app" target="_blank" rel="noopener noreferrer" data-en="Visit website">Visitar web</a></div>
+  </article>
+<article class="project-entry" data-repository="siarem">
+    <div class="project-entry-meta"><span>03 / <span data-translation-text data-en="Product · CRM">Producto · CRM</span></span><time datetime="2026-10-07T19:15:53Z">oct 2026</time></div>
+    <h3>Siarem</h3><p data-translation-text data-en="A CRM connecting sales and delivery: companies, leads, opportunities, orders, projects and invoices in one place.">Un CRM para conectar ventas y entrega: empresas, leads, oportunidades, pedidos, proyectos y facturas en un mismo lugar.</p>
     <div class="tech-list"><span>TypeScript</span><span>CRM</span></div>
-    <a class="text-link" href="https://github.com/4pablospena/siarem" target="_blank" rel="noopener noreferrer" data-en="Explore Siarem on GitHub">Explorar Siarem en GitHub</a>
+    <div class="project-entry-links"><a href="https://github.com/4pablospena/siarem" target="_blank" rel="noopener noreferrer" data-en="View code">Ver código</a></div>
   </article>
-  <article class="featured-project" data-enter>
-    <div class="agent-explorer">
-      <div class="explorer-top"><span>build / your / agents</span><span>01 — 03</span></div>
-      <div class="explorer-title" aria-hidden="true">Un agente.<br><span>Siete archivos.</span></div>
-      <div class="agent-files" aria-label="Archivos de la especificación">
-        <div class="file-tabs" role="tablist" aria-label="Explorar los archivos del agente">
-          <button type="button" role="tab" id="tab-soul" aria-controls="panel-soul" aria-selected="true" tabindex="0">soul.md</button>
-          <button type="button" role="tab" id="tab-identity" aria-controls="panel-identity" aria-selected="false" tabindex="-1">identity.md</button>
-          <button type="button" role="tab" id="tab-agents" aria-controls="panel-agents" aria-selected="false" tabindex="-1">agents.md</button>
-          <button type="button" role="tab" id="tab-user" aria-controls="panel-user" aria-selected="false" tabindex="-1">user.md</button>
-          <button type="button" role="tab" id="tab-memory" aria-controls="panel-memory" aria-selected="false" tabindex="-1">memory.md</button>
-          <button type="button" role="tab" id="tab-tools" aria-controls="panel-tools" aria-selected="false" tabindex="-1">tools.md</button>
-          <button type="button" role="tab" id="tab-heartbeat" aria-controls="panel-heartbeat" aria-selected="false" tabindex="-1">heartbeat.md</button>
-        </div>
-        <div class="file-panels">
-          <div role="tabpanel" id="panel-soul" aria-labelledby="tab-soul" tabindex="0"><span class="file-code" data-en="01 / Agent identity">01 / identidad del agente</span><h4 data-en="A voice of its own.<br>Clear boundaries.">Una voz propia.<br>Unos límites claros.</h4><p data-en="The personality, values and capabilities that define how it behaves.">La personalidad, los valores y las capacidades que definen cómo se comporta.</p></div>
-          <div role="tabpanel" id="panel-identity" aria-labelledby="tab-identity" tabindex="0" hidden><span class="file-code" data-en="02 / Configuration">02 / configuración</span><h4 data-en="A place<br>to operate from.">Un lugar<br>desde el que operar.</h4><p data-en="Metadata, models and guidance for directing the agent's requests.">Metadatos, modelos y pautas para dirigir las peticiones del agente.</p></div>
-          <div role="tabpanel" id="panel-agents" aria-labelledby="tab-agents" tabindex="0" hidden><span class="file-code" data-en="03 / Coordination">03 / coordinación</span><h4 data-en="Less improvisation.<br>More judgement.">Menos improvisación.<br>Más criterio.</h4><p data-en="Session order, workflows and rules of action.">El orden de la sesión, los flujos de trabajo y las reglas de actuación.</p></div>
-          <div role="tabpanel" id="panel-user" aria-labelledby="tab-user" tabindex="0" hidden><span class="file-code" data-en="04 / Human context">04 / contexto humano</span><h4 data-en="Understand who<br>is on the other side.">Entender a quien<br>está al otro lado.</h4><p data-en="Preferences, projects and tasks of the person it works with.">Preferencias, proyectos y tareas de la persona con la que trabaja.</p></div>
-          <div role="tabpanel" id="panel-memory" aria-labelledby="tab-memory" tabindex="0" hidden><span class="file-code" data-en="05 / Memory">05 / memoria</span><h4 data-en="Don't start<br>from zero each time.">No empezar<br>de cero cada vez.</h4><p data-en="Confirmed facts worth keeping between sessions.">Hechos confirmados que merece la pena conservar entre sesiones.</p></div>
-          <div role="tabpanel" id="panel-tools" aria-labelledby="tab-tools" tabindex="0" hidden><span class="file-code" data-en="06 / Tools">06 / herramientas</span><h4 data-en="Know what to use.<br>And when.">Saber qué usar.<br>Y cuándo.</h4><p data-en="The map of available tools and connections, and the order for choosing them.">El mapa de herramientas y conexiones disponibles, y su orden de selección.</p></div>
-          <div role="tabpanel" id="panel-heartbeat" aria-labelledby="tab-heartbeat" tabindex="0" hidden><span class="file-code" data-en="07 / Continuity">07 / continuidad</span><h4 data-en="The tasks<br>that come back.">Las tareas<br>que vuelven.</h4><p data-en="Scheduled tasks that need an external trigger to run.">Tareas programadas que necesitan un disparador externo para ejecutarse.</p></div>
-        </div>
-      </div>
-      <div class="explorer-foot"><span data-en="A specification in markdown">Una especificación en markdown</span><span data-en="Select a file">selecciona un archivo</span></div>
-    </div>
-    <div class="featured-copy"><span class="project-category" data-en="AI agents / open specification">Agentes de IA / especificación abierta</span><h3 data-en="Give context<br>to intelligence.">Dar contexto<br>a la inteligencia.</h3><p data-en="An agent needs more than a prompt. This project organises its identity, tools and memory in seven files you can read and edit.">Un agente necesita algo más que un prompt. Este proyecto organiza su identidad, sus herramientas y su memoria en siete archivos que puedes leer y editar.</p><p class="project-purpose" data-en="For building personal agents with a structure you can understand and carry with you.">Para construir agentes personales con una estructura comprensible y portable.</p><div class="tech-list"><span>Vue</span><span>Nuxt</span><span>markdown</span></div><a class="text-link" href="https://github.com/4pablospena/build-your-agents" target="_blank" rel="noopener noreferrer" data-en="See the project">ver el proyecto</a></div>
+<article class="project-entry" data-repository="facturas-excel-pdf">
+    <div class="project-entry-meta"><span>04 / <span data-translation-text data-en="Automation">Automatización</span></span><time datetime="2026-08-25T11:16:40Z">ago 2026</time></div>
+    <h3>Facturas Excel a PDF</h3><p data-translation-text data-en="A Python tool for converting Excel invoices into PDFs and reducing manual document work.">Una herramienta en Python para convertir facturas de Excel en PDF y reducir el trabajo manual con documentos.</p>
+    <div class="tech-list"><span>Python</span><span>Excel</span><span>PDF</span></div>
+    <div class="project-entry-links"><a href="https://github.com/4pablospena/facturas-excel-pdf" target="_blank" rel="noopener noreferrer" data-en="View code">Ver código</a></div>
   </article>
-  <div class="project-pair">
-    <article class="lab-card firewall-card" data-enter>
-      <div class="card-meta"><span>02 / Agentic action firewall</span><span>pre-alpha</span></div>
-      <div class="action-diagram" aria-label="Flujo conceptual: agente, revisión de políticas, acción"><span class="diagram-node" data-en="Agent">agente</span><span class="diagram-line" aria-hidden="true"></span><span class="diagram-gate" data-en="Review<br><small>Policies</small>">revisar<br><small>políticas</small></span><span class="diagram-line" aria-hidden="true"></span><span class="diagram-node" data-en="Action">acción</span></div>
-      <h3 data-en="Autonomy.<br>With boundaries.">Autonomía.<br>Con límites.</h3><p data-en="A layer between the agent and the outside world. It inspects actions before they run and applies authorisation rules.">Una capa entre el agente y el mundo exterior. Inspecciona las acciones antes de ejecutarlas y aplica reglas de autorización.</p><div class="card-bottom"><span class="project-category">TypeScript · seguridad de agentes</span><a class="arrow-link" href="https://github.com/4pablospena/agentic-action-firewall" target="_blank" rel="noopener noreferrer" aria-label="Ver agentic action firewall en GitHub">↗</a></div>
-    </article>
-    <article class="lab-card automation-card" data-enter>
-      <div class="card-meta"><span>03 / facturas Excel → PDF</span><span>automatización</span></div>
-      <div class="format-diagram" aria-label="Conversión de Excel a PDF"><span>.Xlsx</span><span class="format-arrow" aria-hidden="true">↗</span><span>.PDF</span></div>
-      <h3 data-en="Repetitive work,<br>resolved.">Lo repetitivo,<br>resuelto.</h3><p data-en="Turn Excel invoices into PDF. A concrete tool to simplify an everyday task with Python.">Convertir facturas de Excel a PDF. Una herramienta concreta para simplificar una tarea cotidiana con Python.</p><div class="card-bottom"><span class="project-category">Python · documentos</span><a class="arrow-link" href="https://github.com/4pablospena/facturas-excel-pdf" target="_blank" rel="noopener noreferrer" aria-label="Ver conversor de facturas en GitHub">↗</a></div>
-    </article>
-  </div>
+<article class="project-entry" data-repository="agentic-action-firewall">
+    <div class="project-entry-meta"><span>05 / <span data-translation-text data-en="Agent security">Seguridad de agentes</span></span><time datetime="2026-06-08T07:41:23Z">jun 2026</time></div>
+    <h3>Agent Action Firewall</h3><p data-translation-text data-en="A layer that inspects and authorises agent actions before execution. Policies, audit logs and approvals. In pre-alpha.">Una capa que inspecciona y autoriza las acciones de agentes antes de ejecutarlas. Políticas, registro de actividad y aprobaciones. En pre-alpha.</p>
+    <div class="tech-list"><span>TypeScript</span><span>Seguridad</span></div>
+    <div class="project-entry-links"><a href="https://github.com/4pablospena/agentic-action-firewall" target="_blank" rel="noopener noreferrer" data-en="View code">Ver código</a></div>
+  </article>
+<!-- project-list:end --></div>
+  <p class="projects-source" data-project-source data-en="From my public GitHub repositories.">A partir de mis repositorios públicos de GitHub.</p>
 </section>
 <div class="interlude" aria-hidden="true"><div class="interlude-track"><span>entender</span><i>↗</i><span>construir</span><i>↗</i><span>aprender</span><i>↗</i><span>volver a empezar</span></div></div>
 <section id="recorrido" class="chapter path-chapter" aria-labelledby="path-title">
@@ -137,12 +125,13 @@
   </div>
 </section>
 <section id="actividad" class="chapter activity-chapter" aria-labelledby="activity-title">
-  <div class="chapter-meta"><span>05 / actividad</span><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+  <div class="chapter-meta"><span>04 / actividad</span><a href="https://github.com/4pablospena" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
   <div class="chapter-heading" data-enter><h2 id="activity-title">El código,<br><em>en movimiento.</em></h2><p>Commits, revisiones y experimentos. Lo que construyo, a la vista en GitHub.</p></div>
 </section>
-<section id="escritos" class="chapter writing-chapter" aria-labelledby="writing-title">
-  <div class="chapter-meta"><span>06 / escritos</span><a href="https://www.linkedin.com/in/pablospena/recent-activity/all/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
-  <div class="chapter-heading" data-enter><h2 id="writing-title">Lo que aprendo,<br><em>por escrito.</em></h2><p>Posts y redacciones sobre producto, desarrollo y agentes de IA.</p></div>
+<section id="blog" class="chapter writing-chapter" aria-labelledby="writing-title">
+  <div class="chapter-meta"><span>05 / blog</span><a href="/blog/" data-en="All posts">Todas las publicaciones</a></div>
+  <div class="chapter-heading"><h2 id="writing-title" data-en="What I’m<br><em>learning.</em>">Lo que voy<br><em>aprendiendo.</em></h2><p data-en="Notes about work, projects and life away from the screen.">Notas sobre el trabajo, los proyectos y lo que pasa fuera de la pantalla.</p></div>
+  <a class="text-link" href="/blog/" data-en="Read the blog">Leer el blog</a>
 </section>
 <footer id="contacto" class="chapter contact-chapter" aria-labelledby="contact-title">
   <div class="chapter-meta"><span data-en="The next conversation">la siguiente conversación</span><span data-en="From Asturias, with curiosity">Desde Asturias, con curiosidad</span></div>

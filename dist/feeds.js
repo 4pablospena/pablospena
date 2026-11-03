@@ -1,8 +1,10 @@
-// Live sections rendered inside the portrait deck: GitHub activity and writing.
+// GitHub activity, project updates and the blog preview inside the portrait deck.
 (() => {
   const USER = '4pablospena';
   const CACHE_KEY = 'psp-feeds-v1';
   const CACHE_TTL = 15 * 60 * 1000;
+  const hiddenRepositories = new Set(['agentic-missioncontrol']);
+  const visibleRepository = repo => !hiddenRepositories.has(repo.name.toLowerCase());
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
   const strings = {
@@ -41,14 +43,15 @@
         PublicEvent: () => 'hizo público el repositorio'
       },
       writing: {
-        head: 'posts y redacciones',
-        title: ['Lo que aprendo,', 'por escrito.'],
-        lead: 'Posts y redacciones sobre producto, desarrollo y agentes de IA.',
-        count: n => `${n} ${n === 1 ? 'escrito' : 'escritos'}`,
+        head: 'personal y trabajo',
+        title: ['Lo que voy', 'aprendiendo.'],
+        lead: 'Notas sobre el trabajo y lo que pasa fuera de la pantalla.',
+        count: n => `${n} ${n === 1 ? 'publicación' : 'publicaciones'}`,
         read: 'leer',
-        emptyTitle: 'Escribiendo el siguiente.',
-        emptyCopy: 'Comparto lo que aprendo construyendo producto y agentes. Mientras llegan aquí, lo encuentras en mi actividad de LinkedIn.',
-        all: 'ver todo en LinkedIn'
+        emptyTitle: 'Las primeras notas llegarán aquí.',
+        emptyCopy: 'Un espacio para escribir sobre el trabajo, los proyectos y lo que pasa fuera de la pantalla.',
+        all: 'abrir el blog',
+        error: 'No se pudieron cargar las publicaciones. Puedes abrir el blog completo.'
       }
     },
     en: {
@@ -86,14 +89,15 @@
         PublicEvent: () => 'made the repository public'
       },
       writing: {
-        head: 'posts and writing',
-        title: ['What I learn,', 'in writing.'],
-        lead: 'Posts and pieces on product, development and AI agents.',
-        count: n => `${n} ${n === 1 ? 'piece' : 'pieces'}`,
+        head: 'personal and work',
+        title: ['What I’m', 'learning.'],
+        lead: 'Notes about work and life away from the screen.',
+        count: n => `${n} ${n === 1 ? 'post' : 'posts'}`,
         read: 'read',
-        emptyTitle: 'Writing the next one.',
-        emptyCopy: 'I share what I learn building product and agents. Until it lands here, you can find it in my LinkedIn activity.',
-        all: 'see everything on LinkedIn'
+        emptyTitle: 'The first notes will appear here.',
+        emptyCopy: 'A space to write about work, projects and life away from the screen.',
+        all: 'open the blog',
+        error: 'The posts could not be loaded. You can still open the full blog.'
       }
     }
   };
@@ -102,7 +106,6 @@
     PullRequestReviewEvent: 'review', PullRequestReviewCommentEvent: 'review', IssuesEvent: 'issue',
     IssueCommentEvent: 'comment', WatchEvent: 'star', ForkEvent: 'fork', ReleaseEvent: 'release', PublicEvent: 'public'
   };
-  const LINKEDIN_ACTIVITY = 'https://www.linkedin.com/in/pablospena/recent-activity/all/';
 
   function branch(ref = '') { return ref.replace('refs/heads/', ''); }
   function el(tag, className, text) {
@@ -123,7 +126,7 @@
   }
 
   async function getJSON(url) {
-    const response = await fetch(url, { headers: { Accept: 'application/json' } });
+    const response = await fetch(url, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(8000) });
     if (!response.ok) throw new Error(`${response.status} ${url}`);
     return response.json();
   }
@@ -141,7 +144,7 @@
     const stale = cached?.data || {};
     githubPromise = Promise.allSettled([
       getJSON(`https://api.github.com/users/${USER}`),
-      getJSON(`https://api.github.com/users/${USER}/repos?sort=pushed&per_page=30`),
+      getJSON(`https://api.github.com/users/${USER}/repos?sort=pushed&per_page=100`),
       getJSON(`https://api.github.com/users/${USER}/events/public?per_page=40`),
       getJSON(`https://github-contributions-api.jogruber.de/v4/${USER}?y=last`)
     ]).then(([user, repos, events, calendar]) => {
@@ -162,9 +165,9 @@
 
   let writingPromise;
   function loadWriting() {
-    writingPromise ||= getJSON('/data/writing.json')
-      .then(data => (data.posts || []).filter(post => post.title && post.url).sort((a, b) => String(b.date).localeCompare(String(a.date))))
-      .catch(() => []);
+    writingPromise ||= getJSON('/data/blog.json')
+      .then(data => (data.posts || []).filter(post => post.title && post.url?.startsWith('/blog/')).sort((a, b) => String(b.date).localeCompare(String(a.date))));
+    writingPromise.catch(() => { writingPromise = null; });
     return writingPromise;
   }
 
@@ -247,7 +250,7 @@
 
   function languages(repoList, t) {
     const counts = new Map();
-    repoList.filter(repo => !repo.fork && repo.language).forEach(repo => counts.set(repo.language, (counts.get(repo.language) || 0) + 1));
+    repoList.filter(repo => visibleRepository(repo) && !repo.fork && repo.language).forEach(repo => counts.set(repo.language, (counts.get(repo.language) || 0) + 1));
     const sorted = [...counts].sort((a, b) => b[1] - a[1]).slice(0, 5);
     if (!sorted.length) return null;
     const box = el('div', 'gh-langs');
@@ -270,7 +273,7 @@
 
   function groupEvents(events) {
     const groups = [];
-    events.forEach(event => {
+    events.filter(event => !hiddenRepositories.has(event.repo.name.split('/').at(-1).toLowerCase())).forEach(event => {
       const last = groups.at(-1);
       const sameDay = last && last.event.created_at.slice(0, 10) === event.created_at.slice(0, 10);
       if (last && sameDay && last.event.type === event.type && last.event.repo.name === event.repo.name) last.count++;
@@ -302,7 +305,7 @@
 
   function repos(data, t, locale) {
     const list = el('ul', 'gh-repos');
-    data.repos.filter(repo => !repo.fork && repo.name !== USER).slice(0, 6).forEach((repo, i) => {
+    data.repos.filter(repo => visibleRepository(repo) && !repo.fork && repo.name !== USER).slice(0, 6).forEach((repo, i) => {
       const item = el('li', 'gh-repo');
       item.style.setProperty('--i', i);
       const link = el('a', 'gh-repo-name', repo.name);
@@ -329,7 +332,8 @@
     const note = el('span', 'live-source');
     note.append(el('i', 'live-dot'), document.createTextNode(label));
     const link = el('a', '', text);
-    link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.href = href;
+    if (href.startsWith('https:')) { link.target = '_blank'; link.rel = 'noopener noreferrer'; }
     foot.replaceChildren(note, link);
   }
 
@@ -372,7 +376,8 @@
     const t = (strings[locale] || strings.es).writing;
     const { root, nav, article, foot } = shell(false);
     nav.append(el('span', '', t.head));
-    footLink(foot, t.all, LINKEDIN_ACTIVITY, 'linkedin');
+    footLink(foot, t.all, '/blog/', 'blog');
+    article.append(el('p', 'live-loading', locale === 'en' ? 'Loading posts…' : 'Cargando publicaciones…'));
     body.replaceChildren(root);
     loadWriting().then(posts => {
       if (!root.isConnected) return;
@@ -380,28 +385,89 @@
         const empty = el('div', 'writing-empty');
         empty.append(el('h2', '', t.emptyTitle), el('p', '', t.emptyCopy));
         const link = el('a', '', t.all);
-        link.href = LINKEDIN_ACTIVITY; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        link.href = '/blog/';
         empty.append(link);
         article.replaceChildren(empty);
         return;
       }
       nav.append(el('span', 'feed-count', t.count(posts.length)));
       const list = el('ol', 'writing-list');
-      posts.forEach((post, i) => {
+      posts.slice(0, 5).forEach((post, i) => {
         const item = el('li', 'writing-item');
         item.style.setProperty('--i', i);
-        const meta = el('span', 'writing-meta', [post.platform || 'linkedin', post.date && shortDate(post.date, locale)].filter(Boolean).join(' · '));
+        const category = post.category === 'trabajo' ? (locale === 'en' ? 'work' : 'trabajo') : 'personal';
+        const meta = el('span', 'writing-meta', [category, post.date && shortDate(post.date, locale)].filter(Boolean).join(' · '));
         const link = el('a', 'writing-title', post.title);
-        link.href = post.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        link.href = post.url;
         item.append(meta, link);
         if (post.summary) item.append(el('p', '', post.summary));
         list.append(item);
       });
       article.replaceChildren(list);
+    }).catch(() => {
+      if (root.isConnected) article.replaceChildren(el('p', 'live-loading', t.error));
     });
   }
 
-  const renderers = { actividad: renderActivity, escritos: renderWriting };
+  let projectSnapshotPromise;
+  function hydrateProjects(section, nextLocale) {
+    section.dataset.projectLocale = nextLocale;
+    const list = section.querySelector('[data-project-list]');
+    const source = section.querySelector('[data-project-source]');
+    if (!list) return;
+    projectSnapshotPromise ||= getJSON('/data/projects.json').catch(error => { projectSnapshotPromise = null; throw error; });
+    projectSnapshotPromise.then(async snapshot => {
+      let projects = snapshot.projects;
+      let live = false;
+      try {
+        const data = await loadGitHub();
+        const excluded = new Set(snapshot.excluded.map(name => name.toLowerCase()));
+        const relevant = data.repos.filter(repo => visibleRepository(repo) && !repo.fork && !repo.archived && !excluded.has(repo.name.toLowerCase()));
+        if (relevant.length) {
+          projects = relevant.map(repo => {
+            const saved = snapshot.projects.find(project => project.name === repo.name);
+            return saved ? { ...saved, pushedAt: repo.pushed_at } : {
+              name: repo.name, title: repo.name, url: repo.html_url, pushedAt: repo.pushed_at,
+              description: { es: repo.description || 'Proyecto personal en GitHub.', en: repo.description || 'A personal project on GitHub.' },
+              category: { es: 'Proyecto', en: 'Project' }, stack: repo.language ? [repo.language] : []
+            };
+          });
+          live = true;
+        }
+      } catch { /* The local project catalog remains available. */ }
+      const locale = section.dataset.projectLocale;
+      const english = locale === 'en';
+      const cards = projects.filter(project => !hiddenRepositories.has(project.name.toLowerCase())).map((project, index) => {
+        const card = el('article', 'project-entry');
+        card.dataset.repository = project.name;
+        const meta = el('div', 'project-entry-meta');
+        const label = el('span', '', `${String(index + 1).padStart(2, '0')} / ${project.category[locale] || project.category.es}`);
+        const time = el('time', '', new Date(project.pushedAt).toLocaleDateString(locale, { month: 'short', year: 'numeric', timeZone: 'UTC' }));
+        time.dateTime = project.pushedAt;
+        meta.append(label, time);
+        const description = el('p', '', project.description[locale] || project.description.es);
+        const stack = el('div', 'tech-list');
+        project.stack.forEach(tech => stack.append(el('span', '', tech)));
+        const links = el('div', 'project-entry-links');
+        const code = el('a', '', english ? 'View code' : 'Ver código');
+        code.href = `https://github.com/${USER}/${encodeURIComponent(project.name)}`; code.target = '_blank'; code.rel = 'noopener noreferrer';
+        links.append(code);
+        if (project.website?.startsWith('https://')) {
+          const website = el('a', '', english ? 'Visit website' : 'Visitar web');
+          website.href = project.website; website.target = '_blank'; website.rel = 'noopener noreferrer';
+          links.append(website);
+        }
+        card.append(meta, el('h3', '', project.title), description, stack, links);
+        return card;
+      });
+      list.replaceChildren(...cards);
+      source.textContent = live
+        ? (english ? 'GitHub repositories · latest available data.' : 'Repositorios de GitHub · últimos datos disponibles.')
+        : (english ? 'Saved copy · GitHub is not available right now.' : 'Copia guardada · GitHub no está disponible ahora.');
+    }).catch(() => { /* Keep the complete HTML catalog if the snapshot cannot load. */ });
+  }
+
+  const renderers = { actividad: renderActivity, blog: renderWriting };
   let locale = 'es';
 
   function paintHome() {
@@ -413,7 +479,7 @@
       const t = strings[locale] || strings.es;
       const total = new Intl.NumberFormat(locale, { useGrouping: 'always' }).format(stats.total);
       target.querySelector('.gh-home-total').replaceChildren(el('b', '', total), document.createTextNode(` ${t.homeTotal}`));
-      const push = data.events.find(event => event.type === 'PushEvent');
+      const push = data.events.find(event => event.type === 'PushEvent' && !hiddenRepositories.has(event.repo.name.split('/').at(-1).toLowerCase()));
       const last = target.querySelector('.gh-home-last');
       last.replaceChildren();
       if (push) last.append(el('i', 'live-dot'), document.createTextNode(t.lastPush(relative(push.created_at, locale), push.repo.name.replace(`${USER}/`, ''))));
@@ -432,6 +498,7 @@
   window.PSPFeeds = {
     has: id => id in renderers,
     render: (id, body, nextLocale = locale) => renderers[id]?.(body, nextLocale),
+    hydrateProjects,
     setLocale: next => { locale = strings[next] ? next : 'es'; paintHome(); }
   };
   paintHome();

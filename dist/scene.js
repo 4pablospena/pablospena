@@ -11,11 +11,11 @@ const chapters = new Map([...document.querySelectorAll('main > .chapter')].map(s
 const homes = new Map();
 let copy = {
   'sobre-mi': ['01 / perspectiva', 'El criterio detrás del código.', 'Personas, producto y agentes de IA. Cómo conecto lo que aprendo con lo que construyo.', 'Explorar mi perspectiva'],
-  proyectos: ['02 / proyectos', 'Ideas que ya tienen código.', 'Agentes con memoria, límites para la autonomía y pequeñas automatizaciones. Siarem, mi proyecto actual, y otros proyectos para explorar.', 'Entrar al laboratorio'],
+  proyectos: ['02 / proyectos', 'Ideas que ya tienen código.', 'Aplicaciones personales, agentes de IA y automatizaciones. Los proyectos que voy construyendo, desde GitHub.', 'Entrar al laboratorio'],
   recorrido: ['03 / recorrido', 'Cada etapa suma.', 'De liderar equipos a desarrollar producto en Resizes. Las experiencias que dan forma a mi manera de trabajar.', 'Ver el recorrido'],
   herramientas: ['04 / stack', 'Las herramientas. El criterio.', 'TypeScript, Vue, Python y un entorno de desarrollo con Codex, Cursor y Claude Code. Siempre en evolución.', 'Explorar el stack'],
   actividad: ['04 / github', 'El código, en movimiento.', 'Contribuciones, actividad reciente y repositorios, en vivo desde GitHub.', 'Ver actividad'],
-  escritos: ['06 / escritos', 'Lo que aprendo, por escrito.', 'Posts y redacciones sobre producto, desarrollo y agentes de IA.', 'Leer'],
+  blog: ['05 / blog', 'Lo que voy aprendiendo.', 'Notas personales y de trabajo. Proyectos, ideas y lo que pasa fuera de la pantalla.', 'Leer el blog'],
   contacto: ['hablemos', 'Una conversación puede ser el inicio.', 'Producto, desarrollo o agentes de IA. Encuentra mi correo y mis perfiles para seguir la conversación.', 'Abrir contacto']
 };
 const spanishCopy = copy;
@@ -118,6 +118,7 @@ function openSection(id, trigger, updateHistory = true) {
   currentSection = chapters.get(id);
   if (window.PSPFeeds?.has(id)) window.PSPFeeds.render(id, modalBody, activeLocale);
   else modalBody.replaceChildren(currentSection);
+  if (id === 'proyectos') window.PSPFeeds?.hydrateProjects(currentSection, activeLocale);
   modalTitle.textContent = copy[id][0];
   if (!dialog.open) lastFocus = trigger || document.activeElement;
   if (!dialog.open) dialog.show();
@@ -171,6 +172,7 @@ dialog.addEventListener('cancel', event => { event.preventDefault(); closeSectio
 dialog.addEventListener('click', event => { if (event.target === dialog) closeSection(); });
 function routeId() {
   const id = location.hash.slice(1);
+  if (id === 'escritos') return 'blog';
   return id === 'herramientas' ? 'sobre-mi' : id;
 }
 function syncRoute() {
@@ -211,11 +213,11 @@ let deckContent = {
 const spanishDeckContent = deckContent;
 const englishCopy = {
   'sobre-mi': ['01 / perspective', 'The thinking behind the code.', 'People, product and AI agents. How I connect what I learn with what I build.', 'Explore my perspective'],
-  proyectos: ['02 / projects', 'Ideas that already have code.', 'Agents with memory, boundaries for autonomy and small automations. Siarem, my current project, and other projects to explore.', 'Enter the lab'],
+  proyectos: ['02 / projects', 'Ideas that already have code.', 'Personal apps, AI agents and automations. What I’m building, from GitHub.', 'Enter the lab'],
   recorrido: ['03 / journey', 'Every stage adds something.', 'From leading teams to building product at Resizes. The experiences shaping how I work.', 'See the journey'],
   herramientas: ['04 / stack', 'The tools. The judgement.', 'TypeScript, Vue, Python and a development environment with Codex, Cursor and Claude Code. Always evolving.', 'Explore the stack'],
   actividad: ['04 / github', 'Code, in motion.', 'Contributions, recent activity and repositories, live from GitHub.', 'See activity'],
-  escritos: ['06 / writing', 'What I learn, in writing.', 'Posts and pieces on product, development and AI agents.', 'Read'],
+  blog: ['05 / blog', 'What I’m learning.', 'Personal and work notes. Projects, ideas and life away from the screen.', 'Read the blog'],
   contacto: ['say hello', 'A conversation can be the beginning.', 'Product, development or AI agents. Find my email and profiles and keep the conversation going.', 'Open contact']
 };
 const englishDeckContent = {
@@ -227,7 +229,7 @@ const englishDeckContent = {
 };
 let activeLocale = 'es';
 const languageButton = document.querySelector('.lang-switch');
-const pointLabels = { sobremi: ['perspectiva', 'perspective'], proyectos: ['proyectos', 'projects'], recorrido: ['recorrido', 'journey'], herramientas: ['stack', 'stack'], actividad: ['GitHub', 'GitHub'], escritos: ['escritos', 'writing'], contacto: ['hablemos', 'say hello'] };
+const pointLabels = { sobremi: ['perspectiva', 'perspective'], proyectos: ['proyectos', 'projects'], recorrido: ['recorrido', 'journey'], herramientas: ['stack', 'stack'], actividad: ['GitHub', 'GitHub'], blog: ['blog', 'blog'], contacto: ['hablemos', 'say hello'] };
 function setLocale(locale) {
   activeLocale = locale;
   const english = locale === 'en';
@@ -243,6 +245,7 @@ function setLocale(locale) {
   document.querySelector('.current p').innerHTML = english ? 'Building at Resizes<br><span>since December 2025</span>' : 'Construyendo en Resizes<br><span>desde diciembre de 2025</span>';
   applyTranslations(english);
   const closeText = dialog.querySelector('.modal-close').firstChild; if (closeText) closeText.textContent = english ? 'close ' : 'cerrar ';
+  closeButton.setAttribute('aria-label', english ? 'Close panel' : 'Cerrar panel');
   languageButton.setAttribute('aria-pressed', String(english));
   languageButton.setAttribute('aria-label', english ? 'Switch language' : 'Cambiar idioma');
   languageButton.querySelector('span').textContent = english ? 'EN' : 'ES';
@@ -255,14 +258,18 @@ function setLocale(locale) {
   window.PSPFeeds?.setLocale(locale);
   window.PSPReveal?.(document.querySelector('#hero-title'));
   if (dialog.open && currentSection) {
+    if (currentSection.id === 'proyectos') window.PSPFeeds?.hydrateProjects(currentSection, activeLocale);
     modalTitle.textContent = copy[currentSection.id][0];
     if (window.PSPFeeds?.has(currentSection.id)) window.PSPFeeds.render(currentSection.id, modalBody, activeLocale);
   }
 }
 function applyTranslations(english) {
   document.querySelectorAll('[data-en]').forEach(node => {
-    if (!node.dataset.es) node.dataset.es = node.innerHTML;
-    node.innerHTML = english ? node.dataset.en : node.dataset.es;
+    const plainText = node.hasAttribute('data-translation-text');
+    if (!node.dataset.es) node.dataset.es = plainText ? node.textContent : node.innerHTML;
+    const value = english ? node.dataset.en : node.dataset.es;
+    if (plainText) node.textContent = value;
+    else node.innerHTML = value;
   });
 }
 languageButton.addEventListener('click', () => { const next = activeLocale === 'es' ? 'en' : 'es'; localStorage.setItem('site-locale', next); setLocale(next); });

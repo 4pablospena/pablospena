@@ -1,0 +1,51 @@
+{
+  "user": "4pablospena",
+  "excluded": ["Agentic-missioncontrol", "4pablospena", "pablospena", "personal-web", "cursorrules"],
+  "overrides": {
+    "pulso": {
+      "title": "Pulso",
+      "category": { "es": "Vida diaria", "en": "Everyday life" },
+      "description": {
+        "es": "Nutrición, entrenamientos y lista de la compra en una app personal. Conecta datos de Apple Salud y Strava para planificar el día.",
+        "en": "Nutrition, workouts and grocery shopping in a personal app. Connects Apple Health and Strava data to plan the day."
+      },
+      "stack": ["Vue", "Nuxt", "PWA"]
+    },
+    "build-your-agents": {
+      "title": "Build Your Agents",
+      "category": { "es": "Agentes de IA", "en": "AI agents" },
+      "description": {
+        "es": "Una especificación abierta para organizar identidad, contexto, memoria y herramientas de agentes personales. Incluye plantillas y un configurador.",
+        "en": "An open specification for organising personal agents’ identity, context, memory and tools. Includes templates and a configurator."
+      },
+      "stack": ["Vue", "Nuxt", "Markdown"]
+    },
+    "siarem": {
+      "title": "Siarem",
+      "category": { "es": "Producto · CRM", "en": "Product · CRM" },
+      "description": {
+        "es": "Un CRM para conectar ventas y entrega: empresas, leads, oportunidades, pedidos, proyectos y facturas en un mismo lugar.",
+        "en": "A CRM connecting sales and delivery: companies, leads, opportunities, orders, projects and invoices in one place."
+      },
+      "stack": ["TypeScript", "CRM"]
+    },
+    "agentic-action-firewall": {
+      "title": "Agent Action Firewall",
+      "category": { "es": "Seguridad de agentes", "en": "Agent security" },
+      "description": {
+        "es": "Una capa que inspecciona y autoriza las acciones de agentes antes de ejecutarlas. Políticas, registro de actividad y aprobaciones. En pre-alpha.",
+        "en": "A layer that inspects and authorises agent actions before execution. Policies, audit logs and approvals. In pre-alpha."
+      },
+      "stack": ["TypeScript", "Seguridad"]
+    },
+    "facturas-excel-pdf": {
+      "title": "Facturas Excel a PDF",
+      "category": { "es": "Automatización", "en": "Automation" },
+      "description": {
+        "es": "Una herramienta en Python para convertir facturas de Excel en PDF y reducir el trabajo manual con documentos.",
+        "en": "A Python tool for converting Excel invoices into PDFs and reducing manual document work."
+      },
+      "stack": ["Python", "Excel", "PDF"]
+    }
+  }
+}

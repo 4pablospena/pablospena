@@ -1,0 +1,110 @@
+{
+  "updatedAt": "2026-11-03T12:31:11.772Z",
+  "excluded": [
+    "Agentic-missioncontrol",
+    "4pablospena",
+    "pablospena",
+    "personal-web",
+    "cursorrules"
+  ],
+  "projects": [
+    {
+      "name": "pulso",
+      "title": "Pulso",
+      "description": {
+        "es": "Nutrición, entrenamientos y lista de la compra en una app personal. Conecta datos de Apple Salud y Strava para planificar el día.",
+        "en": "Nutrition, workouts and grocery shopping in a personal app. Connects Apple Health and Strava data to plan the day."
+      },
+      "category": {
+        "es": "Vida diaria",
+        "en": "Everyday life"
+      },
+      "stack": [
+        "Vue",
+        "Nuxt",
+        "PWA"
+      ],
+      "url": "https://github.com/4pablospena/pulso",
+      "website": null,
+      "pushedAt": "2026-11-02T19:21:26Z"
+    },
+    {
+      "name": "build-your-agents",
+      "title": "Build Your Agents",
+      "description": {
+        "es": "Una especificación abierta para organizar identidad, contexto, memoria y herramientas de agentes personales. Incluye plantillas y un configurador.",
+        "en": "An open specification for organising personal agents’ identity, context, memory and tools. Includes templates and a configurator."
+      },
+      "category": {
+        "es": "Agentes de IA",
+        "en": "AI agents"
+      },
+      "stack": [
+        "Vue",
+        "Nuxt",
+        "Markdown"
+      ],
+      "url": "https://github.com/4pablospena/build-your-agents",
+      "website": "https://build-your-agents.vercel.app",
+      "pushedAt": "2026-10-11T14:18:55Z"
+    },
+    {
+      "name": "siarem",
+      "title": "Siarem",
+      "description": {
+        "es": "Un CRM para conectar ventas y entrega: empresas, leads, oportunidades, pedidos, proyectos y facturas en un mismo lugar.",
+        "en": "A CRM connecting sales and delivery: companies, leads, opportunities, orders, projects and invoices in one place."
+      },
+      "category": {
+        "es": "Producto · CRM",
+        "en": "Product · CRM"
+      },
+      "stack": [
+        "TypeScript",
+        "CRM"
+      ],
+      "url": "https://github.com/4pablospena/siarem",
+      "website": null,
+      "pushedAt": "2026-10-07T19:15:53Z"
+    },
+    {
+      "name": "facturas-excel-pdf",
+      "title": "Facturas Excel a PDF",
+      "description": {
+        "es": "Una herramienta en Python para convertir facturas de Excel en PDF y reducir el trabajo manual con documentos.",
+        "en": "A Python tool for converting Excel invoices into PDFs and reducing manual document work."
+      },
+      "category": {
+        "es": "Automatización",
+        "en": "Automation"
+      },
+      "stack": [
+        "Python",
+        "Excel",
+        "PDF"
+      ],
+      "url": "https://github.com/4pablospena/facturas-excel-pdf",
+      "website": null,
+      "pushedAt": "2026-08-25T11:16:40Z"
+    },
+    {
+      "name": "agentic-action-firewall",
+      "title": "Agent Action Firewall",
+      "description": {
+        "es": "Una capa que inspecciona y autoriza las acciones de agentes antes de ejecutarlas. Políticas, registro de actividad y aprobaciones. En pre-alpha.",
+        "en": "A layer that inspects and authorises agent actions before execution. Policies, audit logs and approvals. In pre-alpha."
+      },
+      "category": {
+        "es": "Seguridad de agentes",
+        "en": "Agent security"
+      },
+      "stack": [
+        "TypeScript",
+        "Seguridad"
+      ],
+      "url": "https://github.com/4pablospena/agentic-action-firewall",
+      "website": null,
+      "pushedAt": "2026-06-08T07:41:23Z"
+    }
+  ]
+}
