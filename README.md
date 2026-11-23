@@ -28,7 +28,7 @@ npm run build
 
 Al abrir proyectos, la web muestra primero la copia guardada y después incorpora la actividad disponible en GitHub. Una caché antigua de actividad conserva los proyectos nuevos del catálogo. Los nuevos repositorios propios no excluidos aparecen con su descripción de GitHub; añade una descripción editorial a `content/projects.json` para personalizarlos. La actividad de GitHub también oculta Mission Control. No se usa ningún token para consultar repositorios públicos.
 
-La sección se presenta como un taller con filtros **Todos**, **Productos**, **Agentes IA** y **Herramientas**. El campo `group` de cada descripción admite `products`, `agents` o `tools`; `featured: true` destaca un proyecto. Trazo también tiene un acceso desde la portada. Cada ficha incluye una ilustración conceptual SVG propia en `dist/assets/projects/`; no son capturas de las aplicaciones. Los enlaces «Visitar web» se toman del campo público `homepage` de GitHub cuando contiene una URL HTTPS sin credenciales.
+La sección se presenta como un taller con filtros **Todos**, **Productos**, **Agentes IA** y **Herramientas**. El campo `group` de cada descripción admite `products`, `agents` o `tools`; `featured: true` destaca un proyecto. Cada ficha incluye una ilustración conceptual SVG propia en `dist/assets/projects/`; no son capturas de las aplicaciones. Los enlaces «Visitar web» se toman del campo público `homepage` de GitHub cuando contiene una URL HTTPS sin credenciales.
 
 `dist/project-renderer.js` comparte la generación de las fichas entre el build y el navegador. `dist/projects.css` contiene el nuevo diseño y sus ajustes de móvil. Sin JavaScript, el catálogo completo sigue disponible en HTML; los filtros se activan al abrir el panel con JavaScript.
 
