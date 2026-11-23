@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "slug": "trazo-una-pizarra-para-mis-agentes",
+      "title": "Trazo: una pizarra para trabajar con mis agentes de IA",
+      "summary": "Qué estoy explorando con Trazo: un lienzo basado en Excalidraw que conecta mis dibujos con Codex, Cursor y Claude Code mediante MCP.",
+      "date": "2026-11-23",
+      "category": "trabajo",
+      "minutes": 3,
+      "url": "/blog/trazo-una-pizarra-para-mis-agentes/"
+    },
+    {
       "slug": "de-la-tienda-al-codigo",
       "title": "De la tienda al código",
       "summary": "Mi paso de Fútbol Emotion a Resizes, lo que me llevé de trabajar con personas y lo que estoy aprendiendo ahora. Una primera nota para presentarme.",
