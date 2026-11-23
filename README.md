@@ -17,7 +17,7 @@ En Vercel, el repositorio usa `npm run build` y publica `dist/`. Mantén el pres
 
 ## Proyectos
 
-El catálogo muestra Pulso, Build Your Agents, Siarem, Facturas Excel a PDF y Agent Action Firewall. Las descripciones se contrastaron con sus README públicos el 3 de noviembre de 2026. Se excluyen Agentic Mission Control, forks, archivados y repositorios de perfil, configuración y versiones anteriores de la web.
+El catálogo muestra Trazo, Pulso, Build Your Agents, Siarem, Facturas Excel a PDF y Agent Action Firewall. Las descripciones y tecnologías se contrastaron con sus README y archivos de dependencias públicos el 23 de noviembre de 2026. Se excluyen Agentic Mission Control, forks, archivados y repositorios de perfil, configuración y versiones anteriores de la web.
 
 `content/projects.json` contiene las exclusiones y las descripciones editoriales en español e inglés. `dist/data/projects.json` conserva una copia pública. Para actualizarla y regenerar el HTML:
 
@@ -26,7 +26,13 @@ npm run sync:projects
 npm run build
 ```
 
-Al abrir proyectos, la web consulta los repositorios de GitHub y conserva el catálogo HTML si falla la conexión. Los nuevos repositorios propios no excluidos aparecen con su descripción de GitHub; añade una descripción editorial a `content/projects.json` para personalizarlos. La actividad de GitHub también oculta Mission Control. No se usa ningún token para consultar repositorios públicos.
+Al abrir proyectos, la web muestra primero la copia guardada y después incorpora la actividad disponible en GitHub. Una caché antigua de actividad conserva los proyectos nuevos del catálogo. Los nuevos repositorios propios no excluidos aparecen con su descripción de GitHub; añade una descripción editorial a `content/projects.json` para personalizarlos. La actividad de GitHub también oculta Mission Control. No se usa ningún token para consultar repositorios públicos.
+
+La sección se presenta como un taller con filtros **Todos**, **Productos**, **Agentes IA** y **Herramientas**. El campo `group` de cada descripción admite `products`, `agents` o `tools`; `featured: true` destaca un proyecto. Trazo también tiene un acceso desde la portada. Cada ficha incluye una ilustración conceptual SVG propia en `dist/assets/projects/`; no son capturas de las aplicaciones. Los enlaces «Visitar web» se toman del campo público `homepage` de GitHub cuando contiene una URL HTTPS sin credenciales.
+
+`dist/project-renderer.js` comparte la generación de las fichas entre el build y el navegador. `dist/projects.css` contiene el nuevo diseño y sus ajustes de móvil. Sin JavaScript, el catálogo completo sigue disponible en HTML; los filtros se activan al abrir el panel con JavaScript.
+
+Validación del rediseño: nueve pruebas automatizadas, build y comprobación de sintaxis correctos. Revisados los filtros, ES/EN, cierre y cambio de sección en navegador; sin desbordamiento horizontal en 320×640, 390×844, 768×1024, 844×390 y 1440×900. Las comprobaciones usan un navegador con tamaños simulados, sin dispositivos físicos.
 
 ## Blog: escribir desde el código
 

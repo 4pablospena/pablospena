@@ -2,8 +2,20 @@
   "user": "4pablospena",
   "excluded": ["Agentic-missioncontrol", "4pablospena", "pablospena", "personal-web", "cursorrules"],
   "overrides": {
+    "trazo": {
+      "title": "Trazo",
+      "featured": true,
+      "group": "tools",
+      "category": { "es": "Lienzo + IA", "en": "Canvas + AI" },
+      "description": {
+        "es": "Un lienzo para pensar con tus IA. Dibuja diagramas, convierte Markdown y Mermaid en elementos editables y conecta Codex, Cursor o Claude Code por MCP.",
+        "en": "A canvas to think with your AI. Draw diagrams, turn Markdown and Mermaid into editable elements, and connect Codex, Cursor or Claude Code through MCP."
+      },
+      "stack": ["React", "TypeScript", "Excalidraw", "MCP"]
+    },
     "pulso": {
       "title": "Pulso",
+      "group": "products",
       "category": { "es": "Vida diaria", "en": "Everyday life" },
       "description": {
         "es": "Nutrición, entrenamientos y lista de la compra en una app personal. Conecta datos de Apple Salud y Strava para planificar el día.",
@@ -13,6 +25,7 @@
     },
     "build-your-agents": {
       "title": "Build Your Agents",
+      "group": "agents",
       "category": { "es": "Agentes de IA", "en": "AI agents" },
       "description": {
         "es": "Una especificación abierta para organizar identidad, contexto, memoria y herramientas de agentes personales. Incluye plantillas y un configurador.",
@@ -22,15 +35,17 @@
     },
     "siarem": {
       "title": "Siarem",
+      "group": "products",
       "category": { "es": "Producto · CRM", "en": "Product · CRM" },
       "description": {
         "es": "Un CRM para conectar ventas y entrega: empresas, leads, oportunidades, pedidos, proyectos y facturas en un mismo lugar.",
         "en": "A CRM connecting sales and delivery: companies, leads, opportunities, orders, projects and invoices in one place."
       },
-      "stack": ["TypeScript", "CRM"]
+      "stack": ["React", "TypeScript", "Cloudflare D1"]
     },
     "agentic-action-firewall": {
       "title": "Agent Action Firewall",
+      "group": "agents",
       "category": { "es": "Seguridad de agentes", "en": "Agent security" },
       "description": {
         "es": "Una capa que inspecciona y autoriza las acciones de agentes antes de ejecutarlas. Políticas, registro de actividad y aprobaciones. En pre-alpha.",
@@ -40,6 +55,7 @@
     },
     "facturas-excel-pdf": {
       "title": "Facturas Excel a PDF",
+      "group": "tools",
       "category": { "es": "Automatización", "en": "Automation" },
       "description": {
         "es": "Una herramienta en Python para convertir facturas de Excel en PDF y reducir el trabajo manual con documentos.",

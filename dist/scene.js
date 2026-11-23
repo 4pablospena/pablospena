@@ -116,6 +116,7 @@ function openSection(id, trigger, updateHistory = true) {
   }
   returnSection();
   currentSection = chapters.get(id);
+  dialog.dataset.section = id;
   if (window.PSPFeeds?.has(id)) window.PSPFeeds.render(id, modalBody, activeLocale);
   else modalBody.replaceChildren(currentSection);
   if (id === 'proyectos') window.PSPFeeds?.hydrateProjects(currentSection, activeLocale);
@@ -145,6 +146,7 @@ async function closeSection(updateHistory = true) {
     try { await portalAnimation.finished; } catch { return; }
   }
   dialog.close();
+  delete dialog.dataset.section;
   portalAnimation?.cancel();
   closing = false;
   returnSection();

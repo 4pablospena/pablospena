@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T12:31:11.772Z",
+  "updatedAt": "2026-11-23T17:55:03.705Z",
   "excluded": [
     "Agentic-missioncontrol",
     "4pablospena",
@@ -8,6 +8,29 @@
     "cursorrules"
   ],
   "projects": [
+    {
+      "name": "trazo",
+      "title": "Trazo",
+      "description": {
+        "es": "Un lienzo para pensar con tus IA. Dibuja diagramas, convierte Markdown y Mermaid en elementos editables y conecta Codex, Cursor o Claude Code por MCP.",
+        "en": "A canvas to think with your AI. Draw diagrams, turn Markdown and Mermaid into editable elements, and connect Codex, Cursor or Claude Code through MCP."
+      },
+      "category": {
+        "es": "Lienzo + IA",
+        "en": "Canvas + AI"
+      },
+      "stack": [
+        "React",
+        "TypeScript",
+        "Excalidraw",
+        "MCP"
+      ],
+      "featured": true,
+      "group": "tools",
+      "url": "https://github.com/4pablospena/trazo",
+      "website": null,
+      "pushedAt": "2026-11-22T19:22:35Z"
+    },
     {
       "name": "pulso",
       "title": "Pulso",
@@ -24,8 +47,9 @@
         "Nuxt",
         "PWA"
       ],
+      "group": "products",
       "url": "https://github.com/4pablospena/pulso",
-      "website": null,
+      "website": "https://pulso-one-phi.vercel.app/",
       "pushedAt": "2026-11-02T19:21:26Z"
     },
     {
@@ -44,8 +68,9 @@
         "Nuxt",
         "Markdown"
       ],
+      "group": "agents",
       "url": "https://github.com/4pablospena/build-your-agents",
-      "website": "https://build-your-agents.vercel.app",
+      "website": "https://build-your-agents.vercel.app/",
       "pushedAt": "2026-10-11T14:18:55Z"
     },
     {
@@ -60,9 +85,11 @@
         "en": "Product · CRM"
       },
       "stack": [
+        "React",
         "TypeScript",
-        "CRM"
+        "Cloudflare D1"
       ],
+      "group": "products",
       "url": "https://github.com/4pablospena/siarem",
       "website": null,
       "pushedAt": "2026-10-07T19:15:53Z"
@@ -83,6 +110,7 @@
         "Excel",
         "PDF"
       ],
+      "group": "tools",
       "url": "https://github.com/4pablospena/facturas-excel-pdf",
       "website": null,
       "pushedAt": "2026-08-25T11:16:40Z"
@@ -102,6 +130,7 @@
         "TypeScript",
         "Seguridad"
       ],
+      "group": "agents",
       "url": "https://github.com/4pablospena/agentic-action-firewall",
       "website": null,
       "pushedAt": "2026-06-08T07:41:23Z"

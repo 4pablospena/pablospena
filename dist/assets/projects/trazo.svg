@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" fill="none">
+<defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#61735c" opacity=".23"/></pattern></defs>
+<path fill="#dce6d4" d="M0 0h760v420H0z"/><path fill="url(#dots)" d="M0 0h760v420H0z"/>
+<g transform="rotate(-5 380 210)"><rect x="117" y="86" width="526" height="276" rx="10" fill="#f3f6ef" stroke="#7b8e73" stroke-width="1.5"/><path d="M117 123h526" stroke="#bac6b2"/><circle cx="139" cy="105" r="3" fill="#8a9c80"/><circle cx="150" cy="105" r="3" fill="#b8c5ac"/><circle cx="161" cy="105" r="3" fill="#d2daca"/>
+<g stroke="#4a6650" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m163 176 110-3 3 68-111 3-2-68Z"/><path d="m453 240 113 2-3 71-113-3 3-70Z"/><path d="m358 158 48 46-50 44-45-43 47-45Z"/><path d="m278 206 33-1m94-1h44v70m-227-32v48h228"/><path d="m303 199 8 6-8 6m128 73 18 6-17 6"/></g>
+<g fill="#4a6650" font-family="monospace" font-size="13"><text x="188" y="212">idea</text><text x="343" y="210">IA</text><text x="477" y="283">lienzo</text></g><path d="M170 334c44-11 63-9 91-9" stroke="#b29870" stroke-width="2" stroke-linecap="round"/></g>
+<rect x="527" y="61" width="119" height="34" rx="6" fill="#344d3e" transform="rotate(7 527 61)"/><text x="547" y="85" fill="#e4ecd9" font-family="monospace" font-size="12" transform="rotate(7 527 61)">MCP ready</text>
+</svg>

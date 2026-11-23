@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" fill="none">
+<path fill="#292b35" d="M0 0h760v420H0z"/>
+<g transform="rotate(-12 380 210)"><rect x="178" y="75" width="179" height="260" rx="6" fill="#a2afbe"/><rect x="212" y="75" width="179" height="260" rx="6" fill="#c1bbcf"/><rect x="246" y="75" width="179" height="260" rx="6" fill="#d9ac8f"/><rect x="280" y="75" width="179" height="260" rx="6" fill="#b5c3a3"/><rect x="314" y="75" width="210" height="260" rx="6" fill="#e6e8db"/><path d="M335 118h166" stroke="#455144" stroke-opacity=".3"/><text x="335" y="107" fill="#465443" font-family="monospace" font-size="12">SOUL.md</text><path d="m376 158-19 17 19 17m84-34 19 17-19 17m-33-44-17 56" stroke="#536648" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M338 236h113m-113 13h142m-142 13h97" stroke="#536648" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/><text x="338" y="307" fill="#536648" font-family="monospace" font-size="11">context · memory · tools</text></g>
+<text x="563" y="327" fill="#d9cdbf" font-family="monospace" font-size="48" font-weight="400">.md</text>
+</svg>

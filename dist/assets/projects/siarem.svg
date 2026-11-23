@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" fill="none">
+<path fill="#25313a" d="M0 0h760v420H0z"/>
+<g transform="rotate(-5 380 210)"><rect x="99" y="81" width="562" height="275" rx="8" fill="#1b252d" stroke="#92a8af" stroke-opacity=".35"/><path d="M99 121h562" stroke="#92a8af" stroke-opacity=".2"/><circle cx="122" cy="102" r="3" fill="#91afb2"/><text x="143" y="106" fill="#bdcfd0" font-family="monospace" font-size="12">siarem / pipeline</text>
+<g font-family="monospace" font-size="12" fill="#aebfc3"><text x="123" y="155">por hacer</text><text x="302" y="155">en curso</text><text x="481" y="155">hecho</text></g>
+<g fill="#293842" stroke="#8cabb2" stroke-opacity=".2"><rect x="121" y="172" width="160" height="67" rx="4"/><rect x="121" y="249" width="160" height="67" rx="4"/><rect x="300" y="172" width="160" height="97" rx="4"/><rect x="479" y="172" width="160" height="67" rx="4"/></g>
+<g stroke-linecap="round" stroke-width="4"><path d="M136 190h80m-80 13h112" stroke="#a5bcc3" stroke-opacity=".5"/><path d="M136 268h60m-60 13h94" stroke="#a5bcc3" stroke-opacity=".5"/><path d="M316 190h80m-80 13h112" stroke="#a5bcc3" stroke-opacity=".5"/><path d="M496 190h60m-60 13h94" stroke="#a5bcc3" stroke-opacity=".5"/><path d="M316 244h81" stroke="#dfb48e"/><path d="m612 219 5 5 9-10" stroke="#bdd3a5" stroke-width="2"/></g></g>
+</svg>

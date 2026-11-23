@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { parsePost, renderMarkdown, selectProjects } from '../lib/content.mjs';
+import { parsePost, renderMarkdown, selectProjects, projectCards } from '../lib/content.mjs';
+import { safeWebsite } from '../dist/project-renderer.js';
 import { build } from '../scripts/build.mjs';
 
 const article = (metadata = '', body = 'Un texto con **formato**.') => `---\ntitle: Una nota\nsummary: Un resumen personal.\ndate: '2026-01-10'\ncategory: personal\n${metadata}---\n${body}`;
@@ -53,6 +54,39 @@ test('excluye Mission Control, forks, archivados y repos privados', () => {
     { name: 'pulso', pushed_at: '2026-11-02', html_url: 'https://github.com/pulso' }
   ];
   assert.deepEqual(selectProjects(repos, config).map(project => project.name), ['pulso', 'old']);
+});
+
+test('publica las webs HTTPS de todos los proyectos y rechaza URLs ejecutables o con credenciales', () => {
+  const config = { user: '4pablospena', excluded: [], overrides: {} };
+  const projects = selectProjects([
+    { name: 'pulso', homepage: 'https://pulso.example/', pushed_at: '2026-11-02' },
+    { name: 'unsafe', homepage: 'javascript:alert(1)', pushed_at: '2026-11-01' }
+  ], config);
+  assert.equal(projects[0].website, 'https://pulso.example/');
+  assert.equal(projects[1].website, null);
+  for (const url of ['javascript:alert(1)', 'data:text/html,hello', '//example.com', 'https://user:secret@example.com', null]) {
+    assert.equal(safeWebsite(url), null);
+  }
+});
+
+test('el catálogo comparte traducciones y filtros, escapando contenido de GitHub', () => {
+  const project = {
+    name: 'trazo', title: '<script>alert(1)</script>', featured: true, group: 'tools',
+    category: { es: 'Lienzo + IA', en: 'Canvas + AI' },
+    description: { es: '<img src=x onerror="alert(1)">', en: 'A canvas & AI' },
+    stack: ['React', '<svg onload=alert(1)>'], pushedAt: '2026-11-22T19:22:35Z',
+    url: 'https://github.com/4pablospena/trazo', website: 'javascript:alert(1)'
+  };
+  const spanish = projectCards([project]);
+  const english = projectCards([project], 'en');
+  assert.match(spanish, /data-project-group="tools"/);
+  assert.match(spanish, /project-featured/);
+  assert.match(spanish, /\/assets\/projects\/trazo.svg/);
+  assert.doesNotMatch(spanish, /<script|<img src=x|<svg onload|href="javascript:/);
+  assert.match(english, />Canvas \+ AI<|>Latest project</);
+  assert.match(english, />A canvas &amp; AI<\/p>/);
+  assert.match(english, />View code<\/a>/);
+  assert.match(projectCards([{ ...project, name: '../../unknown', group: 'unexpected' }]), /\/assets\/projects\/project.svg/);
 });
 
 test('el blog publica, actualiza y retira artículos al editar sus archivos Markdown', async t => {

@@ -410,61 +410,75 @@
   }
 
   let projectSnapshotPromise;
+  const projectFilterSections = new WeakSet();
+  function filterProjects(section) {
+    const filter = section.dataset.activeProjectFilter || 'all';
+    let count = 0;
+    section.querySelectorAll('[data-project-list] .project-entry').forEach(card => {
+      card.hidden = filter !== 'all' && card.dataset.projectGroup !== filter;
+      if (!card.hidden) count++;
+    });
+    section.querySelectorAll('button[data-project-filter]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.projectFilter === filter));
+    });
+    const counter = section.querySelector('[data-project-count]');
+    if (counter) counter.textContent = section.dataset.projectLocale === 'en'
+      ? `${count} ${count === 1 ? 'project' : 'projects'}`
+      : `${count} ${count === 1 ? 'proyecto' : 'proyectos'}`;
+    section.querySelector('.project-filters')?.setAttribute('aria-label', section.dataset.projectLocale === 'en' ? 'Filter projects' : 'Filtrar proyectos');
+  }
+
   function hydrateProjects(section, nextLocale) {
     section.dataset.projectLocale = nextLocale;
     const list = section.querySelector('[data-project-list]');
     const source = section.querySelector('[data-project-source]');
     if (!list) return;
+    section.querySelector('[data-project-controls]')?.removeAttribute('hidden');
+    if (!projectFilterSections.has(section)) {
+      section.addEventListener('click', event => {
+        const button = event.target.closest('button[data-project-filter]');
+        if (!button) return;
+        section.dataset.activeProjectFilter = button.dataset.projectFilter;
+        filterProjects(section);
+      });
+      projectFilterSections.add(section);
+    }
+    filterProjects(section);
     projectSnapshotPromise ||= getJSON('/data/projects.json').catch(error => { projectSnapshotPromise = null; throw error; });
-    projectSnapshotPromise.then(async snapshot => {
-      let projects = snapshot.projects;
-      let live = false;
+    Promise.all([projectSnapshotPromise, import('/project-renderer.js')]).then(async ([snapshot, renderer]) => {
+      const paint = (projects, live) => {
+        const locale = section.dataset.projectLocale;
+        list.innerHTML = renderer.projectCards(projects.filter(project => !hiddenRepositories.has(project.name.toLowerCase())), locale);
+        filterProjects(section);
+        if (source) {
+          source.textContent = live
+            ? (locale === 'en' ? 'Public projects · latest available GitHub activity.' : 'Proyectos públicos · última actividad disponible en GitHub.')
+            : (locale === 'en' ? 'Saved catalog · available even if GitHub does not respond.' : 'Catálogo guardado · disponible aunque GitHub no responda.');
+          // This copy is refreshed here when switching languages.
+          source.removeAttribute('data-en');
+        }
+      };
+      paint(snapshot.projects, false);
       try {
         const data = await loadGitHub();
         const excluded = new Set(snapshot.excluded.map(name => name.toLowerCase()));
-        const relevant = data.repos.filter(repo => visibleRepository(repo) && !repo.fork && !repo.archived && !excluded.has(repo.name.toLowerCase()));
-        if (relevant.length) {
-          projects = relevant.map(repo => {
-            const saved = snapshot.projects.find(project => project.name === repo.name);
-            return saved ? { ...saved, pushedAt: repo.pushed_at } : {
-              name: repo.name, title: repo.name, url: repo.html_url, pushedAt: repo.pushed_at,
-              description: { es: repo.description || 'Proyecto personal en GitHub.', en: repo.description || 'A personal project on GitHub.' },
-              category: { es: 'Proyecto', en: 'Project' }, stack: repo.language ? [repo.language] : []
-            };
+        const saved = new Map(snapshot.projects.map(project => [project.name, project]));
+        const relevant = data.repos.filter(repo => visibleRepository(repo) && !repo.private && !repo.fork && !repo.archived && !excluded.has(repo.name.toLowerCase()));
+        // Older cached activity may predate a new project. Keep the saved catalog
+        // and merge live additions instead of making that project disappear.
+        const projects = new Map(saved);
+        relevant.forEach(repo => {
+          const previous = saved.get(repo.name);
+          projects.set(repo.name, previous ? { ...previous, pushedAt: repo.pushed_at, website: renderer.safeWebsite(repo.homepage) || previous.website } : {
+            name: repo.name, title: repo.name, url: `https://github.com/${USER}/${encodeURIComponent(repo.name)}`, pushedAt: repo.pushed_at,
+            website: renderer.safeWebsite(repo.homepage), group: 'tools',
+            description: { es: repo.description || 'Proyecto personal en GitHub.', en: repo.description || 'A personal project on GitHub.' },
+            category: { es: 'Proyecto', en: 'Project' }, stack: repo.language ? [repo.language] : []
           });
-          live = true;
-        }
+        });
+        if (relevant.length) paint([...projects.values()].sort((a, b) => b.pushedAt.localeCompare(a.pushedAt)), true);
       } catch { /* The local project catalog remains available. */ }
-      const locale = section.dataset.projectLocale;
-      const english = locale === 'en';
-      const cards = projects.filter(project => !hiddenRepositories.has(project.name.toLowerCase())).map((project, index) => {
-        const card = el('article', 'project-entry');
-        card.dataset.repository = project.name;
-        const meta = el('div', 'project-entry-meta');
-        const label = el('span', '', `${String(index + 1).padStart(2, '0')} / ${project.category[locale] || project.category.es}`);
-        const time = el('time', '', new Date(project.pushedAt).toLocaleDateString(locale, { month: 'short', year: 'numeric', timeZone: 'UTC' }));
-        time.dateTime = project.pushedAt;
-        meta.append(label, time);
-        const description = el('p', '', project.description[locale] || project.description.es);
-        const stack = el('div', 'tech-list');
-        project.stack.forEach(tech => stack.append(el('span', '', tech)));
-        const links = el('div', 'project-entry-links');
-        const code = el('a', '', english ? 'View code' : 'Ver código');
-        code.href = `https://github.com/${USER}/${encodeURIComponent(project.name)}`; code.target = '_blank'; code.rel = 'noopener noreferrer';
-        links.append(code);
-        if (project.website?.startsWith('https://')) {
-          const website = el('a', '', english ? 'Visit website' : 'Visitar web');
-          website.href = project.website; website.target = '_blank'; website.rel = 'noopener noreferrer';
-          links.append(website);
-        }
-        card.append(meta, el('h3', '', project.title), description, stack, links);
-        return card;
-      });
-      list.replaceChildren(...cards);
-      source.textContent = live
-        ? (english ? 'GitHub repositories · latest available data.' : 'Repositorios de GitHub · últimos datos disponibles.')
-        : (english ? 'Saved copy · GitHub is not available right now.' : 'Copia guardada · GitHub no está disponible ahora.');
-    }).catch(() => { /* Keep the complete HTML catalog if the snapshot cannot load. */ });
+    }).catch(() => { /* Keep the complete HTML catalog if the snapshot or renderer cannot load. */ });
   }
 
   const renderers = { actividad: renderActivity, blog: renderWriting };

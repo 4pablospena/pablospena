@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" fill="none">
+<defs><pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0v35" stroke="#b8c3ad" stroke-opacity=".07"/></pattern></defs><path fill="#242d2b" d="M0 0h760v420H0z"/><path fill="url(#grid)" d="M0 0h760v420H0z"/>
+<circle cx="380" cy="205" r="136" stroke="#a9ba98" stroke-opacity=".15"/><circle cx="380" cy="205" r="112" stroke="#a9ba98" stroke-opacity=".12"/>
+<path d="M380 109c29 21 53 27 77 31v69c0 51-38 80-77 100-39-20-77-49-77-100v-69c24-4 48-10 77-31Z" fill="#344139" stroke="#a9ba98" stroke-width="1.5"/><path d="m352 206 19 19 38-43" stroke="#d3ddbc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<g font-family="monospace" font-size="12"><rect x="82" y="177" width="130" height="46" rx="5" fill="#303a35" stroke="#a9ba98" stroke-opacity=".3"/><text x="105" y="205" fill="#cad4bf">agent.action</text><rect x="548" y="177" width="130" height="46" rx="5" fill="#303a35" stroke="#a9ba98" stroke-opacity=".3"/><text x="575" y="205" fill="#dfb48e">authorize</text></g><path d="M213 200h89m156 0h89" stroke="#a9ba98" stroke-opacity=".5" stroke-dasharray="4 5"/>
+</svg>
